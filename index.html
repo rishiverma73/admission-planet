@@ -14,7 +14,7 @@
         <div class="container">
             <div class="contact-info">
                 <span><i class="fas fa-phone-alt"></i> +91 8936006657</span>
-                <span><i class="fas fa-envelope"></i> info@admissionplanet.org</span>
+                <span><i class="fas fa-envelope"></i> admissionplanet2021@gmail.com</span>
                 <span><i class="fas fa-map-marker-alt"></i> Jehanabad, Bihar</span>
             </div>
             <div class="social-links">
@@ -39,8 +39,10 @@
                     <li><a href="index.html">Home</a></li>
                     <li><a href="courses.html">Courses</a></li>
                     <li><a href="eligibility.html">Eligibility</a></li>
-                    <li><a href="contact.html">Contact</a></li>
-                    <li><a href="#enquiry" class="btn">Enquire Now</a></li>
+                    <li class="nav-contact"> <a href="contact.html" class="nav-link contact-link">
+    <i class="fas fa-envelope"></i> Contact
+  </a>
+</li>
                 </ul>
             </nav>
             <div class="mobile-menu">
@@ -50,17 +52,181 @@
     </header>
     <!-- Hero Section -->
     <section class="hero">
-        <div class="container">
-            <div class="hero-content">
-                <h2>Your Gateway to Top Universities</h2>
-                <p>Get admission in UG/PG Pharmacy, Nursing, Management, Law & Paramedical courses from India's premier institutions at affordable costs</p>
-                <div class="hero-btns">
-                    <a href="#enquiry" class="btn btn-primary">Free Consultation</a>
-                    <a href="courses.html" class="btn btn-secondary">Explore Courses</a>
+    <div class="container">
+        <div class="hero-content">
+            <h1>ADMISSION PLANET</h1>
+            <p class="tagline">Now Dreams Will Come True</p>
+            <p class="hero-text">Expert guidance for Undergraduate, Postgraduate Teacher Training, Pharmacy, Nursing, Management, Law, & <strong>Paramedical courses</strong>. We connect you with India's top universities at affordable fees.</p>
+            
+            <div class="hero-btns">
+                <a href="#enquiry" class="btn btn-primary">Free Consultation</a>
+                <a href="courses.html" class="btn btn-secondary">Explore Courses →</a>
+            </div>
+            
+            <div class="achievements">
+                <div class="achievement-item">
+                    <span class="number">25+</span>
+                    <span class="label">Partner Universities</span>
+                </div>
+                <div class="achievement-item">
+                    <span class="number">100+</span>
+                    <span class="label">Diverse Courses</span>
+                </div>
+                <div class="achievement-item">
+                    <span class="number">1600+</span>
+                    <span class="label">Successful Admissions</span>
                 </div>
             </div>
         </div>
-    </section>
+    </div>
+</section>
+
+<style>
+.hero {
+    background: linear-gradient(135deg, #1a2980 0%, #26d0ce 100%);
+    color: white;
+    padding: 80px 0;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.hero-content {
+    max-width: 800px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 2;
+}
+
+.hero h1 {
+    font-size: 3.2rem;
+    font-weight: 800;
+    margin-bottom: 10px;
+    letter-spacing: 1px;
+}
+
+.tagline {
+    font-size: 1.5rem;
+    font-weight: 300;
+    margin-bottom: 15px;
+    color: rgba(255,255,255,0.9);
+}
+
+.hero-text {
+    font-size: 1.15rem;
+    line-height: 1.6;
+    margin-bottom: 30px;
+    color: rgba(255,255,255,0.9);
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.hero-text strong {
+    color: white;
+    font-weight: 600;
+}
+
+.hero-btns {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-bottom: 50px;
+    flex-wrap: wrap;
+}
+
+.btn {
+    display: inline-block;
+    padding: 12px 30px;
+    border-radius: 30px;
+    font-size: 1rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.btn-primary {
+    background-color: #25D366;
+    color: white;
+}
+
+.btn-primary:hover {
+    background-color: #128C7E;
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
+
+.btn-secondary {
+    background-color: transparent;
+    color: white;
+    border: 2px solid white;
+}
+
+.btn-secondary:hover {
+    background-color: rgba(255,255,255,0.1);
+    transform: translateY(-3px);
+}
+
+.achievements {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    margin-top: 30px;
+}
+
+.achievement-item {
+    padding: 15px 25px;
+    min-width: 180px;
+}
+
+.number {
+    display: block;
+    font-size: 2.2rem;
+    font-weight: 700;
+    margin-bottom: 5px;
+    color: white;
+}
+
+.label {
+    font-size: 0.95rem;
+    font-weight: 400;
+    color: rgba(255,255,255,0.8);
+}
+
+@media (max-width: 768px) {
+    .hero {
+        padding: 60px 0;
+    }
+    
+    .hero h1 {
+        font-size: 2.2rem;
+    }
+    
+    .tagline {
+        font-size: 1.2rem;
+    }
+    
+    .hero-text {
+        font-size: 1rem;
+    }
+    
+    .hero-btns {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .achievement-item {
+        margin-bottom: 20px;
+        width: 100%;
+    }
+}
+</style>
 
     <!-- Featured Courses -->
     <section class="featured-courses">
@@ -272,7 +438,7 @@
                     <i class="fas fa-envelope"></i>
                     <div>
                         <h4>Email Us</h4>
-                        <p>info@admissionplanet.org</p>
+                        <p>admissionplanet2021@gmail.com</p>
                     </div>
                 </div>
                 <div class="info-box">
@@ -572,7 +738,7 @@ document.getElementById('whatsappContactForm').addEventListener('submit', functi
                     <ul>
                         <li><i class="fas fa-map-marker-alt"></i> Makhdumpur, Jehanabad, Bihar, India-804422</li>
                         <li><i class="fas fa-phone-alt"></i> +91 8936006657</li>
-                        <li><i class="fas fa-envelope"></i> info@admissionplanet.org</li>
+                        <li><i class="fas fa-envelope"></i> admissionplanet2021@gmail.com</li>
                         <li><i class="fas fa-clock"></i> Mon-Sat: 10:00 AM - 7:00 PM</li>
                     </ul>
                 </div>
