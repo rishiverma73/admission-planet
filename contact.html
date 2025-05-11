@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us | Admission Planet</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+        <!-- Top Bar -->
+        <div class="top-bar">
+            <div class="container">
+                <div class="contact-info">
+                    <span><i class="fas fa-phone-alt"></i> +91 9876543210</span>
+                    <span><i class="fas fa-envelope"></i> info@admissionplanet.com</span>
+                    <span><i class="fas fa-map-marker-alt"></i> New Delhi, India</span>
+                </div>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="#"><i class="fab fa-whatsapp"></i></a>
+                </div>
+            </div>
+        </div>
+    
+        <!-- Header -->
+        <header>
+            <div class="container">
+                <div class="logo">
+                    <img src="images/logo.png" alt="Admission Planet">
+                    <h1>Admission<span>Planet</span></h1>
+                </div>
+                <nav>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="courses.html">Courses</a></li>
+                        <li><a href="eligibility.html">Eligibility</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                        <li><a href="#enquiry" class="btn">Enquire Now</a></li>
+                    </ul>
+                </nav>
+                <div class="mobile-menu">
+                    <i class="fas fa-bars"></i>
+                </div>
+            </div>
+        </header>
+    
+    <!-- Contact Hero -->
+    <section class="page-hero">
+        <div class="container">
+            <h1>Contact Us</h1>
+            <p>Get in touch with our admission experts</p>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact-section">
+        <div class="container">
+            <div class="contact-grid">
+                <div class="contact-info">
+                    <h2>Our Office</h2>
+                    <div class="info-box">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <div>
+                            <h3>Address</h3>
+                            <p>Makhdumpur, Jehanabad, Bihar, India 804422</p>
+                        </div>
+                    </div>
+                    <div class="info-box">
+                        <i class="fas fa-phone-alt"></i>
+                        <div>
+                            <h3>Phone</h3>
+                            <p>+91-8936006657</p>
+                        </div>
+                    </div>
+                    <div class="info-box">
+                        <i class="fas fa-envelope"></i>
+                        <div>
+                            <h3>Email</h3>
+                            <p>info@admissionplanet.org</p>
+                        </div>
+                    </div>
+                    <div class="info-box">
+                        <i class="fas fa-clock"></i>
+                        <div>
+                            <h3>Working Hours</h3>
+                            <p>Monday to Saturday: 10:00 AM - 7:00 PM</p>
+                            <p>Sunday: Closed</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="contact-form">
+    <h2>Contact Us via WhatsApp</h2>
+    <form id="whatsappContactForm">
+        <div class="form-group">
+            <input type="text" id="waName" placeholder="Your Name*" required>
+        </div>
+        <div class="form-group">
+            <input type="email" id="waEmail" placeholder="Email Address">
+        </div>
+        <div class="form-group">
+            <input type="tel" id="waPhone" placeholder="Phone Number*" required>
+        </div>
+        <div class="form-group">
+            <select id="waSubject" required>
+                <option value="">Select Subject*</option>
+                <option value="Admission Query">Admission Query</option>
+                <option value="Eligibility">Eligibility Criteria</option>
+                <option value="Documentation">Documentation Help</option>
+                <option value="Fees">Fees Structure</option>
+                <option value="Other">Other Question</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <textarea id="waMessage" placeholder="Your Message*" required></textarea>
+        </div>
+        <button type="submit" class="btn btn-whatsapp">
+            <i class="fab fa-whatsapp"></i> Send via WhatsApp
+        </button>
+    </form>
+</div>
+
+<style>
+.btn-whatsapp {
+    background-color: #25D366;
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 6px;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    width: 100%;
+    transition: all 0.3s;
+}
+
+.btn-whatsapp:hover {
+    background-color: #128C7E;
+    transform: translateY(-2px);
+}
+
+.btn-whatsapp i {
+    font-size: 20px;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 16px;
+}
+
+.form-group textarea {
+    min-height: 120px;
+    resize: vertical;
+}
+</style>
+
+<script>
+document.getElementById('whatsappContactForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    // Replace with your WhatsApp number in international format (without +)
+    const whatsappNumber = '918936006657'; 
+    
+    // Get form values
+    const name = document.getElementById('waName').value;
+    const email = document.getElementById('waEmail').value;
+    const phone = document.getElementById('waPhone').value;
+    const subject = document.getElementById('waSubject').value;
+    const message = document.getElementById('waMessage').value;
+    
+    // Compose WhatsApp message
+    const whatsappMessage = `*New Admission Inquiry*%0A%0A
+*Name:* ${name}%0A
+*Phone:* ${phone}%0A
+${email ? `*Email:* ${email}%0A` : ''}
+*Subject:* ${subject}%0A
+*Message:* ${message}`;
+    
+    // Open WhatsApp with pre-filled message
+    window.open(`https://wa.me/${whatsappNumber}?text=${whatsappMessage}`, '_blank');
+    
+    // Optional: Reset form after submission
+    this.reset();
+});
+</script>
+
+<!-- Add Font Awesome for WhatsApp icon -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+            </div>
+        </div>
+    </section>
+
+    <!-- Map Section -->
+    <section class="map-section">
+    <div class="container">
+        <h2 class="section-title">Our Location</h2>
+        <div class="map-container">
+            <iframe 
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3610.178637452378!2d85.0467223150093!3d25.18501998389685!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39f2a7e8a1d5f4d5%3A0x1d6e1e5b1e5b1e5b!2sMakhdumpur%2C%20Jehanabad%2C%20Bihar!5e0!3m2!1sen!2sin!4v1624456789012!5m2!1sen!2sin" 
+                width="100%" 
+                height="450" 
+                style="border:0;" 
+                allowfullscreen="" 
+                loading="lazy"
+                title="Our Location in Makhdumpur, Jehanabad, Bihar">
+            </iframe>
+            <div class="map-overlay">
+                <div class="location-info">
+                    <h3>Admission Planet Office</h3>
+                    <p><i class="fas fa-map-marker-alt"></i> Makhdumpur, Jehanabad, Bihar 804417</p>
+                    <p><i class="fas fa-phone"></i> +91-8936006657</p>
+                    <p><i class="fas fa-envelope"></i> info@admissionplanet.com</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+.map-section {
+    padding: 60px 0;
+    background-color: #f9f9f9;
+}
+
+.section-title {
+    text-align: center;
+    margin-bottom: 30px;
+    color: #2c3e50;
+    font-size: 2rem;
+}
+
+.map-container {
+    position: relative;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+.map-overlay {
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    background: rgba(255,255,255,0.9);
+    padding: 15px;
+    border-radius: 8px;
+    max-width: 300px;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+}
+
+.location-info h3 {
+    margin-top: 0;
+    color: #2c3e50;
+    font-size: 1.2rem;
+}
+
+.location-info p {
+    margin: 8px 0;
+    color: #34495e;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.location-info i {
+    color: #3498db;
+    width: 20px;
+    text-align: center;
+}
+
+@media (max-width: 768px) {
+    .map-overlay {
+        position: relative;
+        bottom: auto;
+        left: auto;
+        max-width: 100%;
+        margin-top: 15px;
+    }
+}
+</style>
+
+<!-- Font Awesome for icons -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+
+    <!-- Branches Section -->
+    <section class="branches-section">
+        <div class="container">
+            <h2 class="section-title">Our Branches</h2>
+            <div class="branches-grid">
+                <div class="branch-card">
+                    <h3><i class="fas fa-map-marker-alt"></i> Delhi</h3>
+                    <p>123 Education Street, Connaught Place, New Delhi - 110001</p>
+                    <p><i class="fas fa-phone"></i> +91-8936006657</p>
+                </div>
+                
+                <div class="branch-card">
+                    <h3><i class="fas fa-map-marker-alt"></i> Mumbai</h3>
+                    <p>456 College Road, Andheri East, Mumbai - 400069</p>
+                    <p><i class="fas fa-phone"></i> +91 9876543212</p>
+                </div>
+                
+                <div class="branch-card">
+                    <h3><i class="fas fa-map-marker-alt"></i> Bangalore</h3>
+                    <p>789 University Avenue, Koramangala, Bangalore - 560034</p>
+                    <p><i class="fas fa-phone"></i> +91 9876543213</p>
+                </div>
+                
+                <div class="branch-card">
+                    <h3><i class="fas fa-map-marker-alt"></i> Hyderabad</h3>
+                    <p>321 Campus Lane, Gachibowli, Hyderabad - 500032</p>
+                    <p><i class="fas fa-phone"></i> +91 9876543214</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer (same as index.html) -->
+
+    <script src="script.js"></script>
+    <script>
+        // Contact form submission
+        const contactForm = document.getElementById('contactForm');
+        if (contactForm) {
+            contactForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                // Get form values
+                const formData = new FormData(contactForm);
+                const data = {};
+                formData.forEach((value, key) => {
+                    data[key] = value;
+                });
+                
+                // Here you would typically send the data to your server
+                console.log('Contact form submitted:', data);
+                
+                // Show success message
+                alert('Thank you for your message! We will contact you shortly.');
+                
+                // Reset form
+                contactForm.reset();
+            });
+        }
+    </script>
+</body>
+</html>
