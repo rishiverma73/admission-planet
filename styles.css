@@ -125,37 +125,7 @@ img {
 }
 
 /* Top Bar */
-.top-bar {
-    background-color: var(--primary-color);
-    color: var(--white);
-    padding: 10px 0;
-    font-size: 14px;
-}
 
-.top-bar .container {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.contact-info span {
-    margin-right: 20px;
-}
-
-.contact-info i {
-    margin-right: 5px;
-    color: var(--secondary-color);
-}
-
-.social-links a {
-    color: var(--white);
-    margin-left: 15px;
-    font-size: 16px;
-}
-
-.social-links a:hover {
-    color: var(--secondary-color);
-}
 
 /* Header */
 header {
