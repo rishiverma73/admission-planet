@@ -10,21 +10,78 @@
 <body>
         <!-- Top Bar -->
          <div class="top-bar">
-        <div class="container">
-            <div class="contact-info">
-                <span><i class="fas fa-phone-alt"></i> +91 8936006657</span>
-                <span><i class="fas fa-envelope"></i> admissionplanet2021@gmail.com</span>
-                <span><i class="fas fa-map-marker-alt"></i> Jehanabad, Bihar</span>
-            </div>
-            <div class="social-links">
-                <a href="#"><i class="fab fa-facebook-f"></i></a>
-                <a href="#"><i class="fab fa-twitter"></i></a>
-                <a href="#"><i class="fab fa-instagram"></i></a>
-                <a href="#"><i class="fab fa-linkedin-in"></i></a>
-                <a href="#"><i class="fab fa-whatsapp"></i></a>
-            </div>
+    <div class="container">
+        <div class="contact-info">
+            <span class="contact-item"><i class="fas fa-phone-alt"></i> +91 8936006657</span>
+            <span class="contact-item"><i class="fas fa-envelope"></i> admissionplanet2021@gmail.com</span>
+            <span class="contact-item"><i class="fas fa-map-marker-alt"></i> Jehanabad, Bihar</span>
         </div>
     </div>
+</div>
+
+<style>
+.top-bar {
+    background-color: #c94016;
+    color: white;
+    padding: 8px 0;
+    font-size: 14px;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 15px;
+}
+
+.contact-info {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.contact-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    white-space: nowrap;
+}
+
+.contact-item i {
+    font-size: 12px;
+}
+
+@media (max-width: 768px) {
+    .contact-info {
+        flex-direction: column;
+        gap: 5px;
+    }
+    
+    .contact-item {
+        white-space: normal;
+    }
+    
+    .top-bar {
+        padding: 6px 0; /* Reduced from 10px */
+        font-size: 13px;
+    }
+}
+
+@media (max-width: 480px) {
+    .contact-item {
+        flex-basis: 100%;
+    }
+    
+    .contact-info {
+        text-align: center;
+        gap: 3px; /* Reduced gap for mobile */
+    }
+    
+    .top-bar {
+        padding: 5px 0; /* Further reduced padding */
+    }
+}
+</style>
     
         <!-- Header -->
         <header>
@@ -73,33 +130,68 @@
                     <div class="program-card">
                         <h3>D.Pharm (Diploma in Pharmacy)</h3>
                         <ul>
-                            <li>Duration: 2 years</li>
-                            <li>Eligibility: 10+2 with Physics, Chemistry & Biology/Mathematics</li>
-                            <li>Career: Pharmacist, Drug Inspector, Medical Representative</li>
+                            <li><strong>Duration:</strong> 2 years (4 semesters)</li>
+                            <li><strong>Eligibility:</strong> 10+2 with Physics, Chemistry & Biology/Mathematics, Minimum 50% marks</li>
+                            <li><strong>Course Content:</strong> Pharmaceutics, Pharmacology, Pharmaceutical Chemistry, Hospital Pharmacy</li>
+                            <li><strong>Career Opportunities:</strong>
+                                <ul class="career-list">
+                                    <li>Community Pharmacist</li>
+                                    <li>Drug Inspector</li>
+                                    <li>Medical Representative</li>
+                                    <li>Pharmacy Technician</li>
+                                </ul>
+                            </li>
+                            <li><strong>Average Starting Salary:</strong> ₹1.8 - ₹3.5 LPA</li>
                         </ul>
                     </div>
                     <div class="program-card">
                         <h3>B.Pharm (Bachelor of Pharmacy)</h3>
                         <ul>
-                            <li>Duration: 4 years</li>
-                            <li>Eligibility: 10+2 with PCB/PCM, Minimum 50% marks</li>
-                            <li>Career: Clinical Pharmacist, Research Associate, Quality Analyst</li>
+                            <li><strong>Duration:</strong> 4 years (8 semesters)</li>
+                            <li><strong>Eligibility:</strong> 10+2 with PCB/PCM, Minimum 50% marks</li>
+                            <li><strong>Course Content:</strong> Medicinal Chemistry, Pharmacognosy, Drug Delivery Systems, Clinical Pharmacy</li>
+                            <li><strong>Career Opportunities:</strong>
+                                <ul class="career-list">
+                                    <li>Clinical Pharmacist</li>
+                                    <li>Pharmaceutical Researcher</li>
+                                    <li>Quality Control Analyst</li>
+                                    <li>Regulatory Affairs Officer</li>
+                                </ul>
+                            </li>
+                            <li><strong>Average Starting Salary:</strong> ₹3 - ₹6 LPA</li>
                         </ul>
                     </div>
                     <div class="program-card">
                         <h3>M.Pharm (Master of Pharmacy)</h3>
                         <ul>
-                            <li>Duration: 2 years</li>
-                            <li>Eligibility: B.Pharm with minimum 55% marks</li>
-                            <li>Specializations: Pharmaceutics, Pharmacology, Pharmacy Practice</li>
+                            <li><strong>Duration:</strong> 2 years (4 semesters)</li>
+                            <li><strong>Eligibility:</strong> B.Pharm with minimum 55% marks + GPAT score</li>
+                            <li><strong>Specializations:</strong>
+                                <ul class="career-list">
+                                    <li>Pharmaceutics (Drug Formulation)</li>
+                                    <li>Pharmacology (Drug Action)</li>
+                                    <li>Pharmacy Practice (Clinical)</li>
+                                    <li>Pharmaceutical Analysis</li>
+                                </ul>
+                            </li>
+                            <li><strong>Average Starting Salary:</strong> ₹4 - ₹8 LPA</li>
                         </ul>
                     </div>
                     <div class="program-card">
                         <h3>Pharm.D (Doctor of Pharmacy)</h3>
                         <ul>
-                            <li>Duration: 6 years (5+1 internship)</li>
-                            <li>Eligibility: 10+2 with PCB, Minimum 50% marks</li>
-                            <li>Career: Clinical Pharmacist, Hospital Pharmacy Director</li>
+                            <li><strong>Duration:</strong> 6 years (5 years academics + 1 year internship)</li>
+                            <li><strong>Eligibility:</strong> 10+2 with PCB, Minimum 50% marks</li>
+                            <li><strong>Course Content:</strong> Clinical Pharmacy, Pharmacotherapeutics, Hospital Training, Community Pharmacy</li>
+                            <li><strong>Career Opportunities:</strong>
+                                <ul class="career-list">
+                                    <li>Clinical Pharmacist in Hospitals</li>
+                                    <li>Hospital Pharmacy Director</li>
+                                    <li>Pharmaceutical Researcher</li>
+                                    <li>Drug Policy Maker</li>
+                                </ul>
+                            </li>
+                            <li><strong>Average Starting Salary:</strong> ₹5 - ₹10 LPA</li>
                         </ul>
                     </div>
                 </div>
@@ -117,33 +209,69 @@
                     <div class="program-card">
                         <h3>ANM (Auxiliary Nurse Midwifery)</h3>
                         <ul>
-                            <li>Duration: 2 years</li>
-                            <li>Eligibility: 10+2 preferably with Science</li>
-                            <li>Career: Community Health Worker, ANM Nurse</li>
+                            <li><strong>Duration:</strong> 2 years</li>
+                            <li><strong>Eligibility:</strong> 10+2 preferably with Science, Minimum 45% marks</li>
+                            <li><strong>Course Content:</strong> Community Health, Midwifery, Child Health, Nutrition</li>
+                            <li><strong>Career Opportunities:</strong>
+                                <ul class="career-list">
+                                    <li>Community Health Worker</li>
+                                    <li>ANM in Primary Health Centers</li>
+                                    <li>Rural Healthcare Provider</li>
+                                    <li>Home Care Nurse</li>
+                                </ul>
+                            </li>
+                            <li><strong>Average Starting Salary:</strong> ₹1.5 - ₹2.5 LPA</li>
                         </ul>
                     </div>
                     <div class="program-card">
                         <h3>GNM (General Nursing Midwifery)</h3>
                         <ul>
-                            <li>Duration: 3.5 years (including internship)</li>
-                            <li>Eligibility: 10+2 with PCB, Minimum 50% marks</li>
-                            <li>Career: Staff Nurse, Home Care Nurse, ICU Nurse</li>
+                            <li><strong>Duration:</strong> 3.5 years (3 years academics + 6 months internship)</li>
+                            <li><strong>Eligibility:</strong> 10+2 with PCB, Minimum 50% marks</li>
+                            <li><strong>Course Content:</strong> Medical-Surgical Nursing, Pediatric Nursing, Mental Health Nursing, Midwifery</li>
+                            <li><strong>Career Opportunities:</strong>
+                                <ul class="career-list">
+                                    <li>Staff Nurse in Hospitals</li>
+                                    <li>ICU Nurse</li>
+                                    <li>Emergency Room Nurse</li>
+                                    <li>Nursing Supervisor</li>
+                                </ul>
+                            </li>
+                            <li><strong>Average Starting Salary:</strong> ₹2.5 - ₹4 LPA</li>
                         </ul>
                     </div>
                     <div class="program-card">
                         <h3>B.Sc Nursing</h3>
                         <ul>
-                            <li>Duration: 4 years</li>
-                            <li>Eligibility: 10+2 with PCB, Minimum 55% marks</li>
-                            <li>Career: Nursing Officer, Nurse Educator, Military Nurse</li>
+                            <li><strong>Duration:</strong> 4 years (8 semesters)</li>
+                            <li><strong>Eligibility:</strong> 10+2 with PCB, Minimum 55% marks</li>
+                            <li><strong>Course Content:</strong> Nursing Foundations, Community Health, Medical-Surgical Nursing, Nursing Research</li>
+                            <li><strong>Career Opportunities:</strong>
+                                <ul class="career-list">
+                                    <li>Nursing Officer in Hospitals</li>
+                                    <li>Nurse Educator</li>
+                                    <li>Military Nurse</li>
+                                    <li>Industrial Nurse</li>
+                                </ul>
+                            </li>
+                            <li><strong>Average Starting Salary:</strong> ₹3 - ₹5 LPA</li>
                         </ul>
                     </div>
                     <div class="program-card">
                         <h3>M.Sc Nursing</h3>
                         <ul>
-                            <li>Duration: 2 years</li>
-                            <li>Eligibility: B.Sc Nursing with minimum 55% marks</li>
-                            <li>Specializations: Medical-Surgical, OBG, Psychiatry, Pediatrics</li>
+                            <li><strong>Duration:</strong> 2 years (4 semesters)</li>
+                            <li><strong>Eligibility:</strong> B.Sc Nursing with minimum 55% marks + 1 year experience</li>
+                            <li><strong>Specializations:</strong>
+                                <ul class="career-list">
+                                    <li>Medical-Surgical Nursing</li>
+                                    <li>Obstetrics & Gynecological Nursing</li>
+                                    <li>Psychiatric Nursing</li>
+                                    <li>Pediatric Nursing</li>
+                                    <li>Community Health Nursing</li>
+                                </ul>
+                            </li>
+                            <li><strong>Average Starting Salary:</strong> ₹4 - ₹7 LPA</li>
                         </ul>
                     </div>
                 </div>
@@ -161,33 +289,100 @@
                     <div class="program-card">
                         <h3>BBA (Bachelor of Business Administration)</h3>
                         <ul>
-                            <li>Duration: 3 years</li>
-                            <li>Eligibility: 10+2 in any stream, Minimum 50% marks</li>
-                            <li>Specializations: Marketing, Finance, HR, International Business</li>
+                            <li><strong>Duration:</strong> 3 years (6 semesters)</li>
+                            <li><strong>Eligibility:</strong> 10+2 in any stream, Minimum 50% marks</li>
+                            <li><strong>Specializations:</strong>
+                                <ul class="career-list">
+                                    <li>Marketing Management</li>
+                                    <li>Financial Management</li>
+                                    <li>Human Resource Management</li>
+                                    <li>International Business</li>
+                                    <li>Digital Marketing</li>
+                                </ul>
+                            </li>
+                            <li><strong>Career Opportunities:</strong>
+                                <ul class="career-list">
+                                    <li>Business Development Executive</li>
+                                    <li>Marketing Analyst</li>
+                                    <li>HR Recruiter</li>
+                                    <li>Entrepreneur</li>
+                                </ul>
+                            </li>
+                            <li><strong>Average Starting Salary:</strong> ₹3 - ₹6 LPA</li>
                         </ul>
                     </div>
                     <div class="program-card">
                         <h3>MBA (Master of Business Administration)</h3>
                         <ul>
-                            <li>Duration: 2 years</li>
-                            <li>Eligibility: Bachelor's degree with 50% marks + Entrance Exam</li>
-                            <li>Specializations: Digital Marketing, Business Analytics, Healthcare</li>
+                            <li><strong>Duration:</strong> 2 years (4 semesters)</li>
+                            <li><strong>Eligibility:</strong> Bachelor's degree with 50% marks + CAT/MAT/XAT score</li>
+                            <li><strong>Specializations:</strong>
+                                <ul class="career-list">
+                                    <li>Finance</li>
+                                    <li>Marketing</li>
+                                    <li>Human Resources</li>
+                                    <li>Operations</li>
+                                    <li>Business Analytics</li>
+                                    <li>Healthcare Management</li>
+                                </ul>
+                            </li>
+                            <li><strong>Career Opportunities:</strong>
+                                <ul class="career-list">
+                                    <li>Business Consultant</li>
+                                    <li>Brand Manager</li>
+                                    <li>Financial Analyst</li>
+                                    <li>Operations Manager</li>
+                                </ul>
+                            </li>
+                            <li><strong>Average Starting Salary:</strong> ₹5 - ₹15 LPA</li>
                         </ul>
                     </div>
                     <div class="program-card">
                         <h3>PGDM (Post Graduate Diploma in Management)</h3>
                         <ul>
-                            <li>Duration: 2 years</li>
-                            <li>Eligibility: Bachelor's degree with 50% marks + Entrance Exam</li>
-                            <li>Career: Business Consultant, Entrepreneur, Corporate Manager</li>
+                            <li><strong>Duration:</strong> 2 years (4 semesters)</li>
+                            <li><strong>Eligibility:</strong> Bachelor's degree with 50% marks + Entrance Exam</li>
+                            <li><strong>Key Features:</strong>
+                                <ul class="career-list">
+                                    <li>Industry-oriented curriculum</li>
+                                    <li>Summer internships</li>
+                                    <li>Live projects with companies</li>
+                                    <li>Specialization in emerging areas</li>
+                                </ul>
+                            </li>
+                            <li><strong>Career Opportunities:</strong>
+                                <ul class="career-list">
+                                    <li>Business Consultant</li>
+                                    <li>Corporate Manager</li>
+                                    <li>Entrepreneur</li>
+                                    <li>Supply Chain Manager</li>
+                                </ul>
+                            </li>
+                            <li><strong>Average Starting Salary:</strong> ₹4 - ₹12 LPA</li>
                         </ul>
                     </div>
                     <div class="program-card">
                         <h3>Executive MBA</h3>
                         <ul>
-                            <li>Duration: 1-2 years (part-time)</li>
-                            <li>Eligibility: Bachelor's degree + 2-5 years work experience</li>
-                            <li>Career: Senior Management Roles, Leadership Positions</li>
+                            <li><strong>Duration:</strong> 1-2 years (part-time/weekend)</li>
+                            <li><strong>Eligibility:</strong> Bachelor's degree + 2-5 years work experience</li>
+                            <li><strong>Program Highlights:</strong>
+                                <ul class="career-list">
+                                    <li>Designed for working professionals</li>
+                                    <li>Case-study based learning</li>
+                                    <li>Industry expert faculty</li>
+                                    <li>Networking opportunities</li>
+                                </ul>
+                            </li>
+                            <li><strong>Career Growth:</strong>
+                                <ul class="career-list">
+                                    <li>Senior Management Roles</li>
+                                    <li>Leadership Positions</li>
+                                    <li>Strategic Planning Roles</li>
+                                    <li>C-Suite Executives</li>
+                                </ul>
+                            </li>
+                            <li><strong>Average Salary Hike:</strong> 30-50% post completion</li>
                         </ul>
                     </div>
                 </div>
@@ -205,25 +400,100 @@
                     <div class="program-card">
                         <h3>BA LLB (Integrated Law Program)</h3>
                         <ul>
-                            <li>Duration: 5 years</li>
-                            <li>Eligibility: 10+2 with 45-50% marks + CLAT/LSAT</li>
-                            <li>Career: Litigation Lawyer, Corporate Counsel, Legal Advisor</li>
+                            <li><strong>Duration:</strong> 5 years (10 semesters)</li>
+                            <li><strong>Eligibility:</strong> 10+2 with 45-50% marks + CLAT/LSAT score</li>
+                            <li><strong>Course Content:</strong> Constitutional Law, Contract Law, Criminal Law, Legal Writing, Moot Courts</li>
+                            <li><strong>Specializations:</strong>
+                                <ul class="career-list">
+                                    <li>Corporate Law</li>
+                                    <li>Criminal Law</li>
+                                    <li>Intellectual Property Law</li>
+                                    <li>International Law</li>
+                                </ul>
+                            </li>
+                            <li><strong>Career Opportunities:</strong>
+                                <ul class="career-list">
+                                    <li>Litigation Lawyer</li>
+                                    <li>Corporate Counsel</li>
+                                    <li>Legal Advisor</li>
+                                    <li>Judicial Services</li>
+                                </ul>
+                            </li>
+                            <li><strong>Average Starting Salary:</strong> ₹4 - ₹8 LPA</li>
                         </ul>
                     </div>
                     <div class="program-card">
                         <h3>LLB (Bachelor of Laws)</h3>
                         <ul>
-                            <li>Duration: 3 years</li>
-                            <li>Eligibility: Bachelor's degree with 45% marks</li>
-                            <li>Specializations: Criminal, Corporate, Cyber, International Law</li>
+                            <li><strong>Duration:</strong> 3 years (6 semesters)</li>
+                            <li><strong>Eligibility:</strong> Bachelor's degree with 45% marks</li>
+                            <li><strong>Course Content:</strong> Jurisprudence, Civil Procedure Code, Criminal Procedure Code, Evidence Law</li>
+                            <li><strong>Specializations:</strong>
+                                <ul class="career-list">
+                                    <li>Cyber Law</li>
+                                    <li>Taxation Law</li>
+                                    <li>Environmental Law</li>
+                                    <li>Human Rights Law</li>
+                                </ul>
+                            </li>
+                            <li><strong>Career Opportunities:</strong>
+                                <ul class="career-list">
+                                    <li>Legal Practitioner</li>
+                                    <li>Public Prosecutor</li>
+                                    <li>Legal Consultant</li>
+                                    <li>Notary</li>
+                                </ul>
+                            </li>
+                            <li><strong>Average Starting Salary:</strong> ₹3.5 - ₹7 LPA</li>
                         </ul>
                     </div>
                     <div class="program-card">
                         <h3>LLM (Master of Laws)</h3>
                         <ul>
-                            <li>Duration: 1-2 years</li>
-                            <li>Eligibility: LLB degree with 50% marks</li>
-                            <li>Career: Legal Researcher, Law Professor, Policy Maker</li>
+                            <li><strong>Duration:</strong> 1-2 years (2-4 semesters)</li>
+                            <li><strong>Eligibility:</strong> LLB degree with 50% marks</li>
+                            <li><strong>Specializations:</strong>
+                                <ul class="career-list">
+                                    <li>Corporate Law</li>
+                                    <li>Constitutional Law</li>
+                                    <li>International Trade Law</li>
+                                    <li>Criminal Law</li>
+                                    <li>Environmental Law</li>
+                                </ul>
+                            </li>
+                            <li><strong>Career Opportunities:</strong>
+                                <ul class="career-list">
+                                    <li>Legal Researcher</li>
+                                    <li>Law Professor</li>
+                                    <li>Policy Maker</li>
+                                    <li>Legal Advisor to Government</li>
+                                </ul>
+                            </li>
+                            <li><strong>Average Starting Salary:</strong> ₹5 - ₹10 LPA</li>
+                        </ul>
+                    </div>
+                    <div class="program-card">
+                        <h3>BBA LLB (Integrated Program)</h3>
+                        <ul>
+                            <li><strong>Duration:</strong> 5 years (10 semesters)</li>
+                            <li><strong>Eligibility:</strong> 10+2 with 45-50% marks + CLAT score</li>
+                            <li><strong>Program Highlights:</strong>
+                                <ul class="career-list">
+                                    <li>Combination of Business and Law</li>
+                                    <li>Moot Court Training</li>
+                                    <li>Internship with Law Firms</li>
+                                    <li>Specialization in Corporate Laws</li>
+                                </ul>
+                            </li>
+                            <li><strong>Career Opportunities:</strong>
+                                <ul class="career-list">
+                                    <li>Corporate Lawyer</li>
+                                    <li>Legal Analyst</li>
+                                    <li>Compliance Officer</li>
+                                    <li>Legal Consultant for Businesses</li>
+                                </ul>
+                            </li>
+                            <li><strong>Average Starting Salary:</strong> ₹5 - ₹9 LPA</li>
                         </ul>
                     </div>
                 </div>
@@ -239,40 +509,415 @@
                 </div>
                 <div class="programs-grid">
                     <div class="program-card">
-                        <h3>B.Sc Medical Lab Technology</h3>
+                        <h3>B.Sc Medical Lab Technology (BMLT)</h3>
                         <ul>
-                            <li>Duration: 3 years</li>
-                            <li>Eligibility: 10+2 with PCB, Minimum 50% marks</li>
-                            <li>Career: Lab Technician, Pathologist Assistant, Research Associate</li>
+                            <li><strong>Duration:</strong> 3 years (6 semesters)</li>
+                            <li><strong>Eligibility:</strong> 10+2 with Physics, Chemistry, Biology (PCB), Minimum 50% marks</li>
+                            <li><strong>Course Content:</strong> Clinical Biochemistry, Pathology, Microbiology, Hematology, Immunology, Histopathology</li>
+                            <li><strong>Career Opportunities:</strong> 
+                                <ul class="career-list">
+                                    <li>Medical Lab Technologist in Hospitals</li>
+                                    <li>Pathology Lab Manager</li>
+                                    <li>Research Associate in Medical Labs</li>
+                                    <li>Quality Control Officer in Pharmaceutical Companies</li>
+                                </ul>
+                            </li>
+                            <li><strong>Average Starting Salary:</strong> ₹2.5 - ₹4.5 LPA</li>
+                        </ul>
+                    </div>
+                    <div class="program-card">
+                        <h3>Diploma in Medical Lab Technology (DMLT)</h3>
+                        <ul>
+                            <li><strong>Duration:</strong> 2 years (4 semesters)</li>
+                            <li><strong>Eligibility:</strong> 10+2 with Science stream (PCB preferred)</li>
+                            <li><strong>Course Content:</strong> Basic Pathology, Clinical Microbiology, Blood Banking, Lab Equipment Handling</li>
+                            <li><strong>Career Opportunities:</strong> 
+                                <ul class="career-list">
+                                    <li>Lab Technician in Diagnostic Centers</li>
+                                    <li>Hospital Lab Assistant</li>
+                                    <li>Blood Bank Technician</li>
+                                    <li>Medical Representative</li>
+                                </ul>
+                            </li>
+                            <li><strong>Average Starting Salary:</strong> ₹1.8 - ₹3 LPA</li>
                         </ul>
                     </div>
                     <div class="program-card">
                         <h3>B.Sc Radiology & Imaging Technology</h3>
                         <ul>
-                            <li>Duration: 3 years</li>
-                            <li>Eligibility: 10+2 with PCB, Minimum 50% marks</li>
-                            <li>Career: Radiologic Technologist, MRI Technician, CT Scan Technician</li>
+                            <li><strong>Duration:</strong> 3 years</li>
+                            <li><strong>Eligibility:</strong> 10+2 with PCB, Minimum 50% marks</li>
+                            <li><strong>Course Content:</strong> Radiographic Techniques, Radiation Physics, CT/MRI Procedures, Patient Care</li>
+                            <li><strong>Career:</strong> Radiologic Technologist, MRI Technician, CT Scan Technician</li>
+                            <li><strong>Average Starting Salary:</strong> ₹3 - ₹5 LPA</li>
                         </ul>
                     </div>
                     <div class="program-card">
                         <h3>B.Sc Optometry</h3>
                         <ul>
-                            <li>Duration: 3 years</li>
-                            <li>Eligibility: 10+2 with PCB, Minimum 50% marks</li>
-                            <li>Career: Optometrist, Ophthalmic Assistant, Vision Therapist</li>
+                            <li><strong>Duration:</strong> 3 years</li>
+                            <li><strong>Eligibility:</strong> 10+2 with PCB, Minimum 50% marks</li>
+                            <li><strong>Course Content:</strong> Ocular Anatomy, Visual Optics, Contact Lens Practice, Low Vision Aids</li>
+                            <li><strong>Career:</strong> Optometrist, Ophthalmic Assistant, Vision Therapist</li>
+                            <li><strong>Average Starting Salary:</strong> ₹2.5 - ₹4 LPA</li>
                         </ul>
                     </div>
                     <div class="program-card">
                         <h3>B.Sc Operation Theatre Technology</h3>
                         <ul>
-                            <li>Duration: 3 years</li>
-                            <li>Eligibility: 10+2 with PCB, Minimum 50% marks</li>
-                            <li>Career: OT Technician, Surgical Assistant, Anesthesia Technician</li>
+                            <li><strong>Duration:</strong> 3 years</li>
+                            <li><strong>Eligibility:</strong> 10+2 with PCB, Minimum 50% marks</li>
+                            <li><strong>Course Content:</strong> Surgical Procedures, Anesthesia Technology, Sterilization Techniques</li>
+                            <li><strong>Career:</strong> OT Technician, Surgical Assistant, Anesthesia Technician</li>
+                            <li><strong>Average Starting Salary:</strong> ₹2.5 - ₹4 LPA</li>
+                        </ul>
+                    </div>
+                    <div class="program-card">
+                        <h3>B.Sc Dialysis Technology</h3>
+                        <ul>
+                            <li><strong>Duration:</strong> 3 years</li>
+                            <li><strong>Eligibility:</strong> 10+2 with PCB, Minimum 50% marks</li>
+                            <li><strong>Course Content:</strong> Renal Physiology, Dialysis Procedures, Equipment Maintenance</li>
+                            <li><strong>Career:</strong> Dialysis Technician, Nephrology Assistant</li>
+                            <li><strong>Average Starting Salary:</strong> ₹2.5 - ₹4 LPA</li>
                         </ul>
                     </div>
                 </div>
             </div>
             
+            <!-- Polytechnic Programs -->
+<div id="polytechnic" class="course-category">
+    <div class="category-header">
+        <div class="category-icon">
+            <i class="fas fa-tools"></i>
+        </div>
+        <h2>Polytechnic Programs</h2>
+    </div>
+    <div class="programs-grid">
+        <div class="program-card">
+            <h3>Diploma in Mechanical Engineering</h3>
+            <ul>
+                <li><strong>Duration:</strong> 3 years (6 semesters)</li>
+                <li><strong>Eligibility:</strong> 10th pass with 45% marks in Science and Mathematics</li>
+                <li><strong>Course Content:</strong>
+                    <ul class="career-list">
+                        <li>Engineering Mechanics</li>
+                        <li>Thermodynamics</li>
+                        <li>Machine Design</li>
+                        <li>Automobile Engineering</li>
+                        <li>CAD/CAM</li>
+                    </ul>
+                </li>
+                <li><strong>Career Opportunities:</strong>
+                    <ul class="career-list">
+                        <li>Junior Engineer in PWD</li>
+                        <li>Maintenance Technician</li>
+                        <li>Quality Control Technician</li>
+                        <li>CAD Operator</li>
+                    </ul>
+                </li>
+                <li><strong>Average Starting Salary:</strong> ₹1.8 - ₹3.5 LPA</li>
+                <li><strong>Lateral Entry:</strong> Can join B.Tech 2nd year after diploma</li>
+            </ul>
+        </div>
+
+        <div class="program-card">
+            <h3>Diploma in Civil Engineering</h3>
+            <ul>
+                <li><strong>Duration:</strong> 3 years (6 semesters)</li>
+                <li><strong>Eligibility:</strong> 10th pass with 45% marks in Science and Mathematics</li>
+                <li><strong>Course Content:</strong>
+                    <ul class="career-list">
+                        <li>Surveying</li>
+                        <li>Construction Technology</li>
+                        <li>Structural Engineering</li>
+                        <li>Geotechnical Engineering</li>
+                        <li>Estimating and Costing</li>
+                    </ul>
+                </li>
+                <li><strong>Career Opportunities:</strong>
+                    <ul class="career-list">
+                        <li>Site Supervisor</li>
+                        <li>Junior Engineer in Construction</li>
+                        <li>CAD Technician</li>
+                        <li>Highway Inspector</li>
+                    </ul>
+                </li>
+                <li><strong>Average Starting Salary:</strong> ₹2 - ₹4 LPA</li>
+                <li><strong>Government Jobs:</strong> PWD, Municipal Corporations, Railways</li>
+            </ul>
+        </div>
+
+        <div class="program-card">
+            <h3>Diploma in Electrical Engineering</h3>
+            <ul>
+                <li><strong>Duration:</strong> 3 years (6 semesters)</li>
+                <li><strong>Eligibility:</strong> 10th pass with 45% marks in Science and Mathematics</li>
+                <li><strong>Course Content:</strong>
+                    <ul class="career-list">
+                        <li>Electrical Circuits</li>
+                        <li>Power Systems</li>
+                        <li>Electrical Machines</li>
+                        <li>Instrumentation</li>
+                        <li>Renewable Energy Systems</li>
+                    </ul>
+                </li>
+                <li><strong>Career Opportunities:</strong>
+                    <ul class="career-list">
+                        <li>Electrical Technician</li>
+                        <li>Maintenance Engineer</li>
+                        <li>Power Plant Operator</li>
+                        <li>Wiring Contractor</li>
+                    </ul>
+                </li>
+                <li><strong>Average Starting Salary:</strong> ₹2 - ₹3.8 LPA</li>
+                <li><strong>Sectors:</strong> Power Distribution, Manufacturing, Maintenance</li>
+            </ul>
+        </div>
+
+        <div class="program-card">
+            <h3>Diploma in Computer Science Engineering</h3>
+            <ul>
+                <li><strong>Duration:</strong> 3 years (6 semesters)</li>
+                <li><strong>Eligibility:</strong> 10th pass with 45% marks in Science and Mathematics</li>
+                <li><strong>Course Content:</strong>
+                    <ul class="career-list">
+                        <li>Programming in C/C++</li>
+                        <li>Data Structures</li>
+                        <li>Computer Networks</li>
+                        <li>Web Development</li>
+                        <li>Database Management</li>
+                    </ul>
+                </li>
+                <li><strong>Career Opportunities:</strong>
+                    <ul class="career-list">
+                        <li>Software Tester</li>
+                        <li>Network Technician</li>
+                        <li>Technical Support</li>
+                        <li>Junior Web Developer</li>
+                    </ul>
+                </li>
+                <li><strong>Average Starting Salary:</strong> ₹2.5 - ₹4.5 LPA</li>
+                <li><strong>Higher Education:</strong> Can pursue B.Tech/B.Sc in Computer Science</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<!-- Engineering Programs -->
+<div id="engineering" class="course-category">
+    <div class="category-header">
+        <div class="category-icon">
+            <i class="fas fa-cogs"></i>
+        </div>
+        <h2>Engineering Programs</h2>
+    </div>
+    <div class="programs-grid">
+        <div class="program-card">
+            <h3>B.Tech in Computer Science Engineering</h3>
+            <ul>
+                <li><strong>Duration:</strong> 4 years (8 semesters)</li>
+                <li><strong>Eligibility:</strong> 10+2 with Physics, Chemistry, Mathematics, Minimum 60% marks + JEE Main</li>
+                <li><strong>Specializations:</strong>
+                    <ul class="career-list">
+                        <li>Artificial Intelligence</li>
+                        <li>Data Science</li>
+                        <li>Cyber Security</li>
+                        <li>Cloud Computing</li>
+                    </ul>
+                </li>
+                <li><strong>Course Content:</strong>
+                    <ul class="career-list">
+                        <li>Algorithms</li>
+                        <li>Machine Learning</li>
+                        <li>Blockchain Technology</li>
+                        <li>IoT</li>
+                        <li>Full Stack Development</li>
+                    </ul>
+                </li>
+                <li><strong>Career Opportunities:</strong>
+                    <ul class="career-list">
+                        <li>Software Engineer (₹6-20 LPA)</li>
+                        <li>Data Scientist (₹8-25 LPA)</li>
+                        <li>Cyber Security Analyst (₹5-18 LPA)</li>
+                        <li>Cloud Architect (₹10-30 LPA)</li>
+                    </ul>
+                </li>
+                <li><strong>Top Recruiters:</strong> Google, Microsoft, Amazon, TCS, Infosys</li>
+            </ul>
+        </div>
+
+        <div class="program-card">
+            <h3>B.Tech in Mechanical Engineering</h3>
+            <ul>
+                <li><strong>Duration:</strong> 4 years (8 semesters)</li>
+                <li><strong>Eligibility:</strong> 10+2 with Physics, Chemistry, Mathematics, Minimum 60% marks + JEE Main</li>
+                <li><strong>Specializations:</strong>
+                    <ul class="career-list">
+                        <li>Automobile Engineering</li>
+                        <li>Robotics</li>
+                        <li>Thermal Engineering</li>
+                        <li>Mechatronics</li>
+                    </ul>
+                </li>
+                <li><strong>Course Content:</strong>
+                    <ul class="career-list">
+                        <li>Fluid Mechanics</li>
+                        <li>Heat Transfer</li>
+                        <li>Machine Design</li>
+                        <li>Control Systems</li>
+                        <li>Industrial Engineering</li>
+                    </ul>
+                </li>
+                <li><strong>Career Opportunities:</strong>
+                    <ul class="career-list">
+                        <li>Design Engineer (₹4-12 LPA)</li>
+                        <li>Production Manager (₹5-15 LPA)</li>
+                        <li>Automobile Engineer (₹4.5-14 LPA)</li>
+                        <li>HVAC Engineer (₹4-10 LPA)</li>
+                    </ul>
+                </li>
+                <li><strong>Industries:</strong> Automotive, Aerospace, Manufacturing, Energy</li>
+            </ul>
+        </div>
+
+        <div class="program-card">
+            <h3>B.Tech in Electrical & Electronics Engineering</h3>
+            <ul>
+                <li><strong>Duration:</strong> 4 years (8 semesters)</li>
+                <li><strong>Eligibility:</strong> 10+2 with Physics, Chemistry, Mathematics, Minimum 60% marks + JEE Main</li>
+                <li><strong>Specializations:</strong>
+                    <ul class="career-list">
+                        <li>Power Systems</li>
+                        <li>Control Systems</li>
+                        <li>Renewable Energy</li>
+                        <li>Instrumentation</li>
+                    </ul>
+                </li>
+                <li><strong>Course Content:</strong>
+                    <ul class="career-list">
+                        <li>Circuit Theory</li>
+                        <li>Power Electronics</li>
+                        <li>Electrical Machines</li>
+                        <li>Smart Grid Technology</li>
+                        <li>Industrial Automation</li>
+                    </ul>
+                </li>
+                <li><strong>Career Opportunities:</strong>
+                    <ul class="career-list">
+                        <li>Electrical Design Engineer (₹4-12 LPA)</li>
+                        <li>Power Plant Engineer (₹5-15 LPA)</li>
+                        <li>Instrumentation Engineer (₹4-10 LPA)</li>
+                        <li>Solar Energy Consultant (₹4.5-12 LPA)</li>
+                    </ul>
+                </li>
+                <li><strong>Sectors:</strong> Power Generation, Transmission, Automation, Renewable Energy</li>
+            </ul>
+        </div>
+
+        <div class="program-card">
+            <h3>B.Tech in Civil Engineering</h3>
+            <ul>
+                <li><strong>Duration:</strong> 4 years (8 semesters)</li>
+                <li><strong>Eligibility:</strong> 10+2 with Physics, Chemistry, Mathematics, Minimum 60% marks + JEE Main</li>
+                <li><strong>Specializations:</strong>
+                    <ul class="career-list">
+                        <li>Structural Engineering</li>
+                        <li>Transportation Engineering</li>
+                        <li>Environmental Engineering</li>
+                        <li>Geotechnical Engineering</li>
+                    </ul>
+                </li>
+                <li><strong>Course Content:</strong>
+                    <ul class="career-list">
+                        <li>Structural Analysis</li>
+                        <li>Concrete Technology</li>
+                        <li>Highway Engineering</li>
+                        <li>Water Resources Engineering</li>
+                        <li>Construction Management</li>
+                    </ul>
+                </li>
+                <li><strong>Career Opportunities:</strong>
+                    <ul class="career-list">
+                        <li>Site Engineer (₹3.5-8 LPA)</li>
+                        <li>Structural Designer (₹4-12 LPA)</li>
+                        <li>Project Manager (₹6-20 LPA)</li>
+                        <li>Urban Planner (₹4-10 LPA)</li>
+                    </ul>
+                </li>
+                <li><strong>Government Jobs:</strong> PWD, CPWD, Railways, NHAI</li>
+            </ul>
+        </div>
+
+        <div class="program-card">
+            <h3>B.Tech in Electronics & Communication Engineering</h3>
+            <ul>
+                <li><strong>Duration:</strong> 4 years (8 semesters)</li>
+                <li><strong>Eligibility:</strong> 10+2 with Physics, Chemistry, Mathematics, Minimum 60% marks + JEE Main</li>
+                <li><strong>Specializations:</strong>
+                    <ul class="career-list">
+                        <li>VLSI Design</li>
+                        <li>Embedded Systems</li>
+                        <li>Telecommunication</li>
+                        <li>Signal Processing</li>
+                    </ul>
+                </li>
+                <li><strong>Course Content:</strong>
+                    <ul class="career-list">
+                        <li>Digital Electronics</li>
+                        <li>Microprocessors</li>
+                        <li>Communication Systems</li>
+                        <li>IoT</li>
+                        <li>5G Technology</li>
+                    </ul>
+                </li>
+                <li><strong>Career Opportunities:</strong>
+                    <ul class="career-list">
+                        <li>Electronics Design Engineer (₹4-15 LPA)</li>
+                        <li>Network Engineer (₹3.5-12 LPA)</li>
+                        <li>Embedded Systems Engineer (₹5-18 LPA)</li>
+                        <li>Telecom Engineer (₹4-14 LPA)</li>
+                    </ul>
+                </li>
+                <li><strong>Top Recruiters:</strong> Samsung, Intel, Qualcomm, Nokia, Ericsson</li>
+            </ul>
+        </div>
+
+        <div class="program-card">
+            <h3>M.Tech Programs</h3>
+            <ul>
+                <li><strong>Duration:</strong> 2 years (4 semesters)</li>
+                <li><strong>Eligibility:</strong> B.Tech/B.E in relevant field with minimum 60% marks + GATE score</li>
+                <li><strong>Specializations:</strong>
+                    <ul class="career-list">
+                        <li>Computer Science (AI/ML, Data Science)</li>
+                        <li>Structural Engineering</li>
+                        <li>Power Electronics</li>
+                        <li>Thermal Engineering</li>
+                        <li>VLSI Design</li>
+                    </ul>
+                </li>
+                <li><strong>Course Highlights:</strong>
+                    <ul class="career-list">
+                        <li>Advanced Research Projects</li>
+                        <li>Industry Collaborations</li>
+                        <li>Specialized Lab Work</li>
+                        <li>Thesis Submission</li>
+                    </ul>
+                </li>
+                <li><strong>Career Opportunities:</strong>
+                    <ul class="career-list">
+                        <li>Research Scientist (₹8-25 LPA)</li>
+                        <li>Technical Specialist (₹10-30 LPA)</li>
+                        <li>Professor (₹6-15 LPA)</li>
+                        <li>R&D Engineer (₹9-20 LPA)</li>
+                    </ul>
+                </li>
+                <li><strong>Higher Education:</strong> Can pursue PhD after M.Tech</li>
+            </ul>
+        </div>
+    </div>
+</div>
             <!-- Science & Arts -->
             <div id="science" class="course-category">
                 <div class="category-header">
@@ -285,39 +930,155 @@
                     <div class="program-card">
                         <h3>B.Sc (Bachelor of Science)</h3>
                         <ul>
-                            <li>Duration: 3 years</li>
-                            <li>Eligibility: 10+2 with Science subjects</li>
-                            <li>Specializations: Physics, Chemistry, Mathematics, Biotechnology</li>
+                            <li><strong>Duration:</strong> 3 years (6 semesters)</li>
+                            <li><strong>Eligibility:</strong> 10+2 with Science subjects (PCM/PCB), Minimum 50% marks</li>
+                            <li><strong>Specializations:</strong>
+                                <ul class="career-list">
+                                    <li>Physics (Condensed Matter, Nuclear Physics)</li>
+                                    <li>Chemistry (Organic, Inorganic, Physical)</li>
+                                    <li>Mathematics (Pure, Applied, Statistics)</li>
+                                    <li>Biotechnology (Genetic Engineering, Microbiology)</li>
+                                    <li>Computer Science (Programming, Data Science)</li>
+                                </ul>
+                            </li>
+                            <li><strong>Career Opportunities:</strong>
+                                <ul class="career-list">
+                                    <li>Research Scientist</li>
+                                    <li>Lab Technician</li>
+                                    <li>Data Analyst</li>
+                                    <li>Quality Control Officer</li>
+                                </ul>
+                            </li>
+                            <li><strong>Average Starting Salary:</strong> ₹2.5 - ₹5 LPA</li>
                         </ul>
                     </div>
                     <div class="program-card">
                         <h3>B.A (Bachelor of Arts)</h3>
                         <ul>
-                            <li>Duration: 3 years</li>
-                            <li>Eligibility: 10+2 in any stream</li>
-                            <li>Specializations: Psychology, Economics, Political Science, History</li>
+                            <li><strong>Duration:</strong> 3 years (6 semesters)</li>
+                            <li><strong>Eligibility:</strong> 10+2 in any stream, Minimum 45% marks</li>
+                            <li><strong>Specializations:</strong>
+                                <ul class="career-list">
+                                    <li>Psychology (Clinical, Counseling)</li>
+                                    <li>Economics (Development, Financial)</li>
+                                    <li>Political Science (International Relations, Public Policy)</li>
+                                    <li>History (Ancient, Modern, World)</li>
+                                    <li>English Literature (Comparative, World Literature)</li>
+                                </ul>
+                            </li>
+                            <li><strong>Career Opportunities:</strong>
+                                <ul class="career-list">
+                                    <li>Content Writer</li>
+                                    <li>Social Worker</li>
+                                    <li>Public Relations Officer</li>
+                                    <li>Civil Services</li>
+                                </ul>
+                            </li>
+                            <li><strong>Average Starting Salary:</strong> ₹2 - ₹4 LPA</li>
                         </ul>
                     </div>
                     <div class="program-card">
                         <h3>B.Com (Bachelor of Commerce)</h3>
                         <ul>
-                            <li>Duration: 3 years</li>
-                            <li>Eligibility: 10+2 with Commerce preferred</li>
-                            <li>Specializations: Accounting, Finance, Taxation, E-Commerce</li>
+                            <li><strong>Duration:</strong> 3 years (6 semesters)</li>
+                            <li><strong>Eligibility:</strong> 10+2 with Commerce preferred, Minimum 50% marks</li>
+                            <li><strong>Specializations:</strong>
+                                <ul class="career-list">
+                                    <li>Accounting (Financial, Cost)</li>
+                                    <li>Finance (Investment, Banking)</li>
+                                    <li>Taxation (Direct, Indirect)</li>
+                                    <li>E-Commerce (Digital Marketing, Online Business)</li>
+                                </ul>
+                            </li>
+                            <li><strong>Career Opportunities:</strong>
+                                <ul class="career-list">
+                                    <li>Accountant</li>
+                                    <li>Financial Analyst</li>
+                                    <li>Tax Consultant</li>
+                                    <li>Audit Assistant</li>
+                                </ul>
+                            </li>
+                            <li><strong>Average Starting Salary:</strong> ₹2.5 - ₹5 LPA</li>
                         </ul>
                     </div>
                     <div class="program-card">
                         <h3>M.Sc (Master of Science)</h3>
                         <ul>
-                            <li>Duration: 2 years</li>
-                            <li>Eligibility: B.Sc in relevant subject with 50% marks</li>
-                            <li>Career: Research Scientist, Lab Manager, Data Analyst</li>
+                            <li><strong>Duration:</strong> 2 years (4 semesters)</li>
+                            <li><strong>Eligibility:</strong> B.Sc in relevant subject with 50% marks</li>
+                            <li><strong>Specializations:</strong>
+                                <ul class="career-list">
+                                    <li>Physics (Specialization in Astrophysics, Nuclear Physics)</li>
+                                    <li>Chemistry (Organic, Analytical, Pharmaceutical)</li>
+                                    <li>Mathematics (Applied, Computational)</li>
+                                    <li>Biotechnology (Industrial, Medical)</li>
+                                </ul>
+                            </li>
+                            <li><strong>Career Opportunities:</strong>
+                                <ul class="career-list">
+                                    <li>Research Scientist</li>
+                                    <li>Lab Manager</li>
+                                    <li>Data Scientist</li>
+                                    <li>University Professor</li>
+                                </ul>
+                            </li>
+                            <li><strong>Average Starting Salary:</strong> ₹3 - ₹6 LPA</li>
                         </ul>
+                    </div>
+                    <div class="program-card">
+                        <h3>M.A (Master of Arts)</h3>
+                        <ul>
+                            <li><strong>Duration:</strong> 2 years (4 semesters)</li>
+                            <li><strong>Eligibility:</strong> B.A in relevant subject with 50% marks</li>
+                            <li><strong>Specializations:</strong>
+                                <ul class="career-list">
+                                    <li>Psychology (Clinical, Organizational)</li>
+                                    <li>Economics (Development, Agricultural)</li>
+                                    <li>English (Literature, Linguistics)</li>
+                                    <li>History (Ancient, Medieval, Modern)</li>
+                                </ul>
+                            </li>
+                            <li><strong>Career Opportunities:</strong>
+                                <ul class="career-list">
+                                    <li>Psychologist</li>
+                                    <li>Economist</li>
+                                    <li>University Professor</li>
+                                    <li>Policy Analyst</li>
+                                </ul>
+                            </li>
+                            <li><strong>Average Starting Salary:</strong> ₹3 - ₹5 LPA</li>
+                        </ul>
+                    </div>
+                    <div class="program-card">
+                        <h3>M.Com (Master of Commerce)</h3>
+                        <ul>
+                            <li><strong>Duration:</strong> 2 years (4 semesters)</li>
+                            <li><strong>Eligibility:</strong> B.Com with 50% marks</li>
+                            <li><strong>Specializations:</strong>
+                                <ul class="career-list">
+                                    <li>Accounting & Finance</li>
+                                    <li>Banking & Insurance</li>
+                                    <li>Taxation</li>
+                                    <li>E-Commerce</li>
+                                </ul>
+                            </li>
+                            <li><strong>Career Opportunities:</strong>
+                                <ul class="career-list">
+                                    <li>Financial Analyst</li>
+                                    <li>Tax Consultant</li>
+                                    <li>Banking Professional</li>
+                                    <li>Audit Manager</li>
+                                </ul>
+                            </li>
+                            <li><strong>Average Starting Salary:</strong> ₹3.5 - ₹6 LPA</li>
+                        </ul>
+                        
                     </div>
                 </div>
             </div>
         </div>
     </section>
+
 
     <!-- Call to Action -->
     <section class="cta-section">
