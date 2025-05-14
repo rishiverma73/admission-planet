@@ -74,3 +74,83 @@ document.addEventListener('DOMContentLoaded', function() {
         document.querySelector('header').classList.add('sticky');
     }
 });
+// Testimonial Slider Functionality
+document.addEventListener('DOMContentLoaded', function() {
+    const slider = document.querySelector('.testimonial-slider');
+    const slides = document.querySelectorAll('.testimonial-card');
+    const prevBtn = document.querySelector('.prev-arrow');
+    const nextBtn = document.querySelector('.next-arrow');
+    const dotsContainer = document.querySelector('.slider-dots');
+    
+    let currentIndex = 0;
+    let slideInterval;
+    const slideCount = slides.length;
+    
+    // Create dots
+    slides.forEach((_, index) => {
+        const dot = document.createElement('span');
+        dot.classList.add('dot');
+        if (index === 0) dot.classList.add('active');
+        dot.addEventListener('click', () => goToSlide(index));
+        dotsContainer.appendChild(dot);
+    });
+    
+    const dots = document.querySelectorAll('.dot');
+    
+    // Update slider position
+    function updateSlider() {
+        const slideWidth = slides[0].offsetWidth + 30; // including gap
+        slider.style.transform = `translateX(-${currentIndex * slideWidth}px)`;
+        
+        // Update dots
+        dots.forEach((dot, index) => {
+            dot.classList.toggle('active', index === currentIndex);
+        });
+    }
+    
+    // Go to specific slide
+    function goToSlide(index) {
+        currentIndex = index;
+        if (currentIndex >= slideCount) currentIndex = 0;
+        if (currentIndex < 0) currentIndex = slideCount - 1;
+        updateSlider();
+        resetInterval();
+    }
+    
+    // Auto slide
+    function startInterval() {
+        slideInterval = setInterval(() => {
+            goToSlide(currentIndex + 1);
+        }, 5000); // Change slide every 5 seconds
+    }
+    
+    function resetInterval() {
+        clearInterval(slideInterval);
+        startInterval();
+    }
+    
+    // Navigation buttons
+    prevBtn.addEventListener('click', () => {
+        goToSlide(currentIndex - 1);
+    });
+    
+    nextBtn.addEventListener('click', () => {
+        goToSlide(currentIndex + 1);
+    });
+    
+    // Initialize
+    updateSlider();
+    startInterval();
+    
+    // Pause on hover
+    slider.addEventListener('mouseenter', () => {
+        clearInterval(slideInterval);
+    });
+    
+    slider.addEventListener('mouseleave', () => {
+        startInterval();
+    });
+    
+    // Responsive adjustments
+    window.addEventListener('resize', updateSlider);
+});
