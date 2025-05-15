@@ -58,7 +58,7 @@
     <div class="container">
         <div class="hero-content">
             <h1>ADMISSION PLANET</h1>
-            <p class="tagline">Now Dreams Will Come True</p>
+            <p class="tagline">" Now Dreams Will Come True "</p>
             <p class="hero-text">Expert guidance for Undergraduate, Postgraduate Teacher Training, Pharmacy, Nursing, Management, Law, & <strong>Paramedical courses</strong>. We connect you with India's top universities at affordable fees.</p>
             
             <div class="hero-btns">
@@ -66,20 +66,147 @@
                 <a href="courses.html" class="btn btn-secondary">Explore Courses →</a>
             </div>
             
-            <div class="achievements">
-                <div class="achievement-item">
-                    <span class="number">25+</span>
-                    <span class="label">Partner Universities</span>
-                </div>
-                <div class="achievement-item">
-                    <span class="number">100+</span>
-                    <span class="label">Diverse Courses</span>
-                </div>
-                <div class="achievement-item">
-                    <span class="number">1600+</span>
-                    <span class="label">Successful Admissions</span>
-                </div>
-            </div>
+            <!DOCTYPE html>
+<html>
+<head>
+<style>
+  
+
+  .achievements {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    gap: 20px;
+    padding: 20px;
+  }
+
+  .achievement-item {
+    position: relative;
+    text-align: center;
+    padding: 30px 40px;
+    border-radius: 15px;
+    z-index: 1;
+    overflow: hidden;
+    min-width: 200px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  }
+
+  /* Blurred background effect */
+  .achievement-item::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-radius: 15px;
+    z-index: -1;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+  }
+
+  /* Gradient border effect */
+  .achievement-item::after {
+    content: '';
+    position: absolute;
+    top: -1px;
+    left: -1px;
+    right: -1px;
+    bottom: -1px;
+    background: linear-gradient(135deg, 
+      rgba(255,255,255,0.4) 0%, 
+      rgba(255,255,255,0.1) 50%, 
+      rgba(255,255,255,0.4) 100%);
+    border-radius: 16px;
+    z-index: -2;
+    padding: 1px;
+    -webkit-mask: 
+      linear-gradient(#fff 0 0) content-box, 
+      linear-gradient(#fff 0 0);
+    mask: 
+      linear-gradient(#fff 0 0) content-box, 
+      linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+  }
+
+  .number {
+    display: block;
+    font-size: 3rem;
+    font-weight: bold;
+    color: white;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    margin-bottom: 8px;
+  }
+
+  .label {
+    display: block;
+    font-size: 1.1rem;
+    color: rgba(255,255,255,0.9);
+    letter-spacing: 0.5px;
+  }
+</style>
+</head>
+<body>
+
+<div class="achievements">
+  <div class="achievement-item">
+    <span class="number">0</span>
+    <span class="label">Partner Universities</span>
+  </div>
+  <div class="achievement-item">
+    <span class="number">0</span>
+    <span class="label">Diverse Courses</span>
+  </div>
+  <div class="achievement-item">
+    <span class="number">0</span>
+    <span class="label">Successful Admissions</span>
+  </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const targets = [25, 100, 1600]; // Your target numbers
+  const numberElements = document.querySelectorAll('.number');
+  const duration = 2000; // Animation duration in ms
+  const startTime = Date.now();
+  
+  function animateNumbers() {
+    const currentTime = Date.now();
+    const elapsed = currentTime - startTime;
+    const progress = Math.min(elapsed / duration, 1);
+    
+    numberElements.forEach((element, index) => {
+      const target = targets[index];
+      const currentValue = Math.floor(progress * target);
+      element.textContent = currentValue + '+';
+    });
+    
+    if (progress < 1) {
+      requestAnimationFrame(animateNumbers);
+    }
+  }
+  
+  // Start animation when elements are in view
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        animateNumbers();
+        observer.disconnect(); // Stop observing after animation starts
+      }
+    });
+  }, {threshold: 0.5});
+  
+  document.querySelectorAll('.achievement-item').forEach(item => {
+    observer.observe(item);
+  });
+});
+</script>
+
+</body>
+</html>
         </div>
     </div>
 </section>
@@ -125,20 +252,20 @@
 
 .hero h1 {
     font-size: 4.2rem;
-    font-weight: 800;
-    margin-bottom: 10px;
-    letter-spacing: 1px;
+    font-weight: 750;
+    margin-bottom: 30px;
+    letter-spacing: 9px;
 }
 
 .tagline {
     font-size: 1.5rem;
     font-weight: 500;
     margin-bottom: 15px;
-    color: rgba(231, 227, 220, 0.9);
+    color: rgba(245, 245, 245, 0.9);
 }
 
 .hero-text {
-    font-size: 1.15rem;
+    font-size: 1.35rem;
     line-height: 1.6;
     margin-bottom: 30px;
     color: rgba(255,255,255,0.9);
@@ -952,34 +1079,25 @@ document.getElementById('whatsappContactForm').addEventListener('submit', functi
                     </div>
                     <div class="testimonial-author">
                         <img src="images/D. Pharma.jpg" alt="Rahul Sharma">
-                        <h4>Rahul Sharma</h4>
-                        <span>D.Pharm Student, Bihar</span>
+                        <h4>Om Shankar</h4>
+                        <span>D.Pharm, Bihar</span>
                     </div>
                 </div>
                 
                 <!-- Testimonial 2 -->
                 <div class="testimonial-card">
                     <div class="testimonial-content">
-                        <p>"I got admission in top nursing college through Admission Planet. They made the complex admission process so simple for me."</p>
+                        <p>"Coming from Jharkhand, I was unsure about the process, but Admission Planet made my D.Pharma admission seamless."</p>
                     </div>
                     <div class="testimonial-author">
-                        <img src="images/testimonials/student2.jpg" alt="Priya Patel">
-                        <h4>Priya Patel</h4>
-                        <span>B.Sc Nursing, Bihar</span>
+                        <img src="images/anjani.jpg" alt="Anjani Kumari">
+                        <h4>Anjani Kumari</h4>
+                        <span>D.Pharma, Jharkhand</span>
                     </div>
                 </div>
                 
                 <!-- Testimonial 3 -->
-                <div class="testimonial-card">
-                    <div class="testimonial-content">
-                        <p>"Thanks to Admission Planet team for securing my MBA seat in a top B-school. Their expertise saved me time and money."</p>
-                    </div>
-                    <div class="testimonial-author">
-                        <img src="images/testimonials/student3.jpg" alt="Amit Kumar">
-                        <h4>Amit Kumar</h4>
-                        <span>MBA Student, Bihar</span>
-                    </div>
-                </div>
+                
 
                 <!-- Testimonial 4 -->
                 <div class="testimonial-card">
@@ -989,7 +1107,7 @@ document.getElementById('whatsappContactForm').addEventListener('submit', functi
                     <div class="testimonial-author">
                         <img src="images/nagmani.jpg" alt="Nagmani Kumar">
                         <h4>Nagmani Kumar</h4>
-                        <span>D.Pharma, Onehankar, Bihar</span>
+                        <span>D.Pharma, Bihar</span>
                     </div>
                 </div>
 
@@ -1066,14 +1184,14 @@ document.getElementById('whatsappContactForm').addEventListener('submit', functi
                 </div>
 
                 <!-- Testimonial 11 -->
-                <div class="testimonial-card">
+               <div class="testimonial-card">
                     <div class="testimonial-content">
-                        <p>"Coming from Jharkhand, I was unsure about the process, but Admission Planet made my D.Pharma admission seamless."</p>
+                        <p>"Thanks to Admission Planet team for securing my MBA seat in a top B-school. Their expertise saved me time and money."</p>
                     </div>
                     <div class="testimonial-author">
-                        <img src="images/anjani.jpg" alt="Anjani Kumari">
-                        <h4>Anjani Kumari</h4>
-                        <span>D.Pharma, Jharkhand</span>
+                        <img src="images/testimonials/student3.jpg" alt="Amit Kumar">
+                        <h4>Amit Kumar</h4>
+                        <span>MBA Student, Bihar</span>
                     </div>
                 </div>
             </div>
