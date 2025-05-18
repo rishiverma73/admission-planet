@@ -45,155 +45,240 @@
     </section>
 
     <!-- Contact Section -->
-    <section class="contact-section">
-        <div class="container">
-            <div class="contact-grid">
-                <div class="contact-info">
-                    <h2>Our Office</h2>
-                    <div class="info-box">
-                        <i class="fas fa-map-marker-alt"></i>
-                        <div>
-                            <h3>Address</h3>
-                            <p>Makhdumpur, Jehanabad, Bihar, India 804422</p>
-                        </div>
-                    </div>
-                    <div class="info-box">
-                        <i class="fas fa-phone-alt"></i>
-                        <div>
-                            <h3>Phone</h3>
-                            <p>+91-8936006657</p>
-                        </div>
-                    </div>
-                    <div class="info-box">
-                        <i class="fas fa-envelope"></i>
-                        <div>
-                            <h3>Email</h3>
-                            <p>admissionplanet2021@gmail.com</p>
-                        </div>
-                    </div>
-                    <div class="info-box">
-                        <i class="fas fa-clock"></i>
-                        <div>
-                            <h3>Working Hours</h3>
-                            <p>Monday to Saturday: 10:00 AM - 7:00 PM</p>
-                            <p>Sunday: Closed</p>
-                        </div>
+<section class="contact-section">
+    <div class="container">
+        <div class="contact-grid">
+            <div class="contact-info">
+                <h2>Our Office</h2>
+                <div class="info-box">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <div>
+                        <h3>Address</h3>
+                        <p>Makhdumpur, Jehanabad, Bihar, India 804422</p>
                     </div>
                 </div>
+                <div class="info-box">
+                    <i class="fas fa-phone-alt"></i>
+                    <div>
+                        <h3>Phone</h3>
+                        <p>+91-8936006657</p>
+                    </div>
+                </div>
+                <div class="info-box">
+                    <i class="fas fa-envelope"></i>
+                    <div>
+                        <h3>Email</h3>
+                        <p>admissionplanet2021@gmail.com</p>
+                    </div>
+                </div>
+                <div class="info-box">
+                    <i class="fas fa-clock"></i>
+                    <div>
+                        <h3>Working Hours</h3>
+                        <p>Monday to Saturday: 10:00 AM - 7:00 PM</p>
+                        <p>Sunday: Closed</p>
+                    </div>
+                </div>
+            </div>
+            
+                <!-- Centered Contact Form with EmailJS -->
+<section style="display: flex; justify-content: center; align-items: center; min-height: 100vh; padding: 20px; background: #f5f7fa;">
+    <div class="contact-form">
+        <h2>Contact Us</h2>
+        <form id="contactForm">
+            <div class="form-group">
+                <input type="text" id="name" name="name" placeholder="Your Name*" required>
+            </div>
+            <div class="form-group">
+                <input type="email" id="email" name="email" placeholder="Email Address*" required>
+            </div>
+            <div class="form-group">
+                <input type="tel" id="phone" name="phone" placeholder="Phone Number">
+            </div>
+            <div class="form-group">
+                <select id="subject" name="subject" required>
+                    <option value="">Select Subject*</option>
+                    <option value="Admission Query">Admission Query</option>
+                    <option value="Eligibility">Eligibility Criteria</option>
+                    <option value="Documentation">Documentation Help</option>
+                    <option value="Fees">Fees Structure</option>
+                    <option value="Other">Other Question</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <textarea id="message" name="message" placeholder="Your Message*" required></textarea>
+            </div>
+            <button type="submit" class="btn-submit">
+                Send Message
+            </button>
+        </form>
+        <div id="successMessage" class="success-message"></div>
+    </div>
+</section>
+
+<!-- EmailJS Integration -->
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+<script>
+    // Initialize EmailJS with your User ID
+    (function() {
+        emailjs.init("87NAu0no1GHVbjlBx"); // Replace with your EmailJS Public Key
+    })();
+
+    document.getElementById('contactForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        // Get form values
+        const formData = {
+            from_name: document.getElementById('name').value,
+            from_email: document.getElementById('email').value,
+            phone: document.getElementById('phone').value,
+            subject: document.getElementById('subject').value,
+            message: document.getElementById('message').value
+        };
+
+        // Send email using EmailJS
+        emailjs.send("service_hdy63yb", "template_5m62tai", formData)
+            .then(function(response) {
+                // Show success message
+                document.getElementById('successMessage').innerHTML = `
+                    <div class="alert-content">
+                        <i class="fas fa-check-circle"></i>
+                        <div>
+                            <h4>Thank You!</h4>
+                            <p>Your message has been sent successfully.</p>
+                        </div>
+                    </div>
+                `;
+                document.getElementById('successMessage').style.display = 'block';
                 
-                <div class="contact-form">
-    <h2>Contact Us via WhatsApp</h2>
-    <form id="whatsappContactForm">
-        <div class="form-group">
-            <input type="text" id="waName" placeholder="Your Name*" required>
-        </div>
-        <div class="form-group">
-            <input type="email" id="waEmail" placeholder="Email Address">
-        </div>
-        <div class="form-group">
-            <input type="tel" id="waPhone" placeholder="Phone Number*" required>
-        </div>
-        <div class="form-group">
-            <select id="waSubject" required>
-                <option value="">Select Subject*</option>
-                <option value="Admission Query">Admission Query</option>
-                <option value="Eligibility">Eligibility Criteria</option>
-                <option value="Documentation">Documentation Help</option>
-                <option value="Fees">Fees Structure</option>
-                <option value="Other">Other Question</option>
-            </select>
-        </div>
-        <div class="form-group">
-            <textarea id="waMessage" placeholder="Your Message*" required></textarea>
-        </div>
-        <button type="submit" class="btn btn-whatsapp">
-            <i class="fab fa-whatsapp"></i> Send via WhatsApp
-        </button>
-    </form>
-</div>
+                // Reset form
+                document.getElementById('contactForm').reset();
+                
+                // Hide success message after 5 seconds
+                setTimeout(function() {
+                    document.getElementById('successMessage').style.display = 'none';
+                }, 5000);
+            }, function(error) {
+                document.getElementById('successMessage').innerHTML = `
+                    <div class="alert-content error">
+                        <i class="fas fa-exclamation-circle"></i>
+                        <div>
+                            <h4>Error</h4>
+                            <p>Failed to send message. Please try again.</p>
+                        </div>
+                    </div>
+                `;
+                document.getElementById('successMessage').style.display = 'block';
+            });
+    });
+</script>
 
 <style>
-.btn-whatsapp {
-    background-color: #25D366;
+.contact-form {
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 30px;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+}
+
+.contact-form h2 {
+    text-align: center;
+    margin-bottom: 25px;
+    color: #2c3e50;
+    font-size: 28px;
+}
+
+.btn-submit {
+    background-color: #4CAF50;
     color: white;
     border: none;
-    padding: 12px 20px;
+    padding: 15px;
     border-radius: 6px;
     font-weight: 600;
     cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
+    display: block;
     width: 100%;
     transition: all 0.3s;
+    font-size: 16px;
+    margin-top: 10px;
 }
 
-.btn-whatsapp:hover {
-    background-color: #128C7E;
+.btn-submit:hover {
+    background-color: #3e8e41;
     transform: translateY(-2px);
-}
-
-.btn-whatsapp i {
-    font-size: 20px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
 }
 
 .form-group {
-    margin-bottom: 15px;
+    margin-bottom: 20px;
 }
 
 .form-group input,
 .form-group select,
 .form-group textarea {
     width: 100%;
-    padding: 12px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
+    padding: 14px;
+    border: 1px solid #e0e0e0;
+    border-radius: 6px;
     font-size: 16px;
+    box-sizing: border-box;
+    transition: all 0.3s;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    border-color: #4CAF50;
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.2);
 }
 
 .form-group textarea {
-    min-height: 120px;
+    min-height: 150px;
     resize: vertical;
 }
+
+.success-message {
+    display: none;
+    margin-top: 20px;
+    padding: 15px;
+    border-radius: 6px;
+    background: #e8f5e9;
+    color: #2e7d32;
+}
+
+.success-message .alert-content {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.success-message .alert-content.error {
+    color: #c62828;
+    background: #ffebee;
+}
+
+.success-message i {
+    font-size: 24px;
+}
+
+.success-message h4 {
+    margin: 0 0 5px 0;
+}
+
+.success-message p {
+    margin: 0;
+    font-size: 14px;
+}
+
+/* Font Awesome for icons */
+@import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css');
 </style>
-
-<script>
-document.getElementById('whatsappContactForm').addEventListener('submit', function(e) {
-    e.preventDefault();
-    
-    // Replace with your WhatsApp number in international format (without +)
-    const whatsappNumber = '918936006657'; 
-    
-    // Get form values
-    const name = document.getElementById('waName').value;
-    const email = document.getElementById('waEmail').value;
-    const phone = document.getElementById('waPhone').value;
-    const subject = document.getElementById('waSubject').value;
-    const message = document.getElementById('waMessage').value;
-    
-    // Compose WhatsApp message
-    const whatsappMessage = `*New Admission Inquiry*%0A%0A
-*Name:* ${name}%0A
-*Phone:* ${phone}%0A
-${email ? `*Email:* ${email}%0A` : ''}
-*Subject:* ${subject}%0A
-*Message:* ${message}`;
-    
-    // Open WhatsApp with pre-filled message
-    window.open(`https://wa.me/${whatsappNumber}?text=${whatsappMessage}`, '_blank');
-    
-    // Optional: Reset form after submission
-    this.reset();
-});
-</script>
-
-<!-- Add Font Awesome for WhatsApp icon -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
             </div>
         </div>
-    </section>
-
     <!-- Map Section -->
     <section class="map-section">
     <div class="container">
@@ -281,6 +366,8 @@ ${email ? `*Email:* ${email}%0A` : ''}
     }
 }
 </style>
+    </div>
+</section>
 
 <!-- Font Awesome for icons -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
@@ -350,7 +437,7 @@ ${email ? `*Email:* ${email}%0A` : ''}
     <script src="script.js"></script>
 
 
-    <script src="script.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
         // Contact form submission
         const contactForm = document.getElementById('contactForm');
