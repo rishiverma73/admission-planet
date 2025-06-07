@@ -8,6 +8,152 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+
+ <!-- Announcement Bar with Auto-Sliding Text -->
+    <div class="announcement-bar">
+        <div class="announcement-container">
+            <div class="announcement-icon">
+                <i class="fas fa-bullhorn"></i>
+            </div>
+            <div class="announcement-text">
+                <div class="sliding-text-container">
+                    <div class="sliding-text">
+                        <span>🚀 Admission Open for 2024-25 Batch! Limited Seats Available</span>
+                        <span>🎓 Get up to 50% Scholarship on selected courses</span>
+                        <span>📞 Call Now: +91 8936006657 for Free Counseling</span>
+                        <span>🏆 Partnered with 25+ Top Universities in India</span>
+                    </div>
+                </div>
+            </div>
+            <div class="announcement-close">
+                <i class="fas fa-times"></i>
+            </div>
+        </div>
+    </div>
+
+    <style>
+        /* Announcement Bar Styles */
+        .announcement-bar {
+            background: linear-gradient(90deg, #1a2980 0%, #26d0ce 100%);
+            color: white;
+            padding: 8px 0;
+            font-size: 14px;
+            position: relative;
+            overflow: hidden;
+            z-index: 1000;
+        }
+        
+        .announcement-container {
+            display: flex;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+        
+        .announcement-icon {
+            margin-right: 10px;
+            font-size: 16px;
+        }
+        
+        .announcement-text {
+            flex-grow: 1;
+            overflow: hidden;
+        }
+        
+        .sliding-text-container {
+            width: 100%;
+            overflow: hidden;
+            position: relative;
+            height: 20px;
+        }
+        
+        .sliding-text {
+            display: flex;
+            position: absolute;
+            white-space: nowrap;
+            animation: slideText 20s linear infinite;
+        }
+        
+        .sliding-text span {
+            margin-right: 40px;
+            display: inline-block;
+            padding-right: 40px;
+            position: relative;
+        }
+        
+        .sliding-text span:after {
+            content: "•";
+            position: absolute;
+            right: 10px;
+            color: rgba(255,255,255,0.5);
+        }
+        
+        .announcement-close {
+            margin-left: 15px;
+            cursor: pointer;
+            opacity: 0.7;
+            transition: opacity 0.3s;
+        }
+        
+        .announcement-close:hover {
+            opacity: 1;
+        }
+        
+        @keyframes slideText {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-100%); }
+        }
+        
+        @media (max-width: 768px) {
+            .announcement-bar {
+                font-size: 12px;
+                padding: 6px 0;
+            }
+            
+            .announcement-icon {
+                font-size: 14px;
+            }
+            
+            .sliding-text-container {
+                height: 18px;
+            }
+            
+            .sliding-text span {
+                margin-right: 30px;
+                padding-right: 30px;
+            }
+        }
+    </style>
+
+    <script>
+        // Close announcement functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const closeBtn = document.querySelector('.announcement-close');
+            const announcementBar = document.querySelector('.announcement-bar');
+            
+            // Check if user has previously closed the announcement
+            if (!localStorage.getItem('announcementClosed')) {
+                announcementBar.style.display = 'block';
+            }
+            
+            // Close announcement and remember preference
+            closeBtn.addEventListener('click', function() {
+                announcementBar.style.display = 'none';
+                localStorage.setItem('announcementClosed', 'true');
+            });
+            
+            // Pause animation on hover
+            const slidingText = document.querySelector('.sliding-text');
+            announcementBar.addEventListener('mouseenter', function() {
+                slidingText.style.animationPlayState = 'paused';
+            });
+            
+            announcementBar.addEventListener('mouseleave', function() {
+                slidingText.style.animationPlayState = 'running';
+            });
+        });
+    </script>
         
         <!-- Header -->
         <header>
