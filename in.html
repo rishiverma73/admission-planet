@@ -24,419 +24,693 @@
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
+    <!-- CSS -->
+    <link rel="stylesheet" href="styles.css">
+
+<!-- Popup CSS -->
     <style>
-    /* Global Styles */
-    :root {
-        --primary-color: #2c3e50;
-        --secondary-color: #e74c3c;
-        --accent-color: #3498db;
-        --light-color: #ecf0f1;
-        --dark-color: #2c3e50;
-        --text-color: #333;
-        --text-light: #7f8c8d;
-        --white: #fff;
-        --black: #000;
-        --box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-        --transition: all 0.3s ease;
-    }
+        /* CSS for the Popup */
+        .popup-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
 
-    * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-    }
+        .popup-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
 
-    html {
-        scroll-behavior: smooth;
-    }
+        .popup-content {
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            width: 90%;
+            max-width: 400px;
+            text-align: center;
+            position: relative;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
 
-    body {
-        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        line-height: 1.6;
-        color: var(--text-color);
-        background-color: var(--white);
-        overflow-x: hidden;
-    }
+        .close-btn {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            font-size: 24px;
+            cursor: pointer;
+            color: #555;
+        }
 
-    .container {
-        width: 90%;
-        max-width: 1200px;
-        margin: 0 auto;
-        padding: 0 15px;
-    }
+        .popup-buttons {
+            margin-top: 20px;
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+        }
 
-    h1, h2, h3, h4, h5, h6 {
-        font-weight: 700;
-        line-height: 1.2;
-        margin-bottom: 15px;
-    }
+        .popup-btn {
+            padding: 10px 20px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: background 0.3s;
+        }
 
-    p {
-        margin-bottom: 15px;
-    }
+        .popup-btn-primary {
+            background-color: #4CAF50;
+            color: white;
+        }
 
-    a {
-        text-decoration: none;
-        color: var(--primary-color);
-        transition: var(--transition);
-    }
+        .popup-btn-primary:hover {
+            background-color: #45a049;
+        }
 
-    ul {
-        list-style: none;
-    }
+        .popup-btn-secondary {
+            background-color: #f1f1f1;
+            color: #333;
+        }
 
-    img {
-        max-width: 100%;
-        height: auto;
-    }
+        .popup-btn-secondary:hover {
+            background-color: #ddd;
+        }
+    </style>
 
-    .btn {
-        display: inline-block;
-        padding: 10px 20px;
-        border-radius: 5px;
-        font-weight: 600;
-        text-transform: uppercase;
-        transition: var(--transition);
-        border: none;
-        cursor: pointer;
-    }
+</head>
+<body>
+       
+    <!-- Announcement Bar with Auto-Sliding Text -->
+    <div class="announcement-bar">
+        <div class="announcement-container">
+            <div class="announcement-icon">
+                <i class="fas fa-bullhorn"></i>
+            </div>
+            <div class="announcement-text">
+                <div class="sliding-text-container">
+                    <div class="sliding-text">
+                        <span>🚀 Admission Open for 2024-25 Batch! Limited Seats Available</span>
+                        <span>🎓 Get up to 50% Scholarship on selected courses</span>
+                        <span>📞 Call Now: +91 8936006657 for Free Counseling</span>
+                        <span>🏆 Partnered with 25+ Top Universities in India</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
-    .btn-primary {
-        background-color: var(--secondary-color);
-        color: var(--white);
-    }
+    <style>
+        /* Announcement Bar Styles */
+        .announcement-bar {
+            background: linear-gradient(90deg, #1a2980 0%, #26d0ce 100%);
+            color: white;
+            padding: 8px 0;
+            font-size: 14px;
+            position: relative;
+            overflow: hidden;
+            z-index: 1000;
+        }
+        
+        .announcement-container {
+            display: flex;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+        
+        .announcement-icon {
+            margin-right: 10px;
+            font-size: 16px;
+        }
+        
+        .announcement-text {
+            flex-grow: 1;
+            overflow: hidden;
+        }
+        
+        .sliding-text-container {
+            width: 100%;
+            overflow: hidden;
+            position: relative;
+            height: 20px;
+        }
+        
+        .sliding-text {
+            display: flex;
+            position: absolute;
+            white-space: nowrap;
+            animation: slideText 20s linear infinite;
+        }
+        
+        .sliding-text span {
+            margin-right: 40px;
+            display: inline-block;
+            padding-right: 40px;
+            position: relative;
+        }
+        
+        .sliding-text span:after {
+            content: "•";
+            position: absolute;
+            right: 10px;
+            color: rgba(255,255,255,0.5);
+        }
+        
+        @keyframes slideText {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-100%); }
+        }
+        
+        @media (max-width: 768px) {
+            .announcement-bar {
+                font-size: 12px;
+                padding: 6px 0;
+            }
+            
+            .announcement-icon {
+                font-size: 14px;
+            }
+            
+            .sliding-text-container {
+                height: 18px;
+            }
+            
+            .sliding-text span {
+                margin-right: 30px;
+                padding-right: 30px;
+            }
+        }
+    </style>
 
-    .btn-primary:hover {
-        background-color: #c0392b;
-        transform: translateY(-3px);
-    }
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Pause animation on hover
+            const slidingText = document.querySelector('.sliding-text');
+            const announcementBar = document.querySelector('.announcement-bar');
+            
+            announcementBar.addEventListener('mouseenter', function() {
+                slidingText.style.animationPlayState = 'paused';
+            });
+            
+            announcementBar.addEventListener('mouseleave', function() {
+                slidingText.style.animationPlayState = 'running';
+            });
+        });
+    </script>
 
-    .btn-secondary {
-        background-color: var(--primary-color);
-        color: var(--white);
-    }
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="logo">
+                <img src="images/admission planet copy.webp" alt="Admission Planet">
+                <h1>Admission<span>Planet</span></h1>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="courses.html">Courses</a></li>
+                    <li><a href="eligibility.html">Eligibility</a></li>
+                    <li class="nav-contact"> <a href="contact.html" class="nav-link contact-link">
+    <i class="fas fa-envelope"></i> Contact
+  </a>
+</li>
+                </ul>
+            </nav>
+            <div class="mobile-menu">
+                <i class="fas fa-bars"></i>
+            </div>
+        </div>
+    </header>
+    <!-- Hero Section -->
+<section class="hero">
+    <div class="hero-bg-image"></div>
+    <div class="container">
+        <div class="hero-content">
+            <h1>ADMISSION PLANET</h1>
+            <p class="tagline">" Now Dreams Will Come True "</p>
+            <p class="hero-text">Expert guidance for Undergraduate, Postgraduate Teacher Training, Pharmacy, Nursing, Management, Law, & <strong>Paramedical courses</strong>. We connect you with India's top universities at affordable fees.</p>
+            
+            <div class="hero-btns">
+                <a href="#enquiry" class="btn btn-primary">Free Consultation</a>
+                <a href="courses.html" class="btn btn-secondary">Explore Courses →</a>
+            </div>
+            
+            <!DOCTYPE html>
+<html>
+<head>
+<style>
+  
 
-    .btn-secondary:hover {
-        background-color: #1a252f;
-        transform: translateY(-3px);
-    }
+  .achievements {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    gap: 20px;
+    padding: 20px;
+  }
 
-    .btn-link {
-        color: var(--secondary-color);
-        font-weight: 600;
-        display: inline-flex;
-        align-items: center;
-    }
+  .achievement-item {
+    position: relative;
+    text-align: center;
+    padding: 30px 40px;
+    border-radius: 15px;
+    z-index: 1;
+    overflow: hidden;
+    min-width: 200px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  }
 
-    .btn-link i {
-        margin-left: 5px;
-        font-size: 12px;
-    }
+  /* Blurred background effect */
+  .achievement-item::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-radius: 15px;
+    z-index: -1;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+  }
 
-    .section-title {
-        font-size: 2.5rem;
-        text-align: center;
-        margin-bottom: 30px;
-        position: relative;
-        color: var(--primary-color);
-    }
+  /* Gradient border effect */
+  .achievement-item::after {
+    content: '';
+    position: absolute;
+    top: -1px;
+    left: -1px;
+    right: -1px;
+    bottom: -1px;
+    background: linear-gradient(135deg, 
+      rgba(255,255,255,0.4) 0%, 
+      rgba(255,255,255,0.1) 50%, 
+      rgba(255,255,255,0.4) 100%);
+    border-radius: 16px;
+    z-index: -2;
+    padding: 1px;
+    -webkit-mask: 
+      linear-gradient(#fff 0 0) content-box, 
+      linear-gradient(#fff 0 0);
+    mask: 
+      linear-gradient(#fff 0 0) content-box, 
+      linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+  }
 
-    .section-title::after {
-        content: '';
-        display: block;
-        width: 80px;
-        height: 4px;
-        background-color: var(--secondary-color);
-        margin: 15px auto;
-        border-radius: 2px;
-    }
+  .number {
+    display: block;
+    font-size: 3rem;
+    font-weight: bold;
+    color: white;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    margin-bottom: 8px;
+  }
 
-    /* Header */
-    header {
-        background-color: var(--white);
-        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-        position: sticky;
-        top: 0;
-        z-index: 1000;
-    }
+  .label {
+    display: block;
+    font-size: 1.1rem;
+    color: rgba(255,255,255,0.9);
+    letter-spacing: 0.5px;
+  }
+</style>
+</head>
+<body>
 
-    header .container {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 15px 0;
-    }
+<div class="achievements">
+  <div class="achievement-item">
+    <span class="number">0</span>
+    <span class="label">Partner Universities</span>
+  </div>
+  <div class="achievement-item">
+    <span class="number">0</span>
+    <span class="label">Diverse Courses</span>
+  </div>
+  <div class="achievement-item">
+    <span class="number">0</span>
+    <span class="label">Successful Admissions</span>
+  </div>
+</div>
 
-    .logo {
-        display: flex;
-        align-items: center;
-    }
-
-    .logo img {
-        height: 50px;
-        margin-right: 10px;
-    }
-
-    .logo h1 {
-        font-size: 1.8rem;
-        margin-bottom: 0;
-    }
-
-    .logo h1 span {
-        color: var(--secondary-color);
-    }
-
-    nav ul {
-        display: flex;
-    }
-
-    nav ul li {
-        margin-left: 25px;
-    }
-
-    nav ul li a {
-        font-weight: 600;
-        color: var(--dark-color);
-        position: relative;
-    }
-
-    nav ul li a::after {
-        content: '';
-        position: absolute;
-        bottom: -5px;
-        left: 0;
-        width: 0;
-        height: 2px;
-        background-color: var(--secondary-color);
-        transition: var(--transition);
-    }
-
-    nav ul li a:hover::after,
-    nav ul li a.active::after {
-        width: 100%;
-    }
-
-    nav ul li a:hover,
-    nav ul li a.active {
-        color: var(--secondary-color);
-    }
-
-    .mobile-menu {
-        display: none;
-        font-size: 24px;
-        cursor: pointer;
-    }
-
-    /* Announcement Bar Styles */
-    .announcement-bar {
-        background: linear-gradient(90deg, #1a2980 0%, #26d0ce 100%);
-        color: white;
-        padding: 8px 0;
-        font-size: 14px;
-        position: relative;
-        overflow: hidden;
-        z-index: 1000;
-    }
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const targets = [25, 120, 5000]; // Your target numbers
+  const numberElements = document.querySelectorAll('.number');
+  const duration = 2000; // Animation duration in ms
+  const startTime = Date.now();
+  
+  function animateNumbers() {
+    const currentTime = Date.now();
+    const elapsed = currentTime - startTime;
+    const progress = Math.min(elapsed / duration, 1);
     
-    .announcement-container {
-        display: flex;
-        align-items: center;
-        max-width: 1200px;
-        margin: 0 auto;
-        padding: 0 15px;
-    }
+    numberElements.forEach((element, index) => {
+      const target = targets[index];
+      const currentValue = Math.floor(progress * target);
+      element.textContent = currentValue + '+';
+    });
     
-    .announcement-icon {
-        margin-right: 10px;
-        font-size: 16px;
+    if (progress < 1) {
+      requestAnimationFrame(animateNumbers);
     }
-    
-    .announcement-text {
-        flex-grow: 1;
-        overflow: hidden;
-    }
-    
-    .sliding-text-container {
-        width: 100%;
-        overflow: hidden;
-        position: relative;
-        height: 20px;
-    }
-    
-    .sliding-text {
-        display: flex;
-        position: absolute;
-        white-space: nowrap;
-        animation: slideText 20s linear infinite;
-    }
-    
-    .sliding-text span {
-        margin-right: 40px;
-        display: inline-block;
-        padding-right: 40px;
-        position: relative;
-    }
-    
-    .sliding-text span:after {
-        content: "•";
-        position: absolute;
-        right: 10px;
-        color: rgba(255,255,255,0.5);
-    }
-    
-    @keyframes slideText {
-        0% { transform: translateX(0); }
-        100% { transform: translateX(-100%); }
-    }
+  }
+  
+  // Start animation when elements are in view
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        animateNumbers();
+        observer.disconnect(); // Stop observing after animation starts
+      }
+    });
+  }, {threshold: 0.5});
+  
+  document.querySelectorAll('.achievement-item').forEach(item => {
+    observer.observe(item);
+  });
+});
+</script>
 
-    /* Hero Section */
+</body>
+</html>
+        </div>
+    </div>
+</section>
+
+<style>
+.hero {
+    background: linear-gradient(135deg, #012f63 0%, #662405 100%);
+    color: white;
+    padding: 150px 0;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.hero-bg-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('https://images.unsplash.com/photo-1523050854058-8df90110c9f1?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
+    background-size: cover;
+    background-position: center;
+    filter: blur(8px);
+    opacity: 0.55;
+    z-index: 1;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+    position: relative;
+    z-index: 2;
+}
+
+.hero-content {
+    max-width: 800px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 2;
+}
+
+.hero h1 {
+    font-size: 4.2rem;
+    font-weight: 750;
+    margin-bottom: 30px;
+    letter-spacing: 9px;
+}
+
+.tagline {
+    font-size: 1.5rem;
+    font-weight: 500;
+    margin-bottom: 15px;
+    color: rgba(245, 245, 245, 0.9);
+}
+
+.hero-text {
+    font-size: 1.35rem;
+    line-height: 1.6;
+    margin-bottom: 30px;
+    color: rgba(255,255,255,0.9);
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.hero-text strong {
+    color: white;
+    font-weight: 600;
+}
+
+.hero-btns {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-bottom: 50px;
+    flex-wrap: wrap;
+}
+
+.btn {
+    display: inline-block;
+    padding: 12px 30px;
+    border-radius: 30px;
+    font-size: 1rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.btn-primary {
+    background-color: #d34825;
+    color: white;
+}
+
+.btn-primary:hover {
+    background-color: #8d1f04;
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
+
+.btn-secondary {
+    background-color: transparent;
+    color: white;
+    border: 2px solid white;
+}
+
+.btn-secondary:hover {
+    background-color: rgba(255,255,255,0.1);
+    transform: translateY(-3px);
+}
+
+.achievements {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    margin-top: 30px;
+}
+
+.achievement-item {
+    padding: 15px 25px;
+    min-width: 180px;
+}
+
+.number {
+    display: block;
+    font-size: 2.2rem;
+    font-weight: 700;
+    margin-bottom: 5px;
+    color: white;
+}
+
+.label {
+    font-size: 0.95rem;
+    font-weight: 400;
+    color: rgba(255,255,255,0.8);
+}
+
+@media (max-width: 768px) {
     .hero {
-        background: linear-gradient(135deg, #012f63 0%, #662405 100%);
-        color: white;
-        padding: 150px 0;
-        text-align: center;
-        position: relative;
-        overflow: hidden;
+        padding: 60px 0;
     }
-
-    .hero-bg-image {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background-image: url('https://images.unsplash.com/photo-1523050854058-8df90110c9f1?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
-        background-size: cover;
-        background-position: center;
-        filter: blur(8px);
-        opacity: 0.55;
-        z-index: 1;
-    }
-
-    .hero-content {
-        max-width: 800px;
-        margin: 0 auto;
-        position: relative;
-        z-index: 2;
-    }
-
+    
     .hero h1 {
-        font-size: 4.2rem;
-        font-weight: 750;
-        margin-bottom: 30px;
-        letter-spacing: 9px;
+        font-size: 2.2rem;
     }
-
+    
     .tagline {
-        font-size: 1.5rem;
-        font-weight: 500;
-        margin-bottom: 15px;
-        color: rgba(245, 245, 245, 0.9);
+        font-size: 1.2rem;
     }
-
+    
     .hero-text {
-        font-size: 1.35rem;
-        line-height: 1.6;
-        margin-bottom: 30px;
-        color: rgba(255,255,255,0.9);
-        max-width: 700px;
-        margin-left: auto;
-        margin-right: auto;
+        font-size: 1rem;
     }
-
-    .hero-text strong {
-        color: white;
-        font-weight: 600;
-    }
-
+    
     .hero-btns {
-        display: flex;
-        justify-content: center;
-        gap: 15px;
-        margin-bottom: 50px;
-        flex-wrap: wrap;
+        flex-direction: column;
+        align-items: center;
     }
-
-    .achievements {
-        display: flex;
-        justify-content: space-around;
-        flex-wrap: wrap;
-        gap: 20px;
-        padding: 20px;
-    }
-
+    
     .achievement-item {
-        position: relative;
-        text-align: center;
-        padding: 30px 40px;
-        border-radius: 15px;
-        z-index: 1;
-        overflow: hidden;
-        min-width: 200px;
-        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        margin-bottom: 20px;
+        width: 100%;
     }
+}
+</style>
 
-    /* Blurred background effect */
-    .achievement-item::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background: rgba(255, 255, 255, 0.2);
-        backdrop-filter: blur(10px);
-        -webkit-backdrop-filter: blur(10px);
-        border-radius: 15px;
-        z-index: -1;
-        border: 1px solid rgba(255, 255, 255, 0.3);
-    }
+           <!-- Enquiry Form with Dual Submission Options -->
+<section id="enquiry" class="enquiry-form">
+    <div class="container">
+        <div class="form-wrapper">
+            <div class="form-container">
+                <div class="form-header">
+                    <h2>Admission Enquiry Form</h2>
+                    <p>Fill this form to get free counseling from our experts</p>
+                </div>
+                <form id="contactForm">
+                    <div class="form-group">
+                        <input type="text" id="name" name="name" placeholder="Full Name*" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="email" id="email" name="email" placeholder="Email Address*" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="tel" id="phone" name="phone" placeholder="Mobile Number*" required>
+                    </div>
+                    <div class="form-group">
+                        <select id="course" name="course" required>
+                            <option value="">Select Course Interested In*</option>
+                            <option value="Pharmacy">Pharmacy (B.Pharm/D.Pharm/M.Pharm)</option>
+                             <option value="Nursing">Nursing (ANM/GNM/B.Sc/M.Sc)</option>
+                            <option value="Management">Management (BBA/MBA/PGDM)</option>
+                            <option value="Law">Law (LLB/BA LLB/LLM)</option>
+                            <option value="Teacher Training">Teacher Training</option>
+                            <option value="Paramedical">Paramedical Courses</option>
+                            <option value="B.Tech">B.Tech Engineering</option>
+                            <option value="B.Sc">B.Sc Science</option>
+                            <option value="B.A">B.A Arts</option>
+                            <option value="B.Com">B.Com Commerce</option>
+                            <option value="M.Tech">M.Tech</option>
+                            <option value="M.Sc">M.Sc</option>
+                            <option value="M.A">M.A</option>
+                            <option value="M.Com">M.Com</option>
+                            <option value="Diploma">Diploma Courses</option>
+                            <option value="Ph.D">Ph.D Programs</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <select id="qualification" name="qualification" required>
+                            <option value="">Current Qualification*</option>
+                            <option value="10th">10th Pass</option>
+                            <option value="12th">12th Pass</option>
+                            <option value="Graduate">Graduate</option>
+                            <option value="Post Graduate">Post Graduate</option>
+                            <option value="Diploma">Diploma Holder</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <textarea id="message" name="message" placeholder="Your Message/Query"></textarea>
+                    </div>
+                    
+                    <div class="submit-options">
+                        <button type="button" id="whatsappSubmit" class="btn-whatsapp">
+                            <i class="fab fa-whatsapp"></i> Submit via WhatsApp
+                        </button>
+                        <div class="or-divider">OR</div>
+                        <button type="submit" class="btn-submit">
+                            Submit via Email
+                        </button>
+                    </div>
+                </form>
+                <div id="successMessage"></div>
+            </div>
+            <div class="form-info">
+                <!-- Contact info boxes (same as before) -->
+            </div>
+        </div>
+    </div>
+</section>
 
-    /* Gradient border effect */
-    .achievement-item::after {
-        content: '';
-        position: absolute;
-        top: -1px;
-        left: -1px;
-        right: -1px;
-        bottom: -1px;
-        background: linear-gradient(135deg, 
-          rgba(255,255,255,0.4) 0%, 
-          rgba(255,255,255,0.1) 50%, 
-          rgba(255,255,255,0.4) 100%);
-        border-radius: 16px;
-        z-index: -2;
-        padding: 1px;
-        -webkit-mask: 
-          linear-gradient(#fff 0 0) content-box, 
-          linear-gradient(#fff 0 0);
-        mask: 
-          linear-gradient(#fff 0 0) content-box, 
-          linear-gradient(#fff 0 0);
-        -webkit-mask-composite: xor;
-        mask-composite: exclude;
-    }
+<!-- EmailJS and Font Awesome -->
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 
-    .number {
-        display: block;
-        font-size: 3rem;
-        font-weight: bold;
-        color: white;
-        text-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        margin-bottom: 8px;
-    }
+<script>
+    // Initialize EmailJS
+    emailjs.init("87NAu0no1GHVbjlBx");
 
-    .label {
-        display: block;
-        font-size: 1.1rem;
-        color: rgba(255,255,255,0.9);
-        letter-spacing: 0.5px;
-    }
+    // WhatsApp Submission
+    document.getElementById('whatsappSubmit').addEventListener('click', function() {
+        const name = document.getElementById('name').value;
+        const phone = document.getElementById('phone').value;
+        const course = document.getElementById('course').value;
+        const qualification = document.getElementById('qualification').value;
+        const message = document.getElementById('message').value;
+        
+        const whatsappMessage = `*Admission Enquiry*%0A%0A*Name:* ${name}%0A*Phone:* ${phone}%0A*Course:* ${course}%0A*Qualification:* ${qualification}%0A*Message:* ${message || 'No message'}`;
+        window.open(`https://wa.me/918936006657?text=${whatsappMessage}`, '_blank');
+    });
 
-    /* Enquiry Form */
+    // EmailJS Submission
+    document.getElementById('contactForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        emailjs.send("service_hdy63yb", "template_5m62tai", {
+            from_name: document.getElementById('name').value,
+            from_email: document.getElementById('email').value,
+            phone: document.getElementById('phone').value,
+            course: document.getElementById('course').value,
+            qualification: document.getElementById('qualification').value,
+            message: document.getElementById('message').value
+        }).then(function() {
+            document.getElementById('successMessage').innerHTML = `
+                <div class="success-alert">
+                    <i class="fas fa-check-circle"></i>
+                    <div>
+                        <h4>Thank you!</h4>
+                        <p>Your enquiry has been submitted successfully via Email.</p>
+                    </div>
+                </div>
+            `;
+            document.getElementById('contactForm').reset();
+        }, function(error) {
+            document.getElementById('successMessage').innerHTML = `
+                <div class="error-alert">
+                    <i class="fas fa-exclamation-circle"></i>
+                    <div>
+                        <h4>Submission Failed</h4>
+                        <p>Please try again or use WhatsApp option.</p>
+                    </div>
+                </div>
+            `;
+        });
+    });
+</script>
+
+<style>
     .enquiry-form {
         background: #f8f9fa;
         padding: 60px 0;
+    }
+
+    .container {
+        max-width: 1200px; /* Reduced from 1200px for better centering */
+        margin: 0 auto;
+        padding: 0 200px; /* Reduced side padding */
     }
 
     .form-wrapper {
@@ -569,780 +843,113 @@
         transform: translateY(-2px);
     }
 
-    /* Featured Courses */
-    .featured-courses {
-        padding: 80px 0;
-        background-color: var(--light-color);
-    }
-
-    .courses-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-        gap: 30px;
-    }
-
-    .course-card {
-        background-color: var(--white);
-        border-radius: 10px;
-        padding: 30px;
-        text-align: center;
-        box-shadow: var(--box-shadow);
-        transition: var(--transition);
-    }
-
-    .course-card:hover {
-        transform: translateY(-10px);
-    }
-
-    .course-icon {
-        width: 80px;
-        height: 80px;
-        background-color: rgba(231, 76, 60, 0.1);
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        margin: 0 auto 20px;
-    }
-
-    .course-icon i {
-        font-size: 30px;
-        color: var(--secondary-color);
-    }
-
-    .course-card h3 {
-        font-size: 1.5rem;
-        margin-bottom: 15px;
-    }
-
-    .course-card p {
-        color: var(--text-light);
-        margin-bottom: 20px;
-    }
-
-    /* Why Choose Us */
-    .why-choose-us {
-        padding: 80px 0;
-    }
-
-    .features-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-        gap: 30px;
-    }
-
-    .feature-box {
-        text-align: center;
-        padding: 30px 20px;
-        border-radius: 10px;
-        background-color: var(--white);
-        box-shadow: var(--box-shadow);
-        transition: var(--transition);
-    }
-
-    .feature-box:hover {
-        transform: translateY(-10px);
-    }
-
-    .feature-icon {
-        width: 70px;
-        height: 70px;
-        background-color: rgba(231, 76, 60, 0.1);
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        margin: 0 auto 20px;
-    }
-
-    .feature-icon i {
-        font-size: 30px;
-        color: var(--secondary-color);
-    }
-
-    .feature-box h3 {
-        font-size: 1.3rem;
-        margin-bottom: 15px;
-    }
-
-    /* University Partners Section Styles */
-    .university-partners {
-        padding: 80px 0;
-        background-color: #f8f9fa;
-    }
-
-    .universities-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-        gap: 30px;
-    }
-
-    .university-card {
-        background: #fff;
-        border-radius: 12px;
-        overflow: hidden;
-        box-shadow: 0 8px 20px rgba(0,0,0,0.08);
-        transition: all 0.3s ease;
-    }
-
-    .university-card:hover {
-        transform: translateY(-10px);
-        box-shadow: 0 15px 30px rgba(0,0,0,0.15);
-    }
-
-    .university-image {
-        height: 200px;
-        background-size: cover;
-        background-position: center;
-        position: relative;
-    }
-
-    .university-name {
-        margin: 0;
-        padding: 20px;
-        color: #2c3e50;
-        font-size: 1.2rem;
-        font-weight: 600;
-        text-align: center;
-        background: white;
-    }
-
-    /* Testimonial Slider Styles */
-    .testimonials {
-        padding: 80px 0;
-        background-color: #f5f7fa;
-    }
-
-    .testimonial-slider-container {
-        position: relative;
-        overflow: hidden;
-        padding: 20px 0;
-    }
-
-    .testimonial-slider {
-        display: flex;
-        transition: transform 0.5s ease;
-        gap: 30px;
-    }
-
-    .testimonial-card {
-        min-width: 100%;
-        padding: 20px;
-        box-sizing: border-box;
-    }
-
-    .testimonial-content {
-        background-color: #f9f9f9;
-        padding: 25px;
-        border-radius: 8px;
-        position: relative;
-        margin-bottom: 20px;
-    }
-
-    .testimonial-content::after {
-        content: '';
-        position: absolute;
-        bottom: -10px;
-        left: 30px;
-        width: 0;
-        height: 0;
-        border-left: 10px solid transparent;
-        border-right: 10px solid transparent;
-        border-top: 10px solid #f9f9f9;
-    }
-
-    .testimonial-author {
-        display: flex;
-        align-items: center;
-    }
-
-    .testimonial-author img {
-        width: 60px;
-        height: 60px;
-        border-radius: 50%;
-        object-fit: cover;
-        margin-right: 15px;
-        border: 3px solid var(--secondary-color);
-    }
-
-    .slider-arrow {
-        position: absolute;
-        top: 50%;
-        transform: translateY(-50%);
-        background-color: rgba(0,0,0,0.5);
-        color: white;
-        border: none;
-        cursor: pointer;
-        padding: 15px;
-        border-radius: 50%;
-        z-index: 10;
-        font-size: 18px;
-    }
-
-    .prev-arrow {
-        left: 10px;
-    }
-
-    .next-arrow {
-        right: 10px;
-    }
-
-    .slider-dots {
-        display: flex;
-        justify-content: center;
-        margin-top: 20px;
-    }
-
-    .dot {
-        height: 12px;
-        width: 12px;
-        margin: 0 5px;
-        background-color: #bbb;
-        border-radius: 50%;
-        display: inline-block;
-        cursor: pointer;
-    }
-
-    .dot.active {
-        background-color: var(--secondary-color);
-    }
-
-    /* Footer */
-    footer {
-        background-color: var(--dark-color);
-        color: var(--white);
-        padding: 60px 0 0;
-    }
-
-    .footer-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-        gap: 40px;
-        margin-bottom: 40px;
-    }
-
-    .footer-col p {
-        color: #bdc3c7;
-    }
-
-    .footer-social {
-        margin-top: 20px;
-    }
-
-    .footer-social a {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        width: 40px;
-        height: 40px;
-        background-color: rgba(255, 255, 255, 0.1);
-        border-radius: 50%;
-        color: var(--white);
-        margin-right: 10px;
-        transition: var(--transition);
-    }
-
-    .footer-social a:hover {
-        background-color: var(--secondary-color);
-        transform: translateY(-3px);
-    }
-
-    .footer-col h3 {
-        font-size: 1.3rem;
-        margin-bottom: 25px;
-        color: var(--white);
-        position: relative;
-        padding-bottom: 10px;
-    }
-
-    .footer-col h3::after {
-        content: '';
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        width: 50px;
-        height: 2px;
-        background-color: var(--secondary-color);
-    }
-
-    .footer-col ul li {
-        margin-bottom: 10px;
-    }
-
-    .footer-col ul li a {
-        color: #bdc3c7;
-        transition: var(--transition);
-    }
-
-    .footer-col ul li a:hover {
-        color: var(--secondary-color);
-        padding-left: 5px;
-    }
-
-    .footer-col.contact ul li {
-        display: flex;
-        align-items: flex-start;
-        margin-bottom: 15px;
-    }
-
-    .footer-col.contact ul li i {
-        color: var(--secondary-color);
-        margin-right: 15px;
-        margin-top: 5px;
-    }
-
-    .copyright {
-        background-color: #1a252f;
-        padding: 20px 0;
-        text-align: center;
-        color: #bdc3c7;
-        font-size: 14px;
-    }
-
-    .copyright .container {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-    }
-
-    /* Popup CSS */
-    .popup-overlay {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background-color: rgba(0, 0, 0, 0.7);
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        z-index: 1000;
-        opacity: 0;
-        visibility: hidden;
-        transition: all 0.3s ease;
-    }
-
-    .popup-overlay.active {
-        opacity: 1;
-        visibility: visible;
-    }
-
-    .popup-content {
-        background: white;
-        padding: 25px;
-        border-radius: 10px;
-        width: 90%;
-        max-width: 400px;
-        text-align: center;
-        position: relative;
-        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-    }
-
-    .close-btn {
-        position: absolute;
-        top: 10px;
-        right: 15px;
-        font-size: 24px;
-        cursor: pointer;
-        color: #555;
-    }
-
-    .popup-buttons {
-        margin-top: 20px;
-        display: flex;
-        gap: 10px;
-        justify-content: center;
-    }
-
-    .popup-btn {
-        padding: 10px 20px;
-        border-radius: 5px;
-        text-decoration: none;
-        font-weight: bold;
-        transition: background 0.3s;
-    }
-
-    .popup-btn-primary {
-        background-color: #4CAF50;
-        color: white;
-    }
-
-    .popup-btn-primary:hover {
-        background-color: #45a049;
-    }
-
-    .popup-btn-secondary {
-        background-color: #f1f1f1;
-        color: #333;
-    }
-
-    .popup-btn-secondary:hover {
-        background-color: #ddd;
-    }
-
-    /* Responsive Styles */
     @media (max-width: 768px) {
-        .announcement-bar {
-            font-size: 12px;
-            padding: 6px 0;
-        }
-        
-        .announcement-icon {
-            font-size: 14px;
-        }
-        
-        .sliding-text-container {
-            height: 18px;
-        }
-        
-        .sliding-text span {
-            margin-right: 30px;
-            padding-right: 30px;
-        }
-
-        .hero {
-            padding: 60px 0;
-        }
-        
-        .hero h1 {
-            font-size: 2.2rem;
-        }
-        
-        .tagline {
-            font-size: 1.2rem;
-        }
-        
-        .hero-text {
-            font-size: 1rem;
-        }
-        
-        .hero-btns {
+        .form-wrapper {
             flex-direction: column;
-            align-items: center;
         }
         
-        .achievement-item {
-            margin-bottom: 20px;
+        .form-container, .form-info {
             width: 100%;
-        }
-
-        nav ul {
-            display: none;
-            position: absolute;
-            top: 100%;
-            left: 0;
-            width: 100%;
-            background-color: var(--white);
-            flex-direction: column;
-            padding: 20px 0;
-            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
-            z-index: 999;
-        }
-        
-        nav ul.show {
-            display: flex;
-        }
-        
-        nav ul li {
-            margin: 0;
-            text-align: center;
-        }
-        
-        nav ul li a {
-            display: block;
-            padding: 10px 0;
-        }
-        
-        .mobile-menu {
-            display: block;
-        }
-        
-        .section-title {
-            font-size: 2rem;
-        }
-        
-        .universities-grid {
-            grid-template-columns: repeat(2, 1fr);
-            gap: 15px;
-        }
-        
-        .university-partners {
-            padding: 50px 0;
-        }
-        
-        .section-title {
-            font-size: 1.8rem;
-            margin-bottom: 30px;
-        }
-        
-        .university-image {
-            height: 140px;
-        }
-        
-        .university-name {
-            padding: 12px;
-            font-size: 1rem;
-        }
-    }
-
-    @media (max-width: 576px) {
-        .copyright .container {
-            flex-direction: column;
-        }
-        
-        .copyright p {
-            margin-bottom: 10px;
         }
     }
     </style>
-</head>
-<body>
-       
-    <!-- Announcement Bar with Auto-Sliding Text -->
-    <div class="announcement-bar">
-        <div class="announcement-container">
-            <div class="announcement-icon">
-                <i class="fas fa-bullhorn"></i>
-            </div>
-            <div class="announcement-text">
-                <div class="sliding-text-container">
-                    <div class="sliding-text">
-                        <span>🚀 Admission Open for 2025-2026 Batch! Limited Seats Available</span>
-                        <span>🎓 Get up to 50% Scholarship on selected courses</span>
-                        <span>📞 Call Now: +91 8936006657 for Free Counseling</span>
-                        <span>🏆 Partnered with 25+ Top Universities in India</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Header -->
-    <header>
-        <div class="container">
-            <div class="logo">
-                <img src="images/admission planet copy.webp" alt="Admission Planet">
-                <h1>Admission<span>Planet</span></h1>
-            </div>
-            <nav>
-                <ul>
-                    <li><a href="index.html">Home</a></li>
-                    <li><a href="courses.html">Courses</a></li>
-                    <li><a href="gallery.html">Gallery</a></li>
-                    <li><a href="eligibility.html">Eligibility</a></li>
-                    <li class="nav-contact"> <a href="contact.html" class="nav-link contact-link">
-                        <i class="fas fa-envelope"></i> Contact
-                      </a>
-                    </li>
-                </ul>
-            </nav>
-            <div class="mobile-menu">
-                <i class="fas fa-bars"></i>
-            </div>
-        </div>
-    </header>
-
-    <!-- Hero Section -->
-    <section class="hero">
-        <div class="hero-bg-image"></div>
-        <div class="container">
-            <div class="hero-content">
-                <h1>ADMISSION PLANET</h1>
-                <p class="tagline">" Now Dreams Will Come True "</p>
-                <p class="hero-text">Expert guidance for Undergraduate, Postgraduate Teacher Training, Pharmacy, Nursing, Management, Law, & <strong>Paramedical courses</strong>. We connect you with India's top universities at affordable fees.</p>
-                
-                <div class="hero-btns">
-                    <a href="#enquiry" class="btn btn-primary">Free Consultation</a>
-                    <a href="courses.html" class="btn btn-secondary">Explore Courses →</a>
-                </div>
-                
-                <div class="achievements">
-                  <div class="achievement-item">
-                    <span class="number">0</span>
-                    <span class="label">Partner Universities</span>
-                  </div>
-                  <div class="achievement-item">
-                    <span class="number">0</span>
-                    <span class="label">Diverse Courses</span>
-                  </div>
-                  <div class="achievement-item">
-                    <span class="number">0</span>
-                    <span class="label">Successful Admissions</span>
-                  </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Enquiry Form with Dual Submission Options -->
-    <section id="enquiry" class="enquiry-form">
-        <div class="container">
-            <div class="form-wrapper">
-                <div class="form-container">
-                    <div class="form-header">
-                        <h2>Admission Enquiry Form</h2>
-                        <p>Fill this form to get free counseling from our experts</p>
-                    </div>
-                    <form id="contactForm">
-                        <div class="form-group">
-                            <input type="text" id="name" name="name" placeholder="Full Name*" required>
-                        </div>
-                        <div class="form-group">
-                            <input type="email" id="email" name="email" placeholder="Email Address*" required>
-                        </div>
-                        <div class="form-group">
-                            <input type="tel" id="phone" name="phone" placeholder="Mobile Number*" required>
-                        </div>
-                        <div class="form-group">
-                            <select id="course" name="course" required>
-                                <option value="">Select Course Interested In*</option>
-                                <option value="Pharmacy">Pharmacy (B.Pharm/D.Pharm/M.Pharm)</option>
-                                 <option value="Nursing">Nursing (ANM/GNM/B.Sc/M.Sc)</option>
-                                <option value="Management">Management (BBA/MBA/PGDM)</option>
-                                <option value="Law">Law (LLB/BA LLB/LLM)</option>
-                                <option value="Teacher Training">Teacher Training</option>
-                                <option value="Paramedical">Paramedical Courses</option>
-                                <option value="B.Tech">B.Tech Engineering</option>
-                                <option value="B.Sc">B.Sc Science</option>
-                                <option value="B.A">B.A Arts</option>
-                                <option value="B.Com">B.Com Commerce</option>
-                                <option value="M.Tech">M.Tech</option>
-                                <option value="M.Sc">M.Sc</option>
-                                <option value="M.A">M.A</option>
-                                <option value="M.Com">M.Com</option>
-                                <option value="Diploma">Diploma Courses</option>
-                                <option value="Ph.D">Ph.D Programs</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <select id="qualification" name="qualification" required>
-                                <option value="">Current Qualification*</option>
-                                <option value="10th">10th Pass</option>
-                                <option value="12th">12th Pass</option>
-                                <option value="Graduate">Graduate</option>
-                                <option value="Post Graduate">Post Graduate</option>
-                                <option value="Diploma">Diploma Holder</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <textarea id="message" name="message" placeholder="Your Message/Query"></textarea>
-                        </div>
-                        
-                        <div class="submit-options">
-                            <button type="button" id="whatsappSubmit" class="btn-whatsapp">
-                                <i class="fab fa-whatsapp"></i> Submit via WhatsApp
-                            </button>
-                            <div class="or-divider">OR</div>
-                            <button type="submit" class="btn-submit">
-                                Submit via Email
-                            </button>
-                        </div>
-                    </form>
-                    <div id="successMessage"></div>
-                </div>
-                <div class="form-info">
-                    <!-- Contact info boxes -->
-                </div>
-            </div>
-        </div>
-    </section>
 
     <!-- Featured Courses -->
     <section class="featured-courses">
         <div class="container">
             <h2 class="section-title">Our Featured Courses</h2>
             <div class="courses-grid">
-                <!-- Nursing Card -->
-                <div class="course-card">
-                    <div class="course-icon">
-                        <i class="fas fa-user-nurse"></i>
-                    </div>
-                    <h3>Nursing</h3>
-                    <p>ANM, GNM, B.Sc Nursing, M.Sc Nursing programs</p>
-                    <a href="courses.html#nursing" class="btn-link">Learn More <i class="fas fa-arrow-right"></i></a>
-                </div>
-
-                <!-- Pharmacy Card -->
-                <div class="course-card">
-                    <div class="course-icon">
-                        <i class="fas fa-pills"></i>
-                    </div>
-                    <h3>Pharmacy</h3>
-                    <p>D.Pharm, B.Pharm, M.Pharm, Pharm.D programs</p>
-                    <a href="courses.html#pharmacy" class="btn-link">Learn More <i class="fas fa-arrow-right"></i></a>
-                </div>
-
-                <!-- Management Card -->
-                <div class="course-card">
-                    <div class="course-icon">
-                        <i class="fas fa-briefcase"></i>
-                    </div>
-                    <h3>Management</h3>
-                    <p>BBA, MBA, PGDM, Executive MBA programs</p>
-                    <a href="courses.html#management" class="btn-link">Learn More <i class="fas fa-arrow-right"></i></a>
-                </div>
-
-                <!-- Polytechnic Card -->
-                <div class="course-card">
-                    <div class="course-icon">
-                        <i class="fas fa-tools"></i>
-                    </div>
-                    <h3>Polytechnic</h3>
-                    <p>Diploma in Mechanical, Civil, Electrical, Computer Engineering</p>
-                    <a href="courses.html#polytechnic" class="btn-link">Learn More <i class="fas fa-arrow-right"></i></a>
-                </div>
-
-                <!-- Engineering Card -->
-                <div class="course-card">
-                    <div class="course-icon">
-                        <i class="fas fa-cogs"></i>
-                    </div>
-                    <h3>Engineering</h3>
-                    <p>B.Tech in CSE, ME, ECE, Civil with M.Tech options</p>
-                    <a href="courses.html#engineering" class="btn-link">Learn More <i class="fas fa-arrow-right"></i></a>
-                </div>
-
-                <!-- Paramedical Card -->
-                <div class="course-card">
-                    <div class="course-icon">
-                        <i class="fas fa-medkit"></i>
-                    </div>
-                    <h3>Paramedical</h3>
-                    <p>BMLT, Radiology, Optometry, OT Technology programs</p>
-                    <a href="courses.html#paramedical" class="btn-link">Learn More <i class="fas fa-arrow-right"></i></a>
-                </div>
-
-                <!-- Teacher Training Card -->
-                <div class="course-card">
-                    <div class="course-icon">
-                        <i class="fas fa-chalkboard-teacher"></i>
-                    </div>
-                    <h3>Teacher Training</h3>
-                    <p>B.Ed, M.Ed, D.El.Ed, NTT, B.P.Ed programs</p>
-                    <a href="courses.html#teacher-training" class="btn-link">Learn More <i class="fas fa-arrow-right"></i></a>
-                </div>
-
-                <!-- Law Card -->
-                <div class="course-card">
-                    <div class="course-icon">
-                        <i class="fas fa-gavel"></i>
-                    </div>
-                    <h3>Law</h3>
-                    <p>BA LLB, LLB, LLM, BBA LLB programs</p>
-                    <a href="courses.html#law" class="btn-link">Learn More <i class="fas fa-arrow-right"></i></a>
-                </div>
-
-                <!-- Science & Arts Card -->
-                <div class="course-card">
-                    <div class="course-icon">
-                        <i class="fas fa-flask"></i>
-                    </div>
-                    <h3>Science & Arts</h3>
-                    <p>B.Sc, B.A, B.Com, M.Sc, M.A programs</p>
-                    <a href="courses.html#science" class="btn-link">Learn More <i class="fas fa-arrow-right"></i></a>
-                </div>
-            </div>
+    <!-- Nursing Card (Existing) -->
+    <div class="course-card">
+        <div class="course-icon">
+            <i class="fas fa-user-nurse"></i>
         </div>
+        <h3>Nursing</h3>
+        <p>ANM, GNM, B.Sc Nursing, M.Sc Nursing programs</p>
+        <a href="courses.html#nursing" class="btn-link">Learn More <i class="fas fa-arrow-right"></i></a>
+    </div>
+
+    <!-- Pharmacy Card (Existing) -->
+    <div class="course-card">
+        <div class="course-icon">
+            <i class="fas fa-pills"></i>
+        </div>
+        <h3>Pharmacy</h3>
+        <p>D.Pharm, B.Pharm, M.Pharm, Pharm.D programs</p>
+        <a href="courses.html#pharmacy" class="btn-link">Learn More <i class="fas fa-arrow-right"></i></a>
+    </div>
+
+    <!-- Management Card (Existing) -->
+    <div class="course-card">
+        <div class="course-icon">
+            <i class="fas fa-briefcase"></i>
+        </div>
+        <h3>Management</h3>
+        <p>BBA, MBA, PGDM, Executive MBA programs</p>
+        <a href="courses.html#management" class="btn-link">Learn More <i class="fas fa-arrow-right"></i></a>
+    </div>
+
+    <!-- Polytechnic Card (New) -->
+    <div class="course-card">
+        <div class="course-icon">
+            <i class="fas fa-tools"></i>
+        </div>
+        <h3>Polytechnic</h3>
+        <p>Diploma in Mechanical, Civil, Electrical, Computer Engineering</p>
+        <a href="courses.html#polytechnic" class="btn-link">Learn More <i class="fas fa-arrow-right"></i></a>
+    </div>
+
+    <!-- Engineering Card (New) -->
+    <div class="course-card">
+        <div class="course-icon">
+            <i class="fas fa-cogs"></i>
+        </div>
+        <h3>Engineering</h3>
+        <p>B.Tech in CSE, ME, ECE, Civil with M.Tech options</p>
+        <a href="courses.html#engineering" class="btn-link">Learn More <i class="fas fa-arrow-right"></i></a>
+    </div>
+
+    <!-- Paramedical Card (Existing) -->
+    <div class="course-card">
+        <div class="course-icon">
+            <i class="fas fa-medkit"></i>
+        </div>
+        <h3>Paramedical</h3>
+        <p>BMLT, Radiology, Optometry, OT Technology programs</p>
+        <a href="courses.html#paramedical" class="btn-link">Learn More <i class="fas fa-arrow-right"></i></a>
+    </div>
+
+    <!-- Teacher Training Card (New Addition) -->
+            <div class="course-card">
+                <div class="course-icon">
+                    <i class="fas fa-chalkboard-teacher"></i>
+                </div>
+                <h3>Teacher Training</h3>
+                <p>B.Ed, M.Ed, D.El.Ed, NTT, B.P.Ed programs</p>
+                <a href="courses.html#teacher-training" class="btn-link">Learn More <i class="fas fa-arrow-right"></i></a>
+            </div>
+
+
+    <!-- Law Card (Existing) -->
+    <div class="course-card">
+        <div class="course-icon">
+            <i class="fas fa-gavel"></i>
+        </div>
+        <h3>Law</h3>
+        <p>BA LLB, LLB, LLM, BBA LLB programs</p>
+        <a href="courses.html#law" class="btn-link">Learn More <i class="fas fa-arrow-right"></i></a>
+    </div>
+
+    <!-- Science & Arts Card (Existing) -->
+    <div class="course-card">
+        <div class="course-icon">
+            <i class="fas fa-flask"></i>
+        </div>
+        <h3>Science & Arts</h3>
+        <p>B.Sc, B.A, B.Com, M.Sc, M.A programs</p>
+        <a href="courses.html#science" class="btn-link">Learn More <i class="fas fa-arrow-right"></i></a>
+    </div>
+</div>
     </section>
 
     <!-- Why Choose Us -->
@@ -1389,288 +996,413 @@
     </section>
 
     <!-- University Partners Section -->
-    <section class="university-partners">
-        <div class="container">
-            <h2 class="section-title">Our Partner Universities</h2>
+<section class="university-partners">
+    <div class="container">
+        <h2 class="section-title">Our Partner Universities</h2>
+        
+        <div class="universities-grid">
+            <!-- First Row - 6 Universities -->
+            <div class="university-card">
+                <div class="university-image" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('https://images.unsplash.com/photo-1541178735493-479c1a27ed24?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80')"></div>
+                <h3 class="university-name">Lovely Professional University</h3>
+            </div>
             
-            <div class="universities-grid">
-                <!-- First Row - 6 Universities -->
-                <div class="university-card">
-                    <div class="university-image" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('https://images.unsplash.com/photo-1541178735493-479c1a27ed24?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80')"></div>
-                    <h3 class="university-name">Lovely Professional University</h3>
-                </div>
-                
-                <div class="university-card">
-                    <div class="university-image" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('https://images.unsplash.com/photo-1523050854058-8df90110c9f1?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80')"></div>
-                    <h3 class="university-name">LNCT Bhopal</h3>
-                </div>
-                
-                <div class="university-card">
-                    <div class="university-image" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('https://images.unsplash.com/photo-1523240795612-9a054b0db644?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80')"></div>
-                    <h3 class="university-name">Amity University</h3>
-                </div>
-                
-                <div class="university-card">
-                    <div class="university-image" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('https://images.unsplash.com/photo-1576495199011-eb94736d05d6?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80')"></div>
-                    <h3 class="university-name">Manipal University</h3>
-                </div>
-                
-                <div class="university-card">
-                    <div class="university-image" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('https://images.unsplash.com/photo-1588072432836-e10032774350?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80')"></div>
-                    <h3 class="university-name">Flame University</h3>
-                </div>
-                
-                <div class="university-card">
-                    <div class="university-image" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('https://images.unsplash.com/photo-1523057530100-383d7fbc77a1?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80')"></div>
-                    <h3 class="university-name">MIT Pune</h3>
-                </div>
-                
-                <!-- Second Row - 6 Universities -->
-                <div class="university-card">
-                    <div class="university-image" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('https://images.unsplash.com/photo-1562774053-701939374585?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80')"></div>
-                    <h3 class="university-name">Arka Jain University</h3>
-                </div>
-                
-                <div class="university-card">
-                    <div class="university-image" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('https://images.unsplash.com/photo-1541178735493-479c1a27ed24?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80')"></div>
-                    <h3 class="university-name">YBN University</h3>
-                </div>
-                
-                <div class="university-card">
-                    <div class="university-image" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('https://images.unsplash.com/photo-1523050854058-8df90110c9f1?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80')"></div>
-                    <h3 class="university-name">CV Raman University</h3>
-                </div>
-                
-                <div class="university-card">
-                    <div class="university-image" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('https://images.unsplash.com/photo-1523240795612-9a054b0db644?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80')"></div>
-                    <h3 class="university-name">Uttranchal University</h3>
-                </div>
-                
-                <div class="university-card">
-                    <div class="university-image" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('https://images.unsplash.com/photo-1576495199011-eb94736d05d6?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80')"></div>
-                    <h3 class="university-name">Himalayan University</h3>
-                </div>
-                
-                <div class="university-card">
-                    <div class="university-image" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('https://images.unsplash.com/photo-1588072432836-e10032774350?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80')"></div>
-                    <h3 class="university-name">Kalinga University</h3>
-                </div>
-                
-                <!-- Third Row - 6 Universities -->
-                <div class="university-card">
-                    <div class="university-image" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('https://images.unsplash.com/photo-1523057530100-383d7fbc77a1?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80')"></div>
-                    <h3 class="university-name">OP Jindal University</h3>
-                </div>
-                
-                <div class="university-card">
-                    <div class="university-image" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('https://images.unsplash.com/photo-1541178735493-479c1a27ed24?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80')"></div>
-                    <h3 class="university-name">Muthoot Business School</h3>
-                </div>
-                
-                <div class="university-card">
-                    <div class="university-image" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('https://images.unsplash.com/photo-1523050854058-8df90110c9f1?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80')"></div>
-                    <h3 class="university-name">AURO University</h3>
-                </div>
-                
-                <div class="university-card">
-                    <div class="university-image" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('https://images.unsplash.com/photo-1523240795612-9a054b0db644?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80')"></div>
-                    <h3 class="university-name">Adani University</h3>
-                </div>
-                
-                <div class="university-card">
-                    <div class="university-image" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('https://images.unsplash.com/photo-1576495199011-eb94736d05d6?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80')"></div>
-                    <h3 class="university-name">Marwadi University</h3>
-                </div>
-                
-                <div class="university-card">
-                    <div class="university-image" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('https://images.unsplash.com/photo-1588072432836-e10032774350?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80')"></div>
-                    <h3 class="university-name">Al-Falah University</h3>
-                </div>
-                
-                <!-- Fourth Row - Remaining Universities -->
-                <div class="university-card">
-                    <div class="university-image" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('https://images.unsplash.com/photo-1523057530100-383d7fbc77a1?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80')"></div>
-                    <h3 class="university-name">GD Goenka University</h3>
-                </div>
-                
-                <div class="university-card">
-                    <div class="university-image" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('https://images.unsplash.com/photo-1562774053-701939374585?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80')"></div>
-                    <h3 class="university-name">KR Mangalam University</h3>
-                </div>
-                
-                <div class="university-card">
-                    <div class="university-image" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('https://images.unsplash.com/photo-1541178735493-479c1a27ed24?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80')"></div>
-                    <h3 class="university-name">APG Shimla University</h3>
-                </div>
-                
-                <div class="university-card">
-                    <div class="university-image" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('https://images.unsplash.com/photo-1523050854058-8df90110c9f1?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80')"></div>
-                    <h3 class="university-name">Jaypee University</h3>
-                </div>
-                
-                <div class="university-card">
-                    <div class="university-image" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('https://images.unsplash.com/photo-1523240795612-9a054b0db644?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80')"></div>
-                    <h3 class="university-name">DY Patil University</h3>
-                </div>
-                
-                <div class="university-card">
-                    <div class="university-image" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('https://images.unsplash.com/photo-1588072432836-e10032774350?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80')"></div>
-                    <h3 class="university-name">Sikkim Skill University</h3>
-                </div>
+            <div class="university-card">
+                <div class="university-image" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('https://images.unsplash.com/photo-1523050854058-8df90110c9f1?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80')"></div>
+                <h3 class="university-name">LNCT Bhopal</h3>
+            </div>
+            
+            <div class="university-card">
+                <div class="university-image" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('https://images.unsplash.com/photo-1523240795612-9a054b0db644?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80')"></div>
+                <h3 class="university-name">Amity University</h3>
+            </div>
+            
+            <div class="university-card">
+                <div class="university-image" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('https://images.unsplash.com/photo-1576495199011-eb94736d05d6?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80')"></div>
+                <h3 class="university-name">Manipal University</h3>
+            </div>
+            
+            <div class="university-card">
+                <div class="university-image" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('https://images.unsplash.com/photo-1588072432836-e10032774350?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80')"></div>
+                <h3 class="university-name">Flame University</h3>
+            </div>
+            
+            <div class="university-card">
+                <div class="university-image" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('https://images.unsplash.com/photo-1523057530100-383d7fbc77a1?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80')"></div>
+                <h3 class="university-name">MIT Pune</h3>
+            </div>
+            
+            <!-- Second Row - 6 Universities -->
+            <div class="university-card">
+                <div class="university-image" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('https://images.unsplash.com/photo-1562774053-701939374585?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80')"></div>
+                <h3 class="university-name">Arka Jain University</h3>
+            </div>
+            
+            <div class="university-card">
+                <div class="university-image" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('https://images.unsplash.com/photo-1541178735493-479c1a27ed24?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80')"></div>
+                <h3 class="university-name">YBN University</h3>
+            </div>
+            
+            <div class="university-card">
+                <div class="university-image" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('https://images.unsplash.com/photo-1523050854058-8df90110c9f1?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80')"></div>
+                <h3 class="university-name">CV Raman University</h3>
+            </div>
+            
+            <div class="university-card">
+                <div class="university-image" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('https://images.unsplash.com/photo-1523240795612-9a054b0db644?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80')"></div>
+                <h3 class="university-name">Uttranchal University</h3>
+            </div>
+            
+            <div class="university-card">
+                <div class="university-image" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('https://images.unsplash.com/photo-1576495199011-eb94736d05d6?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80')"></div>
+                <h3 class="university-name">Himalayan University</h3>
+            </div>
+            
+            <div class="university-card">
+                <div class="university-image" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('https://images.unsplash.com/photo-1588072432836-e10032774350?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80')"></div>
+                <h3 class="university-name">Kalinga University</h3>
+            </div>
+            
+            <!-- Third Row - 6 Universities -->
+            <div class="university-card">
+                <div class="university-image" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('https://images.unsplash.com/photo-1523057530100-383d7fbc77a1?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80')"></div>
+                <h3 class="university-name">OP Jindal University</h3>
+            </div>
+            
+            <div class="university-card">
+                <div class="university-image" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('https://images.unsplash.com/photo-1541178735493-479c1a27ed24?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80')"></div>
+                <h3 class="university-name">Muthoot Business School</h3>
+            </div>
+            
+            <div class="university-card">
+                <div class="university-image" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('https://images.unsplash.com/photo-1523050854058-8df90110c9f1?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80')"></div>
+                <h3 class="university-name">AURO University</h3>
+            </div>
+            
+            <div class="university-card">
+                <div class="university-image" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('https://images.unsplash.com/photo-1523240795612-9a054b0db644?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80')"></div>
+                <h3 class="university-name">Adani University</h3>
+            </div>
+            
+            <div class="university-card">
+                <div class="university-image" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('https://images.unsplash.com/photo-1576495199011-eb94736d05d6?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80')"></div>
+                <h3 class="university-name">Marwadi University</h3>
+            </div>
+            
+            <div class="university-card">
+                <div class="university-image" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('https://images.unsplash.com/photo-1588072432836-e10032774350?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80')"></div>
+                <h3 class="university-name">Al-Falah University</h3>
+            </div>
+            
+            <!-- Fourth Row - Remaining Universities -->
+            <div class="university-card">
+                <div class="university-image" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('https://images.unsplash.com/photo-1523057530100-383d7fbc77a1?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80')"></div>
+                <h3 class="university-name">GD Goenka University</h3>
+            </div>
+            
+            <div class="university-card">
+                <div class="university-image" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('https://images.unsplash.com/photo-1562774053-701939374585?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80')"></div>
+                <h3 class="university-name">KR Mangalam University</h3>
+            </div>
+            
+            <div class="university-card">
+                <div class="university-image" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('https://images.unsplash.com/photo-1541178735493-479c1a27ed24?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80')"></div>
+                <h3 class="university-name">APG Shimla University</h3>
+            </div>
+            
+            <div class="university-card">
+                <div class="university-image" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('https://images.unsplash.com/photo-1523050854058-8df90110c9f1?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80')"></div>
+                <h3 class="university-name">Jaypee University</h3>
+            </div>
+            
+            <div class="university-card">
+                <div class="university-image" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('https://images.unsplash.com/photo-1523240795612-9a054b0db644?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80')"></div>
+                <h3 class="university-name">DY Patil University</h3>
+            </div>
+            
+            <div class="university-card">
+                <div class="university-image" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('https://images.unsplash.com/photo-1588072432836-e10032774350?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80')"></div>
+                <h3 class="university-name">Sikkim Skill University</h3>
+            </div>
 
-                <div class="university-card">
-                    <div class="university-image" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('https://admission-open.com/wp-content/uploads/2024/06/AIU-Admissions-manipur.jpeg')"></div>
-                    <h3 class="university-name">Asian International University</h3>
-                </div>
+            <div class="university-card">
+                <div class="university-image" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('https://admission-open.com/wp-content/uploads/2024/06/AIU-Admissions-manipur.jpeg')"></div>
+                <h3 class="university-name">Asian International University</h3>
+            </div>
 
-                <div class="university-card">
-                    <div class="university-image" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('https://images.unsplash.com/photo-1576495199011-eb94736d05d6?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80')"></div>
-                    <h3 class="university-name">CMJ University</h3>
-                </div>
+            <div class="university-card">
+                <div class="university-image" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('https://images.unsplash.com/photo-1576495199011-eb94736d05d6?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80')"></div>
+                <h3 class="university-name">CMJ University</h3>
             </div>
         </div>
-    </section>
+    </div>
+</section>
 
-    <!-- Testimonials Section with Auto Slide -->
-    <section class="testimonials">
-        <div class="container">
-            <h2 class="section-title">What Our Students Say</h2>
-            
-            <div class="testimonial-slider-container">
-                <div class="testimonial-slider">
-                    <!-- Testimonial 1 -->
-                    <div class="testimonial-card">
-                        <div class="testimonial-content">
-                            <p>"Admission Planet helped me get into my dream D.Pharm college with scholarship. Their guidance was invaluable throughout the process."</p>
-                        </div>
-                        <div class="testimonial-author">
-                            <img src="images/D. Pharma.jpg" alt="Rahul Sharma">
-                            <h4>Om Shankar</h4>
-                            <span>D.Pharma, Bihar</span>
-                        </div>
-                    </div>
-                    
-                    <!-- Testimonial 2 -->
-                    <div class="testimonial-card">
-                        <div class="testimonial-content">
-                            <p>"Coming from Jharkhand, I was unsure about the process, but Admission Planet made my D.Pharma admission seamless."</p>
-                        </div>
-                        <div class="testimonial-author">
-                            <img src="images/anjani.jpg" alt="Anjani Kumari">
-                            <h4>Anjani Kumari</h4>
-                            <span>D.Pharma, Jharkhand</span>
-                        </div>
-                    </div>
-                    
-                    <!-- Testimonial 3 -->
-                    
+<style>
+/* University Partners Section Styles */
+.university-partners {
+    padding: 80px 0;
+    background-color: #f8f9fa;
+}
 
-                    <!-- Testimonial 4 -->
-                    <div class="testimonial-card">
-                        <div class="testimonial-content">
-                            <p>"As a dresser, getting into D.Pharma was challenging, but Admission Planet made it possible with their expert guidance."</p>
-                        </div>
-                        <div class="testimonial-author">
-                            <img src="images/nagmani.jpg" alt="Nagmani Kumar">
-                            <h4>Nagmani Kumar</h4>
-                            <span>D.Pharma, Bihar</span>
-                        </div>
-                    </div>
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
 
-                    <!-- Testimonial 5 -->
-                    <div class="testimonial-card">
-                        <div class="testimonial-content">
-                            <p>"The team helped me secure admission in D.Pharma despite tough competition. Truly professional services!"</p>
-                        </div>
-                        <div class="testimonial-author">
-                            <img src="images/suman.jpg" alt="Suman Raj">
-                            <h4>Suman Raj</h4>
-                            <span>D.Pharma, Bihar</span>
-                        </div>
-                    </div>
+.section-title {
+    text-align: center;
+    margin-bottom: 50px;
+    font-size: 2.5rem;
+    color: #1a2980;
+    font-weight: 600;
+    background: linear-gradient(to right, #1a2980, #26d0ce);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
 
-                    <!-- Testimonial 6 -->
-                    <div class="testimonial-card">
-                        <div class="testimonial-content">
-                            <p>"Transitioning to become a Sanitary Inspector was smooth with Admission Planet's counseling and support."</p>
-                        </div>
-                        <div class="testimonial-author">
-                            <img src="images/shweta.jpg" alt="Shweta Ranjan">
-                            <h4>Shweta Ranjan</h4>
-                            <span>Sanitary Inspector, Bihar</span>
-                        </div>
-                    </div>
+.universities-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 30px;
+}
 
-                    <!-- Testimonial 7 -->
-                    <div class="testimonial-card">
-                        <div class="testimonial-content">
-                            <p>"My dream of becoming an ANM became reality thanks to Admission Planet's dedicated assistance."</p>
-                        </div>
-                        <div class="testimonial-author">
-                            <img src="images/rajni.jpg" alt="Rajni Kumari">
-                            <h4>Rajni Kumari</h4>
-                            <span>ANM, Bihar</span>
-                        </div>
-                    </div>
+.university-card {
+    background: #fff;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+    transition: all 0.3s ease;
+}
 
-                    <!-- Testimonial 8 -->
-                    <div class="testimonial-card">
-                        <div class="testimonial-content">
-                            <p>"GNM admission process was complicated, but Admission Planet handled everything perfectly."</p>
-                        </div>
-                        <div class="testimonial-author">
-                            <img src="images/jitendra.jpg" alt="Jitendra Kumar">
-                            <h4>Jitendra Kumar</h4>
-                            <span>GNM, Bihar</span>
-                        </div>
-                    </div>
+.university-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+}
 
-                    <!-- Testimonial 9 -->
-                    <div class="testimonial-card">
-                        <div class="testimonial-content">
-                            <p>"BLIS admission through Admission Planet was hassle-free and well-guided at every step."</p>
-                        </div>
-                        <div class="testimonial-author">
-                            <img src="images/ranjan.jpg" alt="Ranjan Kumar">
-                            <h4>Ranjan Kumar</h4>
-                            <span>BLIS, Bihar</span>
-                        </div>
-                    </div>
+.university-image {
+    height: 200px;
+    background-size: cover;
+    background-position: center;
+    position: relative;
+}
 
-                    <!-- Testimonial 10 -->
-                    <div class="testimonial-card">
-                        <div class="testimonial-content">
-                            <p>"Got into a premier MBA college with Admission Planet's strategic counseling and application support."</p>
-                        </div>
-                        <div class="testimonial-author">
-                            <img src="images/nikhil.jpg" alt="Nikhil Kumar">
-                            <h4>Nikhil Kumar</h4>
-                            <span>MBA, Bihar</span>
-                        </div>
-                    </div>
+.university-name {
+    margin: 0;
+    padding: 20px;
+    color: #2c3e50;
+    font-size: 1.2rem;
+    font-weight: 600;
+    text-align: center;
+    background: white;
+}
 
-                    <!-- Testimonial 11 -->
-                   <div class="testimonial-card">
-                        <div class="testimonial-content">
-                            <p>"Thanks to Admission Planet team for securing my MBA seat in a top B-school. Their expertise saved me time and money."</p>
-                        </div>
-                        <div class="testimonial-author">
-                            <img src="images/testimonials/student3.jpg" alt="Amit Kumar">
-                            <h4>Amit Kumar</h4>
-                            <span>MBA Student, Bihar</span>
-                        </div>
+/* Responsive Styles */
+@media (max-width: 1024px) {
+    .universities-grid {
+        grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+        gap: 25px;
+    }
+    
+    .university-image {
+        height: 180px;
+    }
+}
+
+@media (max-width: 768px) {
+    .university-partners {
+        padding: 60px 0;
+    }
+    
+    .section-title {
+        font-size: 2rem;
+        margin-bottom: 40px;
+    }
+    
+    .universities-grid {
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        gap: 20px;
+    }
+    
+    .university-image {
+        height: 160px;
+    }
+    
+    .university-name {
+        padding: 15px;
+        font-size: 1.1rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .universities-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 15px;
+    }
+    
+    .university-partners {
+        padding: 50px 0;
+    }
+    
+    .section-title {
+        font-size: 1.8rem;
+        margin-bottom: 30px;
+    }
+    
+    .university-image {
+        height: 140px;
+    }
+    
+    .university-name {
+        padding: 12px;
+        font-size: 1rem;
+    }
+}
+</style>
+
+  
+   <!-- Testimonials Section with Auto Slide -->
+<section class="testimonials">
+    <div class="container">
+        <h2 class="section-title">What Our Students Say</h2>
+        
+        <div class="testimonial-slider-container">
+            <div class="testimonial-slider">
+                <!-- Testimonial 1 -->
+                <div class="testimonial-card">
+                    <div class="testimonial-content">
+                        <p>"Admission Planet helped me get into my dream D.Pharm college with scholarship. Their guidance was invaluable throughout the process."</p>
+                    </div>
+                    <div class="testimonial-author">
+                        <img src="images/D. Pharma.jpg" alt="Rahul Sharma">
+                        <h4>Om Shankar</h4>
+                        <span>D.Pharma, Bihar</span>
                     </div>
                 </div>
                 
-                <!-- Navigation Arrows -->
-                <button class="slider-arrow prev-arrow">&#10094;</button>
-                <button class="slider-arrow next-arrow">&#10095;</button>
+                <!-- Testimonial 2 -->
+                <div class="testimonial-card">
+                    <div class="testimonial-content">
+                        <p>"Coming from Jharkhand, I was unsure about the process, but Admission Planet made my D.Pharma admission seamless."</p>
+                    </div>
+                    <div class="testimonial-author">
+                        <img src="images/anjani.jpg" alt="Anjani Kumari">
+                        <h4>Anjani Kumari</h4>
+                        <span>D.Pharma, Jharkhand</span>
+                    </div>
+                </div>
                 
-                <!-- Dots Navigation -->
-                <div class="slider-dots"></div>
+                <!-- Testimonial 3 -->
+                
+
+                <!-- Testimonial 4 -->
+                <div class="testimonial-card">
+                    <div class="testimonial-content">
+                        <p>"As a dresser, getting into D.Pharma was challenging, but Admission Planet made it possible with their expert guidance."</p>
+                    </div>
+                    <div class="testimonial-author">
+                        <img src="images/nagmani.jpg" alt="Nagmani Kumar">
+                        <h4>Nagmani Kumar</h4>
+                        <span>D.Pharma, Bihar</span>
+                    </div>
+                </div>
+
+                <!-- Testimonial 5 -->
+                <div class="testimonial-card">
+                    <div class="testimonial-content">
+                        <p>"The team helped me secure admission in D.Pharma despite tough competition. Truly professional services!"</p>
+                    </div>
+                    <div class="testimonial-author">
+                        <img src="images/suman.jpg" alt="Suman Raj">
+                        <h4>Suman Raj</h4>
+                        <span>D.Pharma, Bihar</span>
+                    </div>
+                </div>
+
+                <!-- Testimonial 6 -->
+                <div class="testimonial-card">
+                    <div class="testimonial-content">
+                        <p>"Transitioning to become a Sanitary Inspector was smooth with Admission Planet's counseling and support."</p>
+                    </div>
+                    <div class="testimonial-author">
+                        <img src="images/shweta.jpg" alt="Shweta Ranjan">
+                        <h4>Shweta Ranjan</h4>
+                        <span>Sanitary Inspector, Bihar</span>
+                    </div>
+                </div>
+
+                <!-- Testimonial 7 -->
+                <div class="testimonial-card">
+                    <div class="testimonial-content">
+                        <p>"My dream of becoming an ANM became reality thanks to Admission Planet's dedicated assistance."</p>
+                    </div>
+                    <div class="testimonial-author">
+                        <img src="images/rajni.jpg" alt="Rajni Kumari">
+                        <h4>Rajni Kumari</h4>
+                        <span>ANM, Bihar</span>
+                    </div>
+                </div>
+
+                <!-- Testimonial 8 -->
+                <div class="testimonial-card">
+                    <div class="testimonial-content">
+                        <p>"GNM admission process was complicated, but Admission Planet handled everything perfectly."</p>
+                    </div>
+                    <div class="testimonial-author">
+                        <img src="images/jitendra.jpg" alt="Jitendra Kumar">
+                        <h4>Jitendra Kumar</h4>
+                        <span>GNM, Bihar</span>
+                    </div>
+                </div>
+
+                <!-- Testimonial 9 -->
+                <div class="testimonial-card">
+                    <div class="testimonial-content">
+                        <p>"BLIS admission through Admission Planet was hassle-free and well-guided at every step."</p>
+                    </div>
+                    <div class="testimonial-author">
+                        <img src="images/ranjan.jpg" alt="Ranjan Kumar">
+                        <h4>Ranjan Kumar</h4>
+                        <span>BLIS, Bihar</span>
+                    </div>
+                </div>
+
+                <!-- Testimonial 10 -->
+                <div class="testimonial-card">
+                    <div class="testimonial-content">
+                        <p>"Got into a premier MBA college with Admission Planet's strategic counseling and application support."</p>
+                    </div>
+                    <div class="testimonial-author">
+                        <img src="images/nikhil.jpg" alt="Nikhil Kumar">
+                        <h4>Nikhil Kumar</h4>
+                        <span>MBA, Bihar</span>
+                    </div>
+                </div>
+
+                <!-- Testimonial 11 -->
+               <div class="testimonial-card">
+                    <div class="testimonial-content">
+                        <p>"Thanks to Admission Planet team for securing my MBA seat in a top B-school. Their expertise saved me time and money."</p>
+                    </div>
+                    <div class="testimonial-author">
+                        <img src="images/testimonials/student3.jpg" alt="Amit Kumar">
+                        <h4>Amit Kumar</h4>
+                        <span>MBA Student, Bihar</span>
+                    </div>
+                </div>
             </div>
+            
+            <!-- Navigation Arrows -->
+            <button class="slider-arrow prev-arrow">&#10094;</button>
+            <button class="slider-arrow next-arrow">&#10095;</button>
+            
+            <!-- Dots Navigation -->
+            <div class="slider-dots"></div>
         </div>
-    </section>
+    </div>
+</section>
 
     <!-- Footer -->
     <footer>
@@ -1732,7 +1464,8 @@
         </div>
     </footer>
 
-    <!-- Popup HTML -->
+
+     <!-- Popup HTML -->
     <div class="popup-overlay" id="popup">
         <div class="popup-content">
             <span class="close-btn" id="closeBtn">&times;</span>
@@ -1745,240 +1478,11 @@
         </div>
     </div>
 
-    <!-- EmailJS and Font Awesome -->
-    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+    <script src="script.js"></script>
     
+    <!-- Popup JavaScript -->
     <script>
     document.addEventListener('DOMContentLoaded', function() {
-        // Mobile Menu Toggle
-        const mobileMenuBtn = document.querySelector('.mobile-menu');
-        const navMenu = document.querySelector('nav ul');
-        
-        mobileMenuBtn.addEventListener('click', function() {
-            navMenu.classList.toggle('show');
-        });
-        
-        // Close mobile menu when clicking on a link
-        const navLinks = document.querySelectorAll('nav ul li a');
-        navLinks.forEach(link => {
-            link.addEventListener('click', function() {
-                if (window.innerWidth <= 768) {
-                    navMenu.classList.remove('show');
-                }
-            });
-        });
-        
-        // Smooth scrolling for anchor links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function(e) {
-                e.preventDefault();
-                
-                const targetId = this.getAttribute('href');
-                if (targetId === '#') return;
-                
-                const targetElement = document.querySelector(targetId);
-                if (targetElement) {
-                    window.scrollTo({
-                        top: targetElement.offsetTop - 80,
-                        behavior: 'smooth'
-                    });
-                }
-            });
-        });
-        
-        // Sticky header on scroll
-        window.addEventListener('scroll', function() {
-            const header = document.querySelector('header');
-            if (window.scrollY > 100) {
-                header.classList.add('sticky');
-            } else {
-                header.classList.remove('sticky');
-            }
-        });
-        
-        // Add sticky class initially if page is scrolled
-        if (window.scrollY > 100) {
-            document.querySelector('header').classList.add('sticky');
-        }
-
-        // Pause announcement animation on hover
-        const slidingText = document.querySelector('.sliding-text');
-        const announcementBar = document.querySelector('.announcement-bar');
-        
-        announcementBar.addEventListener('mouseenter', function() {
-            slidingText.style.animationPlayState = 'paused';
-        });
-        
-        announcementBar.addEventListener('mouseleave', function() {
-            slidingText.style.animationPlayState = 'running';
-        });
-
-        // Initialize EmailJS
-        emailjs.init("87NAu0no1GHVbjlBx");
-
-        // WhatsApp Submission
-        document.getElementById('whatsappSubmit').addEventListener('click', function() {
-            const name = document.getElementById('name').value;
-            const phone = document.getElementById('phone').value;
-            const course = document.getElementById('course').value;
-            const qualification = document.getElementById('qualification').value;
-            const message = document.getElementById('message').value;
-            
-            const whatsappMessage = `*Admission Enquiry*%0A%0A*Name:* ${name}%0A*Phone:* ${phone}%0A*Course:* ${course}%0A*Qualification:* ${qualification}%0A*Message:* ${message || 'No message'}`;
-            window.open(`https://wa.me/918936006657?text=${whatsappMessage}`, '_blank');
-        });
-
-        // EmailJS Submission
-        document.getElementById('contactForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            emailjs.send("service_hdy63yb", "template_5m62tai", {
-                from_name: document.getElementById('name').value,
-                from_email: document.getElementById('email').value,
-                phone: document.getElementById('phone').value,
-                course: document.getElementById('course').value,
-                qualification: document.getElementById('qualification').value,
-                message: document.getElementById('message').value
-            }).then(function() {
-                document.getElementById('successMessage').innerHTML = `
-                    <div class="success-alert">
-                        <i class="fas fa-check-circle"></i>
-                        <div>
-                            <h4>Thank you!</h4>
-                            <p>Your enquiry has been submitted successfully via Email.</p>
-                        </div>
-                    </div>
-                `;
-                document.getElementById('contactForm').reset();
-            }, function(error) {
-                document.getElementById('successMessage').innerHTML = `
-                    <div class="error-alert">
-                        <i class="fas fa-exclamation-circle"></i>
-                        <div>
-                            <h4>Submission Failed</h4>
-                            <p>Please try again or use WhatsApp option.</p>
-                        </div>
-                    </div>
-                `;
-            });
-        });
-
-        // Testimonial Slider Functionality
-        const slider = document.querySelector('.testimonial-slider');
-        const slides = document.querySelectorAll('.testimonial-card');
-        const prevBtn = document.querySelector('.prev-arrow');
-        const nextBtn = document.querySelector('.next-arrow');
-        const dotsContainer = document.querySelector('.slider-dots');
-        
-        let currentIndex = 0;
-        let slideInterval;
-        const slideCount = slides.length;
-        
-        // Create dots
-        slides.forEach((_, index) => {
-            const dot = document.createElement('span');
-            dot.classList.add('dot');
-            if (index === 0) dot.classList.add('active');
-            dot.addEventListener('click', () => goToSlide(index));
-            dotsContainer.appendChild(dot);
-        });
-        
-        const dots = document.querySelectorAll('.dot');
-        
-        // Update slider position
-        function updateSlider() {
-            const slideWidth = slides[0].offsetWidth + 30; // including gap
-            slider.style.transform = `translateX(-${currentIndex * slideWidth}px)`;
-            
-            // Update dots
-            dots.forEach((dot, index) => {
-                dot.classList.toggle('active', index === currentIndex);
-            });
-        }
-        
-        // Go to specific slide
-        function goToSlide(index) {
-            currentIndex = index;
-            if (currentIndex >= slideCount) currentIndex = 0;
-            if (currentIndex < 0) currentIndex = slideCount - 1;
-            updateSlider();
-            resetInterval();
-        }
-        
-        // Auto slide
-        function startInterval() {
-            slideInterval = setInterval(() => {
-                goToSlide(currentIndex + 1);
-            }, 5000); // Change slide every 5 seconds
-        }
-        
-        function resetInterval() {
-            clearInterval(slideInterval);
-            startInterval();
-        }
-        
-        // Navigation buttons
-        prevBtn.addEventListener('click', () => {
-            goToSlide(currentIndex - 1);
-        });
-        
-        nextBtn.addEventListener('click', () => {
-            goToSlide(currentIndex + 1);
-        });
-        
-        // Initialize
-        updateSlider();
-        startInterval();
-        
-        // Pause on hover
-        slider.addEventListener('mouseenter', () => {
-            clearInterval(slideInterval);
-        });
-        
-        slider.addEventListener('mouseleave', () => {
-            startInterval();
-        });
-        
-        // Responsive adjustments
-        window.addEventListener('resize', updateSlider);
-
-        // Achievement counters animation
-        const targets = [25, 120, 4200]; // Your target numbers
-        const numberElements = document.querySelectorAll('.number');
-        const duration = 2000; // Animation duration in ms
-        const startTime = Date.now();
-        
-        function animateNumbers() {
-            const currentTime = Date.now();
-            const elapsed = currentTime - startTime;
-            const progress = Math.min(elapsed / duration, 1);
-            
-            numberElements.forEach((element, index) => {
-                const target = targets[index];
-                const currentValue = Math.floor(progress * target);
-                element.textContent = currentValue + '+';
-            });
-            
-            if (progress < 1) {
-                requestAnimationFrame(animateNumbers);
-            }
-        }
-        
-        // Start animation when elements are in view
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    animateNumbers();
-                    observer.disconnect(); // Stop observing after animation starts
-                }
-            });
-        }, {threshold: 0.5});
-        
-        document.querySelectorAll('.achievement-item').forEach(item => {
-            observer.observe(item);
-        });
-
-        // Popup functionality
         const popup = document.getElementById('popup');
         const closeBtn = document.getElementById('closeBtn');
         const actionButtons = document.querySelectorAll('.popup-action-btn');
@@ -2017,7 +1521,18 @@
                 button.textContent = 'Loading...';
             });
         });
+
+        // Optional: Store in localStorage to prevent repeat popups
+        // if (!localStorage.getItem('popupShown')) {
+        //     setTimeout(() => {
+        //         popup.classList.add('active');
+        //         localStorage.setItem('popupShown', 'true');
+        //     }, 3000);
+        // }
     });
-    </script>
+</script>
+
+    <script src="script.js"></script>
+
 </body>
 </html>
