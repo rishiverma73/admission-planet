@@ -1,0 +1,751 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog | Admission Planet</title>
+    <meta name="description" content="Read our latest blogs on university admissions, career guidance, scholarship tips and education news in India.">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #2c3e50;
+            --secondary: #e74c3c;
+            --accent: #3498db;
+            --light: #ecf0f1;
+            --dark: #2c3e50;
+            --text: #333;
+            --text-light: #7f8c8d;
+            --white: #fff;
+            --shadow: 0 5px 20px rgba(0,0,0,0.1);
+            --radius: 12px;
+            --transition: all 0.3s ease;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { font-family: 'Inter', 'Segoe UI', sans-serif; line-height: 1.6; color: var(--text); background: #f8f9fa; overflow-x: hidden; }
+        a { text-decoration: none; color: inherit; transition: var(--transition); }
+        ul { list-style: none; }
+        img { max-width: 100%; height: auto; }
+
+        /* ===== ANNOUNCEMENT BAR ===== */
+        .announcement-bar {
+            background: linear-gradient(90deg, #1a2980 0%, #26d0ce 100%);
+            color: white; padding: 8px 0; font-size: 14px; overflow: hidden; z-index: 1001;
+        }
+        .announcement-container { display: flex; align-items: center; max-width: 1200px; margin: 0 auto; padding: 0 15px; }
+        .announcement-icon { margin-right: 10px; font-size: 16px; }
+        .sliding-text-container { flex: 1; overflow: hidden; height: 20px; position: relative; }
+        .sliding-text { display: flex; position: absolute; white-space: nowrap; animation: slideText 20s linear infinite; }
+        .sliding-text span { margin-right: 40px; }
+        @keyframes slideText { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+
+        /* ===== HEADER ===== */
+        header {
+            background: var(--white); box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: sticky; top: 0; z-index: 1000;
+        }
+        header .container { display: flex; justify-content: space-between; align-items: center; padding: 15px 0; max-width: 1200px; margin: 0 auto; padding-left: 15px; padding-right: 15px; }
+        .logo { display: flex; align-items: center; }
+        .logo img { height: 50px; margin-right: 10px; }
+        .logo h1 { font-size: 1.8rem; margin: 0; font-weight: 700; }
+        .logo h1 span { color: var(--secondary); }
+        nav ul { display: flex; gap: 25px; }
+        nav ul li a { font-weight: 600; color: var(--dark); position: relative; padding-bottom: 3px; }
+        nav ul li a::after { content: ''; position: absolute; bottom: -5px; left: 0; width: 0; height: 2px; background: var(--secondary); transition: var(--transition); }
+        nav ul li a:hover::after, nav ul li a.active::after { width: 100%; }
+        nav ul li a:hover, nav ul li a.active { color: var(--secondary); }
+        .mobile-menu { display: none; font-size: 24px; cursor: pointer; color: var(--dark); }
+        @media (max-width: 768px) {
+            nav { display: none; position: absolute; top: 100%; left: 0; width: 100%; background: white; padding: 20px; box-shadow: 0 10px 20px rgba(0,0,0,0.1); z-index: 999; }
+            nav.open { display: block; }
+            nav ul { flex-direction: column; gap: 10px; }
+            .mobile-menu { display: block; }
+        }
+
+        /* ===== HERO ===== */
+        .blog-hero {
+            background: linear-gradient(135deg, #012f63 0%, #662405 100%);
+            color: white; padding: 80px 0 60px; text-align: center; position: relative; overflow: hidden;
+        }
+        .blog-hero::before {
+            content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: url('https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?w=1200&q=80') center/cover;
+            opacity: 0.15; z-index: 0;
+        }
+        .blog-hero .content { position: relative; z-index: 1; }
+        .blog-hero h2 { font-size: 3rem; font-weight: 800; letter-spacing: 3px; margin-bottom: 15px; }
+        .blog-hero p { font-size: 1.2rem; opacity: 0.9; max-width: 600px; margin: 0 auto 30px; }
+        .hero-search { display: flex; max-width: 500px; margin: 0 auto; border-radius: 50px; overflow: hidden; box-shadow: 0 5px 20px rgba(0,0,0,0.3); }
+        .hero-search input { flex: 1; padding: 14px 24px; border: none; outline: none; font-size: 15px; font-family: 'Inter', sans-serif; }
+        .hero-search button { background: var(--secondary); color: white; border: none; padding: 14px 24px; cursor: pointer; font-size: 16px; transition: var(--transition); }
+        .hero-search button:hover { background: #c0392b; }
+
+        /* ===== CONTAINER ===== */
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 15px; }
+
+        /* ===== CATEGORY FILTERS ===== */
+        .filters-section { background: white; border-bottom: 1px solid #eee; padding: 0; }
+        .filters-inner { display: flex; gap: 10px; overflow-x: auto; padding: 18px 0; scrollbar-width: none; }
+        .filters-inner::-webkit-scrollbar { display: none; }
+        .filter-btn {
+            white-space: nowrap; padding: 8px 20px; border-radius: 50px; border: 2px solid #e0e0e0;
+            background: white; color: var(--text-light); font-weight: 600; cursor: pointer;
+            font-size: 13px; transition: var(--transition); font-family: 'Inter', sans-serif;
+        }
+        .filter-btn:hover, .filter-btn.active { background: var(--secondary); border-color: var(--secondary); color: white; }
+
+        /* ===== BLOG GRID ===== */
+        .blog-section { padding: 60px 0; }
+        .blog-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; }
+        @media (max-width: 992px) { .blog-grid { grid-template-columns: repeat(2, 1fr); } }
+        @media (max-width: 576px) { .blog-grid { grid-template-columns: 1fr; } }
+
+        /* ===== BLOG CARD ===== */
+        .blog-card {
+            background: white; border-radius: var(--radius); overflow: hidden;
+            box-shadow: 0 3px 15px rgba(0,0,0,0.07); transition: var(--transition);
+            display: flex; flex-direction: column; cursor: pointer;
+        }
+        .blog-card:hover { transform: translateY(-8px); box-shadow: 0 15px 35px rgba(0,0,0,0.13); }
+        .card-image { height: 200px; overflow: hidden; position: relative; }
+        .card-image img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease; }
+        .blog-card:hover .card-image img { transform: scale(1.05); }
+        .card-category {
+            position: absolute; top: 15px; left: 15px;
+            background: var(--secondary); color: white; padding: 4px 14px;
+            border-radius: 50px; font-size: 11px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase;
+        }
+        .card-body { padding: 22px; flex: 1; display: flex; flex-direction: column; }
+        .card-meta { display: flex; gap: 15px; font-size: 12px; color: var(--text-light); margin-bottom: 12px; }
+        .card-meta i { margin-right: 4px; color: var(--secondary); }
+        .card-title { font-size: 1.1rem; font-weight: 700; color: var(--dark); margin-bottom: 10px; line-height: 1.4; }
+        .card-excerpt { color: var(--text-light); font-size: 0.9rem; margin-bottom: 18px; flex: 1; line-height: 1.6; }
+        .card-footer { display: flex; align-items: center; justify-content: space-between; }
+        .read-more-btn {
+            display: inline-flex; align-items: center; gap: 6px;
+            background: var(--secondary); color: white; padding: 8px 18px;
+            border-radius: 50px; font-size: 13px; font-weight: 600; border: none; cursor: pointer;
+            transition: var(--transition); font-family: 'Inter', sans-serif;
+        }
+        .read-more-btn:hover { background: #c0392b; transform: translateX(3px); }
+        .card-views { font-size: 12px; color: var(--text-light); }
+        .card-views i { margin-right: 4px; }
+
+        /* ===== EMPTY STATE ===== */
+        .empty-state { text-align: center; padding: 80px 20px; grid-column: 1/-1; }
+        .empty-state i { font-size: 60px; color: #ddd; margin-bottom: 20px; }
+        .empty-state h3 { font-size: 1.5rem; color: var(--text-light); margin-bottom: 10px; }
+        .empty-state p { color: var(--text-light); }
+
+        /* ===== MODAL ===== */
+        .modal-overlay {
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.7); z-index: 9999; justify-content: center; align-items: center;
+            backdrop-filter: blur(4px);
+        }
+        .modal-overlay.open { display: flex; animation: fadeIn 0.3s ease; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        .modal-box {
+            background: white; border-radius: 16px; max-width: 800px; width: 95%;
+            max-height: 90vh; overflow-y: auto; position: relative;
+            animation: slideUp 0.3s ease;
+        }
+        @keyframes slideUp { from { transform: translateY(30px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+        .modal-header-img { width: 100%; height: 280px; object-fit: cover; border-radius: 16px 16px 0 0; }
+        .modal-body { padding: 32px; }
+        .modal-category {
+            display: inline-block; background: var(--secondary); color: white; padding: 4px 16px;
+            border-radius: 50px; font-size: 12px; font-weight: 700; text-transform: uppercase;
+            letter-spacing: 1px; margin-bottom: 16px;
+        }
+        .modal-title { font-size: 1.8rem; font-weight: 800; color: var(--dark); margin-bottom: 12px; line-height: 1.3; }
+        .modal-meta { display: flex; gap: 20px; font-size: 13px; color: var(--text-light); margin-bottom: 24px; flex-wrap: wrap; }
+        .modal-meta i { margin-right: 5px; color: var(--secondary); }
+        .modal-content-text { color: var(--text); line-height: 1.8; font-size: 1rem; white-space: pre-line; }
+        .modal-close {
+            position: absolute; top: 15px; right: 20px; background: rgba(0,0,0,0.5);
+            color: white; border: none; width: 36px; height: 36px; border-radius: 50%;
+            font-size: 18px; cursor: pointer; display: flex; align-items: center; justify-content: center;
+            transition: var(--transition); z-index: 10;
+        }
+        .modal-close:hover { background: var(--secondary); }
+
+        /* ===== FOOTER ===== */
+        footer { background: var(--dark); color: white; padding: 50px 0 0; }
+        .footer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 40px; margin-bottom: 40px; }
+        .footer-col h3 { font-size: 1.2rem; margin-bottom: 20px; color: white; position: relative; padding-bottom: 10px; }
+        .footer-col h3::after { content: ''; position: absolute; bottom: 0; left: 0; width: 40px; height: 2px; background: var(--secondary); }
+        .footer-col p { color: #bdc3c7; font-size: 0.9rem; line-height: 1.7; }
+        .footer-col ul li { margin-bottom: 10px; }
+        .footer-col ul li a { color: #bdc3c7; font-size: 0.9rem; }
+        .footer-col ul li a:hover { color: var(--secondary); padding-left: 5px; }
+        .footer-social { display: flex; gap: 10px; margin-top: 20px; }
+        .footer-social a { width: 38px; height: 38px; background: rgba(255,255,255,0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; transition: var(--transition); }
+        .footer-social a:hover { background: var(--secondary); transform: translateY(-3px); }
+        .copyright { background: #1a252f; text-align: center; padding: 18px 0; color: #bdc3c7; font-size: 13px; }
+
+        /* ===== SECTION TITLE ===== */
+        .section-title { font-size: 2.2rem; color: var(--dark); font-weight: 800; margin-bottom: 8px; }
+        .section-subtitle { color: var(--text-light); margin-bottom: 40px; }
+        .title-line { width: 60px; height: 4px; background: var(--secondary); border-radius: 2px; margin-bottom: 12px; }
+
+        /* ===== STATS BAR ===== */
+        .stats-bar { background: var(--secondary); color: white; padding: 20px 0; }
+        .stats-inner { display: flex; justify-content: space-around; flex-wrap: wrap; gap: 10px; }
+        .stat-item { text-align: center; }
+        .stat-num { font-size: 1.8rem; font-weight: 800; }
+        .stat-label { font-size: 12px; opacity: 0.85; }
+    </style>
+</head>
+<body>
+
+<!-- Announcement Bar -->
+<div class="announcement-bar">
+    <div class="announcement-container">
+        <div class="announcement-icon"><i class="fas fa-bullhorn"></i></div>
+        <div class="sliding-text-container">
+            <div class="sliding-text">
+                <span>🚀 Admission Open for 2025-26 Batch! Limited Seats Available</span>
+                <span>🎓 Get up to 50% Scholarship on selected courses</span>
+                <span>📞 Call Now: +91 8936006657 for Free Counseling</span>
+                <span>🏆 Partnered with 25+ Top Universities in India</span>
+                <span>🚀 Admission Open for 2025-26 Batch! Limited Seats Available</span>
+                <span>🎓 Get up to 50% Scholarship on selected courses</span>
+                <span>📞 Call Now: +91 8936006657 for Free Counseling</span>
+                <span>🏆 Partnered with 25+ Top Universities in India</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Header -->
+<header>
+    <div class="container">
+        <div class="logo">
+            <img src="images/admission planet copy.webp" alt="Admission Planet">
+            <h1>Admission<span>Planet</span></h1>
+        </div>
+        <nav id="mainNav">
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="courses.html">Courses</a></li>
+                <li><a href="gallery.html">Gallery</a></li>
+                <li><a href="eligibility.html">Eligibility</a></li>
+                <li><a href="blog.html" class="active">Blog</a></li>
+                <li><a href="contact.html"><i class="fas fa-envelope" style="margin-right:5px;"></i>Contact</a></li>
+            </ul>
+        </nav>
+        <div class="mobile-menu" id="mobileMenuBtn"><i class="fas fa-bars"></i></div>
+    </div>
+</header>
+
+<!-- Hero -->
+<section class="blog-hero">
+    <div class="content container">
+        <h2>📚 Our Blog</h2>
+        <p>Latest insights on admissions, career guidance, scholarships & education tips</p>
+        <div class="hero-search">
+            <input type="text" id="searchInput" placeholder="Search articles..." />
+            <button onclick="doSearch()"><i class="fas fa-search"></i></button>
+        </div>
+    </div>
+</section>
+
+<!-- Stats Bar -->
+<div class="stats-bar">
+    <div class="container">
+        <div class="stats-inner">
+            <div class="stat-item"><div class="stat-num" id="statTotal">0</div><div class="stat-label">Total Articles</div></div>
+            <div class="stat-item"><div class="stat-num" id="statViews">0</div><div class="stat-label">Total Reads</div></div>
+            <div class="stat-item"><div class="stat-num" id="statCats">0</div><div class="stat-label">Categories</div></div>
+        </div>
+    </div>
+</div>
+
+<!-- Category Filters -->
+<div class="filters-section">
+    <div class="container">
+        <div class="filters-inner" id="filtersContainer">
+            <button class="filter-btn active" data-cat="all" onclick="filterPosts('all', this)">All Posts</button>
+        </div>
+    </div>
+</div>
+
+<!-- Blog Grid -->
+<section class="blog-section">
+    <div class="container">
+        <div class="blog-grid" id="blogGrid">
+            <!-- Cards injected by JS -->
+        </div>
+    </div>
+</section>
+
+<!-- Modal -->
+<div class="modal-overlay" id="postModal" onclick="closeModalOnBg(event)">
+    <div class="modal-box">
+        <button class="modal-close" onclick="closeModal()"><i class="fas fa-times"></i></button>
+        <img src="" alt="" id="modalImg" class="modal-header-img" onerror="this.style.display='none'">
+        <div class="modal-body">
+            <span class="modal-category" id="modalCat"></span>
+            <h2 class="modal-title" id="modalTitle"></h2>
+            <div class="modal-meta" id="modalMeta"></div>
+            <div class="modal-content-text" id="modalContent"></div>
+        </div>
+    </div>
+</div>
+
+<!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="footer-grid">
+            <div class="footer-col">
+                <h3>Admission Planet</h3>
+                <p>India's trusted admission consultancy. We help students find the best universities and courses for their future.</p>
+                <div class="footer-social">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-youtube"></i></a>
+                    <a href="https://wa.me/918936006657"><i class="fab fa-whatsapp"></i></a>
+                </div>
+            </div>
+            <div class="footer-col">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="courses.html">Courses</a></li>
+                    <li><a href="gallery.html">Gallery</a></li>
+                    <li><a href="eligibility.html">Eligibility</a></li>
+                    <li><a href="blog.html">Blog</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-col contact">
+                <h3>Contact Us</h3>
+                <ul>
+                    <li><i class="fas fa-phone" style="color:#e74c3c;margin-right:10px;"></i> +91 8936006657</li>
+                    <li><i class="fab fa-whatsapp" style="color:#25D366;margin-right:10px;"></i> WhatsApp Available</li>
+                    <li><i class="fas fa-map-marker-alt" style="color:#e74c3c;margin-right:10px;"></i> India</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="copyright">
+        <div class="container">
+            <p>© 2025 Admission Planet. All Rights Reserved.</p>
+        </div>
+    </div>
+</footer>
+
+<script>
+// ===== DEFAULT SEED POSTS =====
+const SEED_POSTS = [
+    {
+        id: 'seed1',
+        title: 'How to Choose the Right University for B.Pharma in India',
+        category: 'Pharmacy',
+        date: '2025-03-10',
+        author: 'Admission Planet Team',
+        excerpt: 'Choosing the right pharmacy college is one of the most crucial decisions in a student\'s life. Here\'s a complete guide to help you make an informed choice.',
+        content: `Choosing the right pharmacy college is one of the most crucial decisions in a student's life. With hundreds of institutions offering B.Pharma programs across India, it can be overwhelming.
+
+Here are the key factors to consider:
+
+1. **NAAC/NBA Accreditation**
+Always check if the university has proper accreditation from NAAC (National Assessment and Accreditation Council) or NBA (National Board of Accreditation). This ensures quality education and recognition.
+
+2. **Faculty & Infrastructure**
+Look for colleges with experienced faculty, modern labs, and well-stocked libraries. Practical training is essential in pharmacy education.
+
+3. **Placement Record**
+Check the placement statistics. Good colleges have tie-ups with leading pharma companies like Sun Pharma, Cipla, Dr. Reddy's, etc.
+
+4. **Fee Structure & Scholarships**
+Compare fee structures across colleges. Many universities offer merit-based and need-based scholarships. At Admission Planet, we help you find the best options within your budget.
+
+5. **Location & Hostel Facilities**
+Consider the location, connectivity, and hostel facilities, especially if you're from a different state.
+
+Contact Admission Planet today for free counseling and get admitted to the best pharmacy college for you!`,
+        thumbnail: 'https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=600&q=80',
+        status: 'published', views: 142
+    },
+    {
+        id: 'seed2',
+        title: 'Top Scholarships Available for Nursing Students in 2025',
+        category: 'Nursing',
+        date: '2025-03-05',
+        author: 'Rishi Verma',
+        excerpt: 'Are you dreaming of a nursing career but worried about the costs? Discover the top scholarships that can make your dream affordable in 2025.',
+        content: `Are you dreaming of a nursing career but worried about the costs? Nursing is one of the most rewarding professions, and there are plenty of scholarships available to help you fund your education.
+
+**Government Scholarships for Nursing Students:**
+
+1. **National Scholarship Portal (NSP)**
+The NSP offers various pre-matric and post-matric scholarships for students from SC/ST/OBC categories. The application is online and simple.
+
+2. **Pragati Scholarship (AICTE)**
+For female students pursuing technical education including nursing-related courses. Provides ₹50,000 per year.
+
+3. **State Government Scholarships**
+Most states offer their own scholarship programs. Check your state's scholarship portal for details.
+
+4. **Prime Minister's Scholarship Scheme**
+For children of ex-servicemen. Provides significant financial support.
+
+**Private & NGO Scholarships:**
+
+- Tata Trusts Education Grant
+- Sitaram Jindal Foundation Scholarship
+- Kishore Vaigyanik Protsahan Yojana (KVPY)
+
+**Tips to Apply:**
+- Apply early — most scholarship deadlines are in July-August
+- Keep all documents ready: marksheets, income certificate, caste certificate, bank details
+- Apply on multiple platforms to increase chances
+
+Admission Planet provides free guidance on scholarship applications. Contact us at +91 8936006657!`,
+        thumbnail: 'https://images.unsplash.com/photo-1579684385127-1ef15d508118?w=600&q=80',
+        status: 'published', views: 98
+    },
+    {
+        id: 'seed3',
+        title: 'MBA vs PGDM: Which is Better for Your Career in India?',
+        category: 'Management',
+        date: '2025-02-28',
+        author: 'Admission Planet Team',
+        excerpt: 'Many students confuse MBA and PGDM. Both are excellent management programs but there are key differences you must know before applying.',
+        content: `Many students confuse MBA and PGDM. Both are excellent management programs but there are key differences that can impact your career significantly.
+
+**What is MBA?**
+MBA (Master of Business Administration) is a university-approved degree program regulated by UGC. It is offered by universities and their affiliated colleges.
+
+**What is PGDM?**
+PGDM (Post Graduate Diploma in Management) is offered by autonomous institutes approved by AICTE. IIMs offer PGDM, not MBA!
+
+**Key Differences:**
+
+| Feature | MBA | PGDM |
+|---------|-----|------|
+| Offered by | Universities | Autonomous Institutes |
+| Regulated by | UGC | AICTE |
+| Curriculum | Fixed by university | Flexible, industry-updated |
+| Top Institutes | Delhi University, BHU | IIMs, XLRI, SP Jain |
+| Recognition | Degree | Diploma (equivalent to degree) |
+
+**Which Should You Choose?**
+
+- If cost is a concern → MBA from a good state university is more affordable
+- If you want industry-relevant curriculum → PGDM from top autonomous institutes
+- For government jobs → MBA is more directly recognized
+- For corporate careers → Both are equally valued if institute is good
+
+**Bottom Line:**
+The institute's reputation matters more than the type of degree. A PGDM from IIM is far more valuable than an MBA from an unknown college.
+
+Call Admission Planet at +91 8936006657 for personalized career counseling!`,
+        thumbnail: 'https://images.unsplash.com/photo-1552664730-d307ca884978?w=600&q=80',
+        status: 'published', views: 215
+    },
+    {
+        id: 'seed4',
+        title: 'Complete Guide to LLB Admission in India 2025',
+        category: 'Law',
+        date: '2025-02-20',
+        author: 'Legal Education Desk',
+        excerpt: 'Interested in a law career? Here\'s everything you need to know about LLB admission, entrance exams, top colleges, and career prospects in India.',
+        content: `A career in law is one of the most prestigious and financially rewarding paths in India. Here's your complete guide to LLB admission in 2025.
+
+**Types of Law Programs:**
+
+1. **5-Year Integrated BA LLB / BBA LLB / B.Com LLB** — After Class 12
+2. **3-Year LLB** — After graduation (any stream)
+
+**Top Entrance Exams for Law in India:**
+
+- **CLAT** (Common Law Admission Test) — For 22 National Law Universities
+- **AILET** — For National Law University, Delhi
+- **LSAT India** — Accepted by 80+ colleges
+- **MH CET Law** — For Maharashtra colleges
+- **State-Level Entrance Tests** — Varies by state
+
+**Top Law Colleges:**
+- NLSIU Bangalore (Rank 1)
+- NLU Delhi
+- NALSAR Hyderabad
+- NLU Jodhpur
+- Symbiosis Law School, Pune
+
+**Eligibility:**
+- 12th pass with minimum 45% marks (40% for SC/ST)
+- No age limit for 3-year LLB (Supreme Court ruling 2023)
+
+**Career Prospects After LLB:**
+- Advocate (Courts)
+- Corporate Lawyer / Legal Consultant
+- Judge (through judiciary exams)
+- Legal Advisor in corporates
+- LLM & research
+
+Admission Planet helps you with CLAT preparation guidance and direct admission in top law colleges. Contact us today!`,
+        thumbnail: 'https://images.unsplash.com/photo-1589829545856-d10d557cf95f?w=600&q=80',
+        status: 'published', views: 176
+    },
+    {
+        id: 'seed5',
+        title: 'Distance vs Regular Education: Which Should You Choose?',
+        category: 'General',
+        date: '2025-02-15',
+        author: 'Admission Planet Team',
+        excerpt: 'Distance education has become increasingly popular in India. But is it the right choice for you? Let\'s compare distance and regular mode of education honestly.',
+        content: `Distance education has become increasingly popular in India, especially post-COVID. But is it the right choice for everyone? Let's make an honest comparison.
+
+**Regular Education (On-Campus):**
+
+Advantages:
+✅ Direct interaction with faculty and peers
+✅ Access to labs, libraries, sports facilities
+✅ Campus placements and networking events
+✅ Structured schedule improves discipline
+✅ Better recognized for some government jobs
+
+Disadvantages:
+❌ Higher cost (fees + hostel + travel)
+❌ Fixed schedule — can't work simultaneously
+❌ Must relocate if college is far
+
+**Distance Education:**
+
+Advantages:
+✅ Study while working — earn + learn
+✅ Lower fees — often 60-80% cheaper
+✅ Study from home — no relocation needed
+✅ Flexible schedule
+✅ UGC-recognized degrees from top universities (IGNOU, Annamalai, etc.)
+
+Disadvantages:
+❌ Less practical exposure
+❌ No campus life or networking events
+❌ Requires strong self-discipline
+❌ Not suitable for professional courses like MBBS, B.Pharma
+
+**Our Recommendation:**
+- If you're a fresh 12th pass student with no financial constraints → Choose Regular
+- If you're working, married, or have financial constraints → Distance is perfectly fine
+- For management, arts, and commerce → Distance works well
+- For medical, engineering, pharmacy → Regular is necessary
+
+Need more guidance? Admission Planet offers free counseling for both modes. Call +91 8936006657!`,
+        thumbnail: 'https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=600&q=80',
+        status: 'published', views: 203
+    },
+    {
+        id: 'seed6',
+        title: 'Paramedical Courses: The Hidden Gems of Healthcare Education',
+        category: 'Paramedical',
+        date: '2025-02-10',
+        author: 'Healthcare Desk',
+        excerpt: 'Paramedical courses are often overlooked, but they offer excellent career opportunities in India\'s booming healthcare sector. Explore the top courses and their scope.',
+        content: `Paramedical courses are the backbone of the healthcare system, yet they remain one of the most underrated career options in India. With India's healthcare sector growing at 22% annually, paramedical professionals are in huge demand.
+
+**What are Paramedical Courses?**
+Paramedical courses train professionals who support doctors and nurses in patient care, diagnosis, and treatment. These include:
+
+**Top Paramedical Courses in India:**
+
+1. **B.Sc. Medical Lab Technology (MLT)**
+   Duration: 3 years | Salary: ₹2-6 LPA
+   
+2. **B.Sc. Radiology & Imaging Technology**
+   Duration: 3 years | Salary: ₹3-7 LPA
+   
+3. **B.Sc. Physiotherapy**
+   Duration: 4.5 years | Salary: ₹3-8 LPA
+
+4. **B.Sc. Operation Theatre Technology**
+   Duration: 3 years | Salary: ₹2.5-6 LPA
+   
+5. **B.Sc. Dialysis Technology**
+   Duration: 3 years | Salary: ₹3-7 LPA
+
+6. **D.Pharm (Diploma in Pharmacy)**
+   Duration: 2 years | Salary: ₹2-5 LPA
+
+**Career Scope:**
+- Government hospitals (AIIMS, PGIMER)
+- Private hospitals & diagnostic centers
+- Pharmaceutical companies
+- Abroad opportunities (especially Gulf countries)
+
+**Eligibility:**
+- 12th with Physics, Chemistry, Biology (PCB)
+- Minimum 50% marks
+
+Admission Planet has tie-ups with top paramedical colleges across India. Get direct admission guidance — Call +91 8936006657!`,
+        thumbnail: 'https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=600&q=80',
+        status: 'published', views: 129
+    }
+];
+
+// ===== STORAGE KEY =====
+const STORAGE_KEY = 'ap_blog_posts';
+
+// ===== LOAD POSTS =====
+function loadPosts() {
+    const stored = localStorage.getItem(STORAGE_KEY);
+    if (stored) return JSON.parse(stored);
+    // First visit: seed and save
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(SEED_POSTS));
+    return SEED_POSTS;
+}
+
+// ===== BUILD CARDS =====
+let allPosts = [];
+let currentFilter = 'all';
+
+function formatDate(d) {
+    const date = new Date(d);
+    return date.toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' });
+}
+
+function buildCards(posts) {
+    const grid = document.getElementById('blogGrid');
+    const publishedPosts = posts.filter(p => p.status === 'published');
+
+    if (publishedPosts.length === 0) {
+        grid.innerHTML = `<div class="empty-state">
+            <i class="fas fa-newspaper"></i>
+            <h3>No posts found</h3>
+            <p>Check back later for new articles!</p>
+        </div>`;
+        return;
+    }
+
+    grid.innerHTML = publishedPosts.map(post => `
+        <div class="blog-card" onclick="openPost('${post.id}')">
+            <div class="card-image">
+                <img src="${post.thumbnail || 'https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?w=600&q=80'}" alt="${post.title}" onerror="this.src='https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?w=600&q=80'">
+                <span class="card-category">${post.category}</span>
+            </div>
+            <div class="card-body">
+                <div class="card-meta">
+                    <span><i class="fas fa-calendar"></i>${formatDate(post.date)}</span>
+                    <span><i class="fas fa-user"></i>${post.author || 'Admin'}</span>
+                </div>
+                <h3 class="card-title">${post.title}</h3>
+                <p class="card-excerpt">${post.excerpt}</p>
+                <div class="card-footer">
+                    <button class="read-more-btn"><i class="fas fa-book-open"></i> Read More</button>
+                    <span class="card-views"><i class="fas fa-eye"></i>${post.views || 0}</span>
+                </div>
+            </div>
+        </div>
+    `).join('');
+}
+
+function buildFilters(posts) {
+    const cats = ['all', ...new Set(posts.map(p => p.category))];
+    const container = document.getElementById('filtersContainer');
+    container.innerHTML = cats.map(cat =>
+        `<button class="filter-btn ${cat === 'all' ? 'active' : ''}" data-cat="${cat}" onclick="filterPosts('${cat}', this)">
+            ${cat === 'all' ? 'All Posts' : cat}
+        </button>`
+    ).join('');
+}
+
+function updateStats(posts) {
+    const published = posts.filter(p => p.status === 'published');
+    const totalViews = published.reduce((sum, p) => sum + (p.views || 0), 0);
+    const cats = new Set(published.map(p => p.category)).size;
+    animateNum('statTotal', published.length);
+    animateNum('statViews', totalViews);
+    animateNum('statCats', cats);
+}
+
+function animateNum(id, target) {
+    let start = 0;
+    const el = document.getElementById(id);
+    const step = Math.ceil(target / 40);
+    const interval = setInterval(() => {
+        start += step;
+        if (start >= target) { el.textContent = target; clearInterval(interval); }
+        else el.textContent = start;
+    }, 30);
+}
+
+function filterPosts(cat, btn) {
+    currentFilter = cat;
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    const filtered = cat === 'all' ? allPosts : allPosts.filter(p => p.category === cat);
+    buildCards(filtered);
+}
+
+function doSearch() {
+    const q = document.getElementById('searchInput').value.toLowerCase().trim();
+    if (!q) { buildCards(currentFilter === 'all' ? allPosts : allPosts.filter(p => p.category === currentFilter)); return; }
+    const filtered = allPosts.filter(p =>
+        p.title.toLowerCase().includes(q) ||
+        p.excerpt.toLowerCase().includes(q) ||
+        p.category.toLowerCase().includes(q)
+    );
+    buildCards(filtered);
+}
+
+document.getElementById('searchInput').addEventListener('keyup', e => {
+    if (e.key === 'Enter') doSearch();
+});
+
+// ===== MODAL =====
+function openPost(id) {
+    const post = allPosts.find(p => p.id === id);
+    if (!post) return;
+
+    // Increment view count
+    post.views = (post.views || 0) + 1;
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(allPosts));
+
+    const img = document.getElementById('modalImg');
+    img.src = post.thumbnail || '';
+    img.style.display = post.thumbnail ? 'block' : 'none';
+    document.getElementById('modalCat').textContent = post.category;
+    document.getElementById('modalTitle').textContent = post.title;
+    document.getElementById('modalMeta').innerHTML = `
+        <span><i class="fas fa-calendar"></i>${formatDate(post.date)}</span>
+        <span><i class="fas fa-user"></i>${post.author || 'Admin'}</span>
+        <span><i class="fas fa-eye"></i>${post.views} reads</span>
+        <span><i class="fas fa-folder"></i>${post.category}</span>
+    `;
+    document.getElementById('modalContent').textContent = post.content;
+    document.getElementById('postModal').classList.add('open');
+    document.body.style.overflow = 'hidden';
+}
+
+function closeModal() {
+    document.getElementById('postModal').classList.remove('open');
+    document.body.style.overflow = '';
+    // Rebuild cards to update view count
+    const filtered = currentFilter === 'all' ? allPosts : allPosts.filter(p => p.category === currentFilter);
+    buildCards(filtered);
+}
+
+function closeModalOnBg(e) {
+    if (e.target === document.getElementById('postModal')) closeModal();
+}
+
+// ===== MOBILE MENU =====
+document.getElementById('mobileMenuBtn').addEventListener('click', () => {
+    document.getElementById('mainNav').classList.toggle('open');
+});
+
+// ===== INIT =====
+document.addEventListener('DOMContentLoaded', () => {
+    allPosts = loadPosts();
+    const published = allPosts.filter(p => p.status === 'published');
+    buildFilters(published);
+    buildCards(published);
+    updateStats(allPosts);
+});
+</script>
+</body>
+</html>
