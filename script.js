@@ -103,8 +103,18 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Update slider position
     function updateSlider() {
+        if (!slides.length) return;
         const slideWidth = slides[0].offsetWidth + 30; // including gap
-        slider.style.transform = `translateX(-${currentIndex * slideWidth}px)`;
+        
+        let visibleSlides = 1;
+        if (window.innerWidth >= 992) visibleSlides = 3;
+        else if (window.innerWidth >= 768) visibleSlides = 2;
+        
+        const maxIndex = Math.max(0, slideCount - visibleSlides);
+        let moveIndex = currentIndex;
+        if (moveIndex > maxIndex) moveIndex = maxIndex;
+
+        slider.style.transform = `translateX(-${moveIndex * slideWidth}px)`;
         
         // Update dots
         dots.forEach((dot, index) => {
