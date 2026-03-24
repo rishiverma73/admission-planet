@@ -245,7 +245,15 @@
             .sidebar-toggle { display: block; }
             .sidebar-w { --sidebar-w: 0; }
         }
+        .seed-banner { background: #fff3cd; border: 1px solid #ffc107; border-radius: 10px; padding: 16px 20px; margin-bottom: 20px; display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+        .seed-banner p { font-size: 13px; color: #856404; margin: 0; }
+        .btn-seed { padding: 8px 18px; background: #f39c12; color: white; border: none; border-radius: 8px; font-size: 13px; font-weight: 700; cursor: pointer; font-family: 'Inter', sans-serif; }
+        .btn-seed:hover { background: #e67e22; }
+        .loading-spinner { text-align: center; padding: 40px; color: var(--text-light); font-size: 14px; }
     </style>
+    <!-- Firebase CDN -->
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
 </head>
 <body>
 
@@ -426,7 +434,18 @@
 </div>
 
 <script>
-const STORAGE_KEY = 'ap_blog_posts';
+// ===== FIREBASE INIT =====
+const firebaseConfig = {
+    apiKey: "AIzaSyDNCFPIdrR44GtbEEsZZMOZ-V7FUCmmP08",
+    authDomain: "admission-planet.firebaseapp.com",
+    projectId: "admission-planet",
+    storageBucket: "admission-planet.firebasestorage.app",
+    messagingSenderId: "974081175341",
+    appId: "1:974081175341:web:13c445329602a7d0abada4"
+};
+firebase.initializeApp(firebaseConfig);
+const db = firebase.firestore();
+
 const PASSWORD = 'admin123'; // Change this password here
 
 // ===== LOGIN =====
@@ -450,18 +469,43 @@ function doLogout() {
     document.getElementById('loginError').style.display = 'none';
 }
 
-// ===== STORAGE =====
-function getPosts() {
-    const stored = localStorage.getItem(STORAGE_KEY);
-    return stored ? JSON.parse(stored) : [];
+// ===== STORAGE — Firebase Firestore =====
+async function getPosts() {
+    const snapshot = await db.collection('posts').orderBy('date', 'desc').get();
+    return snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
 }
 
-function savePosts(posts) {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(posts));
+async function checkAndShowSeedBanner() {
+    const posts = await getPosts();
+    const existing = document.getElementById('seedBanner');
+    if (existing) existing.remove();
+    if (posts.length === 0) {
+        const banner = document.createElement('div');
+        banner.id = 'seedBanner';
+        banner.className = 'seed-banner';
+        banner.innerHTML = `<p>🌱 <strong>Firestore mein koi post nahi hai.</strong> Sample posts add karo blog start karne ke liye.</p><button class="btn-seed" onclick="seedDefaultPosts()">Sample Posts Add Karo</button>`;
+        document.getElementById('panel-dashboard').prepend(banner);
+    }
 }
 
-function genId() {
-    return 'post_' + Date.now() + '_' + Math.random().toString(36).substr(2, 6);
+async function seedDefaultPosts() {
+    showToast('Sample posts add ho rahi hain...');
+    const SEED_POSTS = [
+        { title: 'How to Choose the Right University for B.Pharma in India', category: 'Pharmacy', date: '2025-03-10', author: 'Admission Planet Team', excerpt: "Choosing the right pharmacy college is one of the most crucial decisions in a student's life. Here's a complete guide to help you make an informed choice.", content: `Choosing the right pharmacy college is one of the most crucial decisions in a student's life. With hundreds of institutions offering B.Pharma programs across India, it can be overwhelming.\n\nHere are the key factors to consider:\n\n1. NAAC/NBA Accreditation\nAlways check if the university has proper accreditation from NAAC or NBA.\n\n2. Faculty & Infrastructure\nLook for colleges with experienced faculty, modern labs, and well-stocked libraries.\n\n3. Placement Record\nCheck the placement statistics. Good colleges have tie-ups with leading pharma companies.\n\n4. Fee Structure & Scholarships\nCompare fee structures across colleges. Many universities offer merit-based scholarships.\n\nContact Admission Planet today for free counseling at +91 8936006657!`, thumbnail: 'https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=600&q=80', status: 'published', views: 142 },
+        { title: 'Top Scholarships Available for Nursing Students in 2025', category: 'Nursing', date: '2025-03-05', author: 'Rishi Verma', excerpt: "Are you dreaming of a nursing career but worried about the costs? Discover the top scholarships that can make your dream affordable in 2025.", content: `Are you dreaming of a nursing career but worried about the costs? Nursing is one of the most rewarding professions, and there are plenty of scholarships available.\n\nGovernment Scholarships:\n1. National Scholarship Portal (NSP) — Pre/post-matric scholarships for SC/ST/OBC students\n2. Pragati Scholarship (AICTE) — For female students, provides Rs 50,000 per year\n3. State Government Scholarships — Check your state portal\n\nPrivate Scholarships:\n- Tata Trusts Education Grant\n- Sitaram Jindal Foundation Scholarship\n\nTips: Apply early, keep all documents ready — marksheets, income certificate, caste certificate.\n\nAdmission Planet provides free guidance on scholarship applications. Call +91 8936006657!`, thumbnail: 'https://images.unsplash.com/photo-1579684385127-1ef15d508118?w=600&q=80', status: 'published', views: 98 },
+        { title: 'MBA vs PGDM: Which is Better for Your Career in India?', category: 'Management', date: '2025-02-28', author: 'Admission Planet Team', excerpt: 'Many students confuse MBA and PGDM. Both are excellent management programs but there are key differences you must know before applying.', content: `Many students confuse MBA and PGDM. Know the key differences:\n\nMBA — University-approved degree regulated by UGC\nPGDM — Offered by autonomous institutes approved by AICTE (IIMs give PGDM!)\n\nKey Differences:\n- MBA: Fixed curriculum | PGDM: Flexible, industry-updated\n- MBA: More affordable | PGDM from top institutes: More expensive\n- For government jobs: MBA is more recognized\n- For corporate careers: Both are equally valued if institute is good\n\nBottom Line: Institute reputation matters more than degree type.\n\nCall Admission Planet at +91 8936006657 for personalized career counseling!`, thumbnail: 'https://images.unsplash.com/photo-1552664730-d307ca884978?w=600&q=80', status: 'published', views: 215 },
+        { title: 'Complete Guide to LLB Admission in India 2025', category: 'Law', date: '2025-02-20', author: 'Legal Education Desk', excerpt: "Interested in a law career? Here's everything you need to know about LLB admission, entrance exams, top colleges, and career prospects in India.", content: `A career in law is one of the most prestigious paths in India.\n\nTypes of Law Programs:\n1. 5-Year Integrated BA LLB / BBA LLB — After Class 12\n2. 3-Year LLB — After graduation\n\nTop Entrance Exams:\n- CLAT — For 22 National Law Universities\n- AILET — For NLU Delhi\n- LSAT India — Accepted by 80+ colleges\n\nTop Law Colleges: NLSIU Bangalore, NLU Delhi, NALSAR Hyderabad\n\nCareer Prospects: Advocate, Corporate Lawyer, Judge, Legal Advisor\n\nAdmission Planet helps with CLAT preparation and direct admission. Contact us today!`, thumbnail: 'https://images.unsplash.com/photo-1589829545856-d10d557cf95f?w=600&q=80', status: 'published', views: 176 },
+        { title: 'Paramedical Courses: The Hidden Gems of Healthcare Education', category: 'Paramedical', date: '2025-02-10', author: 'Healthcare Desk', excerpt: "Paramedical courses are often overlooked, but they offer excellent career opportunities in India's booming healthcare sector.", content: `Paramedical courses are the backbone of the healthcare system. India's healthcare sector grows at 22% annually — paramedical professionals are in huge demand!\n\nTop Paramedical Courses:\n1. B.Sc. Medical Lab Technology (MLT) — 3 years | Salary: Rs 2-6 LPA\n2. B.Sc. Radiology & Imaging Technology — 3 years | Salary: Rs 3-7 LPA\n3. B.Sc. Physiotherapy — 4.5 years | Salary: Rs 3-8 LPA\n4. B.Sc. Operation Theatre Technology — 3 years | Salary: Rs 2.5-6 LPA\n5. D.Pharm — 2 years | Salary: Rs 2-5 LPA\n\nEligibility: 12th with PCB, Minimum 50% marks\n\nAdmission Planet has tie-ups with top paramedical colleges. Call +91 8936006657!`, thumbnail: 'https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=600&q=80', status: 'published', views: 129 }
+    ];
+    const batch = db.batch();
+    SEED_POSTS.forEach(post => {
+        const ref = db.collection('posts').doc();
+        batch.set(ref, post);
+    });
+    await batch.commit();
+    document.getElementById('seedBanner')?.remove();
+    showToast('5 sample posts add ho gayi! 🎉');
+    renderDashboard();
 }
 
 // ===== PANEL SWITCHING =====
@@ -486,8 +530,10 @@ function showPanel(name, navEl) {
 }
 
 // ===== DASHBOARD =====
-function renderDashboard() {
-    const posts = getPosts();
+async function renderDashboard() {
+    document.getElementById('dashStats').innerHTML = '<div class="loading-spinner"><i class="fas fa-spinner fa-spin"></i> Loading stats...</div>';
+    const posts = await getPosts();
+    checkAndShowSeedBanner();
     const published = posts.filter(p => p.status === 'published');
     const drafts = posts.filter(p => p.status === 'draft');
     const totalViews = posts.reduce((s, p) => s + (p.views || 0), 0);
@@ -511,7 +557,7 @@ function renderDashboard() {
     `).join('');
 
     // Recent posts
-    const recent = [...posts].sort((a, b) => new Date(b.date) - new Date(a.date)).slice(0, 5);
+    const recent = posts.slice(0, 5);
     document.getElementById('recentPostsWidget').innerHTML = recent.length ? recent.map(p => `
         <div class="recent-item">
             <img src="${p.thumbnail || 'https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?w=100&q=60'}" onerror="this.src='https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?w=100&q=60'" alt="${p.title}">
@@ -541,14 +587,12 @@ function formatDate(d) {
     return new Date(d).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' });
 }
 
-function renderTable() {
-    const q = (document.getElementById('tableSearch')?.value || '').toLowerCase();
-    let posts = getPosts();
-    if (q) posts = posts.filter(p => p.title.toLowerCase().includes(q) || p.category.toLowerCase().includes(q));
-
-    posts.sort((a, b) => new Date(b.date) - new Date(a.date));
-
+async function renderTable() {
     const tbody = document.getElementById('postsTableBody');
+    tbody.innerHTML = '<tr><td colspan="7" class="loading-spinner"><i class="fas fa-spinner fa-spin"></i> Loading posts...</td></tr>';
+    const q = (document.getElementById('tableSearch')?.value || '').toLowerCase();
+    let posts = await getPosts();
+    if (q) posts = posts.filter(p => p.title.toLowerCase().includes(q) || p.category.toLowerCase().includes(q));
     if (!posts.length) {
         tbody.innerHTML = `<tr><td colspan="7"><div class="empty-table"><i class="fas fa-newspaper"></i>No posts found</div></td></tr>`;
         return;
@@ -565,7 +609,7 @@ function renderTable() {
             <td>
                 <div class="action-btns">
                     <button class="action-btn edit" title="Edit" onclick="editPost('${p.id}')"><i class="fas fa-edit"></i></button>
-                    <button class="action-btn toggle" title="Toggle Status" onclick="toggleStatus('${p.id}')"><i class="fas fa-exchange-alt"></i></button>
+                    <button class="action-btn toggle" title="Toggle Status" onclick="toggleStatus('${p.id}', '${p.status}')"><i class="fas fa-exchange-alt"></i></button>
                     <button class="action-btn delete" title="Delete" onclick="confirmDelete('${p.id}')"><i class="fas fa-trash"></i></button>
                 </div>
             </td>
@@ -590,7 +634,7 @@ function previewThumb() {
     else preview.style.display = 'none';
 }
 
-function savePost(status) {
+async function savePost(status) {
     const title = document.getElementById('fTitle').value.trim();
     const category = document.getElementById('fCategory').value;
     const excerpt = document.getElementById('fExcerpt').value.trim();
@@ -601,43 +645,35 @@ function savePost(status) {
     if (!excerpt) { showToast('Short excerpt zaroor likhna hai!', true); return; }
     if (!content) { showToast('Post content khali nahi ho sakta!', true); return; }
 
-    const posts = getPosts();
     const editId = document.getElementById('editPostId').value;
+    const postData = {
+        title, category,
+        author: document.getElementById('fAuthor').value.trim() || 'Admin',
+        thumbnail: document.getElementById('fThumbnail').value.trim(),
+        excerpt, content, status
+    };
 
-    if (editId) {
-        const idx = posts.findIndex(p => p.id === editId);
-        if (idx !== -1) {
-            posts[idx].title = title;
-            posts[idx].category = category;
-            posts[idx].author = document.getElementById('fAuthor').value.trim() || 'Admin';
-            posts[idx].thumbnail = document.getElementById('fThumbnail').value.trim();
-            posts[idx].excerpt = excerpt;
-            posts[idx].content = content;
-            posts[idx].status = status;
+    try {
+        if (editId) {
+            await db.collection('posts').doc(editId).update(postData);
+            showToast('Post successfully update ho gayi! ✅');
+        } else {
+            postData.date = new Date().toISOString().split('T')[0];
+            postData.views = 0;
+            await db.collection('posts').add(postData);
+            showToast(status === 'published' ? 'Post publish ho gayi! 🎉' : 'Draft save ho gaya! ✅');
         }
-        showToast('Post successfully update ho gayi! ✅');
-    } else {
-        posts.unshift({
-            id: genId(),
-            title, category,
-            author: document.getElementById('fAuthor').value.trim() || 'Admin',
-            thumbnail: document.getElementById('fThumbnail').value.trim(),
-            excerpt, content,
-            date: new Date().toISOString().split('T')[0],
-            status, views: 0
-        });
-        showToast(status === 'published' ? 'Post publish ho gayi! 🎉' : 'Draft save ho gaya! ✅');
+        resetForm();
+        showPanel('allposts');
+    } catch(e) {
+        showToast('Error: ' + e.message, true);
     }
-
-    savePosts(posts);
-    resetForm();
-    showPanel('allposts');
 }
 
-function editPost(id) {
-    const posts = getPosts();
-    const p = posts.find(post => post.id === id);
-    if (!p) return;
+async function editPost(id) {
+    const doc = await db.collection('posts').doc(id).get();
+    if (!doc.exists) return;
+    const p = { id: doc.id, ...doc.data() };
 
     document.getElementById('editPostId').value = id;
     document.getElementById('fTitle').value = p.title;
@@ -652,15 +688,11 @@ function editPost(id) {
     showPanel('newpost');
 }
 
-function toggleStatus(id) {
-    const posts = getPosts();
-    const idx = posts.findIndex(p => p.id === id);
-    if (idx !== -1) {
-        posts[idx].status = posts[idx].status === 'published' ? 'draft' : 'published';
-        savePosts(posts);
-        renderTable();
-        showToast(`Post ${posts[idx].status === 'published' ? 'publish' : 'draft'} ho gayi!`);
-    }
+async function toggleStatus(id, currentStatus) {
+    const newStatus = currentStatus === 'published' ? 'draft' : 'published';
+    await db.collection('posts').doc(id).update({ status: newStatus });
+    renderTable();
+    showToast(`Post ${newStatus} ho gayi!`);
 }
 
 // ===== DELETE =====
@@ -668,9 +700,8 @@ let deleteTargetId = null;
 function confirmDelete(id) {
     deleteTargetId = id;
     document.getElementById('confirmOverlay').classList.add('open');
-    document.getElementById('confirmYesBtn').onclick = () => {
-        const posts = getPosts().filter(p => p.id !== deleteTargetId);
-        savePosts(posts);
+    document.getElementById('confirmYesBtn').onclick = async () => {
+        await db.collection('posts').doc(deleteTargetId).delete();
         closeConfirm();
         renderTable();
         renderDashboard();
