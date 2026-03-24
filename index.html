@@ -1715,7 +1715,7 @@
                 <div class="footer-col contact">
                     <h3>Contact Info</h3>
                     <ul>
-                        <li><i class="fas fa-map-marker-alt"></i> S.N college more, Tekari, Gaya, Bihar, India-804422</li>
+                        <li><i class="fas fa-map-marker-alt"></i> S.N college more, Tekari, Gaya, Bihar, India-824236</li>
                         <li><i class="fas fa-phone-alt"></i> +91 8936006657, +91 9798446477</li>
                         <li><i class="fas fa-envelope"></i> info@admissionplanet.org</li>
                         <li><i class="fas fa-envelope"></i> admissionplanet.offical@gmail.com</li>
@@ -1772,17 +1772,21 @@
         // Smooth scrolling for anchor links
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function(e) {
+                const targetId = this.getAttribute('href');
+                if (targetId === '#' || targetId === '#!') return;
+                
                 e.preventDefault();
                 
-                const targetId = this.getAttribute('href');
-                if (targetId === '#') return;
-                
-                const targetElement = document.querySelector(targetId);
-                if (targetElement) {
-                    window.scrollTo({
-                        top: targetElement.offsetTop - 80,
-                        behavior: 'smooth'
-                    });
+                try {
+                    const targetElement = document.querySelector(targetId);
+                    if (targetElement) {
+                        window.scrollTo({
+                            top: targetElement.offsetTop - 80,
+                            behavior: 'smooth'
+                        });
+                    }
+                } catch(err) {
+                    // Ignore invalid selectors like #!
                 }
             });
         });
